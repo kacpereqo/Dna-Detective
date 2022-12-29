@@ -3,6 +3,8 @@ from .service import Translator
 
 from .schemas import Rna_to_translate, Rna_translated
 
+#|------------------------------------------------------------------------------|#
+
 router = APIRouter()
 
 @router.post("/api/translate", tags=["Rna translation"], description="Translates RNA to proteins")
@@ -15,3 +17,5 @@ def translate_rna(rna: Rna_to_translate, is_reversed: bool = False, is_forward: 
         open_reading_frames=translator.open_reading_frames,
         translated_frames=translator.translated_frames
     )
+
+#|------------------------------------------------------------------------------|#

@@ -2,6 +2,8 @@ from .constants import RNA_CODON_TABLE
 from typing import List
 import re
 
+#|------------------------------------------------------------------------------|#
+
 class Translator():
     def __init__(self, rna: str, is_reversed: bool = False, is_forward: bool = True):
         self.rna = rna
@@ -9,6 +11,7 @@ class Translator():
         self.translated_frames = self.translate_frames()
         self.open_reading_frames = self.find_open_reading_frames()
 
+    #|------------------------------------------------------------------------------|#
      
     
     def get_frames(self, is_reversed: bool, is_forward: bool) -> List[str]:
@@ -21,6 +24,8 @@ class Translator():
             _frames.extend(self.rna[i:][::-1] for i in range(3))
         
         return _frames
+
+    #|------------------------------------------------------------------------------|#
 
     def translate_frames(self):
         _proteins = []
@@ -37,7 +42,9 @@ class Translator():
             _proteins.append(protein)
 
         return _proteins        
-    
+
+    #|------------------------------------------------------------------------------|#
+
     def find_open_reading_frames(self):
         _proteins = {}
         for i,frame in enumerate(self.translated_frames):
@@ -50,6 +57,4 @@ class Translator():
 
         return _proteins
 
-
-
-
+#|------------------------------------------------------------------------------|#

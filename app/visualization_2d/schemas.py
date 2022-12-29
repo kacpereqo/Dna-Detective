@@ -1,5 +1,7 @@
 from pydantic import BaseModel, validator
 
+#|------------------------------------------------------------------------------|#
+
 class Protein(BaseModel):
     sequence: str
 
@@ -10,3 +12,5 @@ class Protein(BaseModel):
         if any(char not in 'ARNDCQEGHILKMFPSTWYV' for char in v):
             raise ValueError('Sequence contains invalid amino acid')
         return v
+
+#|------------------------------------------------------------------------------|#

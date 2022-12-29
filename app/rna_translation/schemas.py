@@ -1,6 +1,8 @@
 from typing import  Optional, List, Dict
 from pydantic import BaseModel, validator
 
+#|------------------------------------------------------------------------------|#W
+
 class Rna_to_translate(BaseModel):
     rna: str
 
@@ -16,6 +18,7 @@ class Rna_to_translate(BaseModel):
             raise ValueError("RNA must contain only A, U, G, C")
         return v
 
+#|------------------------------------------------------------------------------|#
 
 class Rna_translated(BaseModel):
     frames: Optional[List[str]] = None
