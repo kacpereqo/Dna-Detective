@@ -27,7 +27,7 @@ class Visualization2DService:
         smiles = self.protein_to_smiles()
         m = Chem.MolFromSmiles(smiles)
 
-        drawer = rdMolDraw2D.MolDraw2DSVG(50+(2*len(smiles)), 200)
+        drawer = rdMolDraw2D.MolDraw2DSVG(100+(2*len(smiles)), 200)
         drawer.SetFontSize(0.5)
         drawer.bondLineWidth = 1.0 
         drawer.drawOptions().explicitMethyl =True
@@ -37,6 +37,6 @@ class Visualization2DService:
         with open('test.svg', 'w') as f:
             f.write(drawer.GetDrawingText())
 
-        return 'saved'
+        return drawer.GetDrawingText()
 
     #|------------------------------------------------------------------------------|#
