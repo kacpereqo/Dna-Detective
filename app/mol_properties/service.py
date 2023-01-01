@@ -1,6 +1,6 @@
 
 
-from .constants import HYDROPHOBICITY_SCALE
+from .constants import *
 import numpy
 import array
 
@@ -27,31 +27,15 @@ scales = {
 'Thurlkill':  {'Cterm': 3.67,'pKAsp': 3.67, 'pKGlu': 4.25,'pKCys': 8.55,'pKTyr': 9.84, 'pk_his': 6.54,'Nterm': 8.0, 'pKLys': 10.4, 'pKArg': 12.0},
 'Nozaki':     {'Cterm': 3.8, 'pKAsp': 4.0,  'pKGlu': 4.4, 'pKCys': 9.5, 'pKTyr': 9.6,  'pk_his': 6.3, 'Nterm': 7.5, 'pKLys': 10.4, 'pKArg': 12},   
 'Dawson':     {'Cterm': 3.2, 'pKAsp': 3.9,  'pKGlu': 4.3, 'pKCys': 8.3, 'pKTyr': 10.1, 'pk_his': 6.0, 'Nterm': 8.2, 'pKLys': 10.5, 'pKArg':  12},   
-          }
+}
 
-aaDict = {'Asp':'D', 'Glu':'E', 'Cys':'C', 'Tyr':'Y', 'His':'H', 
-          'Lys':'K', 'Arg':'R', 'Met':'M', 'Phe':'F', 'Leu':'L', 
-          'Val':'V', 'Ala':'A', 'Gly':'G', 'Gln':'Q', 'Asn':'N',
-          'Ile':'I', 'Trp':'W', 'Ser':'S', 'Thr':'T', 'Sec':'U',
-          'Pro':'P', 'Xaa':'X', 'Sec':'U', 'Pyl':'O', 'Asx':'B',
-          'Xle':'J', }
+
 
 _CODE1 = [
         "A", "R", "N", "D", "C", "Q", "E", "G", "H", "I",
         "L", "K", "M", "F", "P", "S", "T", "W", "Y", "V",
         "O", "U", "B", "Z", "J", "X"
     ]
-
-charge_table = {
-"R": 	1.0,
-"H": 	1.0,
-"K": 	1.0,
-"D": 	-1.0,
-"E": 	-1.0,
-"C": 	-1.0,
-"Y": 	-1.0,
-}
-
 acidic = ['D', 'E', 'C', 'Y']
 basic = ['K', 'R', 'H']
 
@@ -108,51 +92,52 @@ class ProteinPropeties():
     def __init__(self, sequence):
         self.sequence = sequence
 
-    def isoelectric_point(self):
-        seq = self.sequence
-        scale = "IPC_protein"
+    def isoelectric_point(self, scale="IPC_protein", precision = 0.01):
+        
+        if scale in PKA_SCALE:
+            pka_scale = PKA_SCALE[scale]
+        else:
+            raise ValueError(f"The scale {scale} is not available")
 
-        pKCterm = scales[scale]['Cterm']
-        pKAsp = scales[scale]['pKAsp']
-        pKGlu = scales[scale]['pKGlu']
-        pKCys = scales[scale]['pKCys']
-        pKTyr = scales[scale]['pKTyr']
-        pKHis = scales[scale]['pk_his']
-        pKNterm = scales[scale]['Nterm']
-        pKLys = scales[scale]['pKLys'] 
-        pKArg = scales[scale]['pKArg']
+        if precision <= 0:
+            raise ValueError(f"The precision {precision} must be greater than 0")
 
-        pH = 6.51             #starting po pI = 6.5 - theoretically it should be 7, but average protein pI is 6.5 so we increase the probability of finding the solution
-        pHprev = 0.0         
-        pHnext = 14.0        
-        E = 0.01             #epsilon means precision [pI = pH +- E]
+        if precision < 0.01:
+            raise ValueError(f"The precision {precision} is too low, it must be greater than 0.01")
+
+
+        pH = 6.51       
+        pH_prev = 0.0
+        pH_next = 14.0
         temp = 0.01
-        nterm=seq[0]
-                
-        while 1:             #the infinite loop
-            QN1=-1.0/(1.0+pow(10,(pKCterm-pH)))                                        
-            QN2=-seq.count('D')/(1.0+pow(10,(pKAsp-pH)))           
-            QN3=-seq.count('E')/(1.0+pow(10,(pKGlu-pH)))           
-            QN4=-seq.count('C')/(1.0+pow(10,(pKCys-pH)))           
-            QN5=-seq.count('Y')/(1.0+pow(10,(pKTyr-pH)))        
-            QP1=seq.count('H')/(1.0+pow(10,(pH-pKHis)))            
-            QP2=1.0/(1.0+pow(10,(pH-pKNterm)))                
-            QP3=seq.count('K')/(1.0+pow(10,(pH-pKLys)))           
-            QP4=seq.count('R')/(1.0+pow(10,(pH-pKArg)))            
-            NQ=QN1+QN2+QN3+QN4+QN5+QP1+QP2+QP3+QP4
-                #print NQ
-            if NQ<0.0:              #we are out of range, thus the new pH value must be smaller                     
-                temp = pH
-                pH = pH-((pH-pHprev)/2.0)
-                pHnext = temp
-                #print "pH: ", pH, ", \tpHnext: ",pHnext
-            else:
-                temp = pH
-                pH = pH + ((pHnext-pH)/2.0)
-                pHprev = temp
-                #print "pH: ", pH, ",\tpHprev: ", pHprev
 
-            if (pH-pHprev<E) and (pHnext-pH<E): #terminal condition, finding pI with given precision
+
+        while True:
+
+            net_charge = 0.0
+            net_charge += -1.0/(1.0+pow(10,(pka_scale['C']-pH)))
+            net_charge +=  1.0/(1.0+pow(10,(pH-pka_scale['NH2'])))
+
+            for aa, charge in AMINE_ACIDS_CHARGE.items():
+                if charge == -1:
+                    net_charge += -self.sequence.count(aa)/(1.0+pow(10,(pka_scale[aa]-pH)))
+
+                elif charge == 1:
+                    net_charge += self.sequence.count(aa)/(1.0 + pow(10,(pH-pka_scale[aa])))
+
+
+            temp = pH
+
+            if net_charge < 0.0:                   
+                pH = pH-((pH-pH_prev)/2.0)
+                pH_next = temp
+
+            elif net_charge > 0.0:
+                pH = pH + ((pH_next-pH)/2.0)
+                pH_prev = temp
+                        
+
+            if (pH - pH_prev < precision) and (pH_next - pH < precision):
                 return pH
 
     def hydrophobicity(self):
