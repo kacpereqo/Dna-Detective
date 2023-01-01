@@ -83,16 +83,13 @@ promost_mid = {
 'O':[7.00, 3.50],     
 }
 
-
-
-from collections import Counter
-
-
 class ProteinPropeties():
     def __init__(self, sequence):
         self.sequence = sequence
 
-    def isoelectric_point(self, scale="IPC_protein", precision = 0.01):
+#|------------------------------------------------------------------------------|#
+
+    def isoelectric_point(self, scale="IPC_protein", precision = 0.01) -> float:
         
         if scale in PKA_SCALE:
             pka_scale = PKA_SCALE[scale]
@@ -140,54 +137,35 @@ class ProteinPropeties():
             if (pH - pH_prev < precision) and (pH_next - pH < precision):
                 return pH
 
-    def hydrophobicity(self):
+    #|------------------------------------------------------------------------------|#
+
+    def hydrophobicity(self, scale = "Kyte-Doolittle") -> float:
+
+        hydrophobicity_scale = HYDROPHOBICITY_SCALE[scale]
         hydrophobicity = 0.0
+
         for aa in self.sequence:
-            hydrophobicity += HYDROPHOBICITY_SCALE[aa]
+            hydrophobicity += hydrophobicity_scale[aa]
 
-        return hydrophobicity/len(self.sequence)
+        return hydrophobicity / len(self.sequence)
+        
+    #|------------------------------------------------------------------------------|#
 
-    def net_charge(self, pKscale: str = "Lehninger") -> float:
-        temp = {}
-        for pH in numpy.arange(0, 14, 0.1):
-            pH = round(pH, 1)
-            encoder = {aa:i for i,aa in enumerate(_CODE1)}
-            self.encoded = array.array('B')
-            for i, aa in enumerate(self.sequence):
-                self.encoded.append(encoder.get(aa, encoder["X"]))
+    def charge_at_ph(self, scale = "Rodwell", pH = 7.0) -> float:
+                pka_scale = PKA_SCALE[scale]
 
-            scale_pKa = {"C": 	8.33,
-                        "D": 	3.86,
-                        "E": 	4.25,
-                        "H": 	6.0,
-                        "K": 	11.5,
-                        "R": 	11.5,
-                        "Y": 	10.7,
-                        "cTer": 	3.1,
-                        "nTer":	8.0}
-            scale_sign = charge_table
+                net_charge = 0.0
+                for aa in self.sequence:
+                    if aa in AMINE_ACIDS_CHARGE:
+                        charge = AMINE_ACIDS_CHARGE[aa]
+                        net_charge += charge / (1.0 + 10 ** (charge * (pH - pka_scale[aa])))
 
-            # build a look-up table for the pKa scale and the charge sign
-            lut_pKa = [scale_pKa.get(aa, 0.0) for aa in _CODE1]
-            lut_sign = [scale_sign.get(aa, 0.0) for aa in _CODE1]
+                net_charge += 1.0 / (1.0 + 10 ** (pH - pka_scale["NH2"]))
+                net_charge += -1.0 / (1.0 + 10 ** (pka_scale["CO"] - pH))
 
-            # compute charge of each amino-acid, and sum
-            if numpy is None:
-                charge = 0.0
-                for aa in self.encoded:
-                    pKa = lut_pKa[aa]
-                    sign = lut_sign[aa]
-                    charge += sign / (1.0 + 10 ** (sign * (pH - pKa)))
-            else:
-                pKa = numpy.take(lut_pKa, self.encoded)
-                sign = numpy.take(lut_sign, self.encoded)
-                charge = numpy.sum(sign / (1.0 + 10**(sign * (pH - pKa))))
+                return net_charge
 
-            # add charge for C-terminal and N-terminal ends of the peptide
-            if "nTer" in scale_pKa:
-                charge += 1.0 / (1.0 + 10 ** (pH - scale_pKa["nTer"]))
-            if "cTer" in scale_pKa:
-                charge += -1.0 / (1.0 + 10 ** (scale_pKa["cTer"] - pH))
-            temp[pH] = charge
-            # return the net protein charge
-        return temp
+    #|------------------------------------------------------------------------------|#
+
+    
+    
