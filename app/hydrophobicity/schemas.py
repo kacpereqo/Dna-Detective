@@ -1,4 +1,5 @@
 from pydantic import BaseModel, validator
+from .constants import HYDROPHOBICITY_SCALE
 
 #|------------------------------------------------------------------------------|#
 
@@ -14,3 +15,12 @@ class Protein(BaseModel):
         return v
 
 #|------------------------------------------------------------------------------|#
+
+class HydrophobicityScale(BaseModel):
+    scale: str
+
+    @validator('scale')
+    def validate_scale(cls, v):
+        if v not in HYDROPHOBICITY_SCALE:
+            raise ValueError('Scale not found')
+        return v
