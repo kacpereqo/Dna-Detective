@@ -11,7 +11,7 @@ router = APIRouter()
 #|------------------------------------------------------------------------------|#
 
 @router.post("/api/aromacity", tags=["Aromacity"], description="Returns aromacity of protein")
-def get_flexibility_of_protein(protein: Protein):
+def get_aromacity_of_protein(protein: Protein):
     """Returns flexibility of protein in units"""
     
     sequence = ProteinAromacity(protein.sequence)
