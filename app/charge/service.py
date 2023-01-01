@@ -11,18 +11,8 @@ class ProteinCharge():
 #|------------------------------------------------------------------------------|#
 
     def isoelectric_point(self, scale="IPC_protein", precision = 0.01) -> float:
-        
-        if scale in PKA_SCALE:
-            pka_scale = PKA_SCALE[scale]
-        else:
-            raise ValueError(f"The scale {scale} is not available")
-
-        if precision <= 0:
-            raise ValueError(f"The precision {precision} must be greater than 0")
-
-        if precision < 0.01:
-            raise ValueError(f"The precision {precision} is too low, it must be greater than 0.01")
-
+    
+        pka_scale = PKA_SCALE[scale]
 
         pH = 6.51       
         pH_prev = 0.0

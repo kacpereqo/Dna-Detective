@@ -1,6 +1,4 @@
 from pydantic import BaseModel, validator
-from fastapi import Query
-from .constants import HYDROPHOBICITY_SCALE
 
 #|------------------------------------------------------------------------------|#
 
@@ -15,13 +13,3 @@ class Protein(BaseModel):
             raise ValueError('Sequence contains invalid amino acid')
         return v
 
-#|------------------------------------------------------------------------------|#
-
-class HydrophobicityScale(BaseModel):
-    scale: str 
-
-    @validator('scale')
-    def validate_scale(cls, v):
-        if v not in HYDROPHOBICITY_SCALE:
-            raise ValueError('Scale not found')
-        return v
