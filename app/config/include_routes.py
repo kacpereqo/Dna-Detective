@@ -6,6 +6,7 @@ from app.charge import routes as charge
 from app.flexibility import routes as flexibility
 from app.aromacity import routes as aromacity
 from app.instability import routes as instability
+from app.statistics import routes as statics
 
 #|------------------------------------------------------------------------------|#
 
@@ -18,5 +19,6 @@ def include_routes(app):
     app.include_router(flexibility.router)
     app.include_router(aromacity.router)
     app.include_router(instability.router)
+    app.include_router(statics.router)
 
 #|------------------------------------------------------------------------------|#
