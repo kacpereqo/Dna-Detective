@@ -1,19 +1,8 @@
-"""Calculate isoelectric points of polypeptides using methods of Bjellqvist.
-pK values and the methods are taken from::
-    * Bjellqvist, B.,Hughes, G.J., Pasquali, Ch., Paquet, N., Ravier, F.,
-    Sanchez, J.-Ch., Frutiger, S. & Hochstrasser, D.F.
-    The focusing positions of polypeptides in immobilized pH gradients can be
-    predicted from their amino acid sequences. Electrophoresis 1993, 14,
-    1023-1031.
-    * Bjellqvist, B., Basse, B., Olsen, E. and Celis, J.E.
-    Reference points for comparisons of two-dimensional maps of proteins from
-    different human cell types defined in a pH scale where isoelectric points
-    correlate with polypeptide compositions. Electrophoresis 1994, 15, 529-539.
-I designed the algorithm according to a note by David L. Tabb, available at:
-http://fields.scripps.edu/DTASelect/20010710-pI-Algorithm.pdf
-"""
+
 
 from .constants import HYDROPHOBICITY_SCALE
+import numpy
+import array
 
 positive_pKs = {"Nterm": 8.6, "K": 10.8, "R": 12.5, "H": 6.5}
 negative_pKs = {"Cterm": 3.6, "D": 3.9, "E": 4.1, "C": 8.5, "Y": 10.1}
@@ -46,6 +35,22 @@ aaDict = {'Asp':'D', 'Glu':'E', 'Cys':'C', 'Tyr':'Y', 'His':'H',
           'Ile':'I', 'Trp':'W', 'Ser':'S', 'Thr':'T', 'Sec':'U',
           'Pro':'P', 'Xaa':'X', 'Sec':'U', 'Pyl':'O', 'Asx':'B',
           'Xle':'J', }
+
+_CODE1 = [
+        "A", "R", "N", "D", "C", "Q", "E", "G", "H", "I",
+        "L", "K", "M", "F", "P", "S", "T", "W", "Y", "V",
+        "O", "U", "B", "Z", "J", "X"
+    ]
+
+charge_table = {
+"R": 	1.0,
+"H": 	1.0,
+"K": 	1.0,
+"D": 	-1.0,
+"E": 	-1.0,
+"C": 	-1.0,
+"Y": 	-1.0,
+}
 
 acidic = ['D', 'E', 'C', 'Y']
 basic = ['K', 'R', 'H']
@@ -95,6 +100,7 @@ promost_mid = {
 }
 
 
+
 from collections import Counter
 
 
@@ -139,13 +145,11 @@ class ProteinPropeties():
                 temp = pH
                 pH = pH-((pH-pHprev)/2.0)
                 pHnext = temp
-                print(pH)
                 #print "pH: ", pH, ", \tpHnext: ",pHnext
             else:
                 temp = pH
                 pH = pH + ((pHnext-pH)/2.0)
                 pHprev = temp
-                print(pH)
                 #print "pH: ", pH, ",\tpHprev: ", pHprev
 
             if (pH-pHprev<E) and (pHnext-pH<E): #terminal condition, finding pI with given precision
@@ -158,4 +162,47 @@ class ProteinPropeties():
 
         return hydrophobicity/len(self.sequence)
 
+    def net_charge(self, pKscale: str = "Lehninger") -> float:
+        temp = {}
+        for pH in numpy.arange(0, 14, 0.1):
+            pH = round(pH, 1)
+            encoder = {aa:i for i,aa in enumerate(_CODE1)}
+            self.encoded = array.array('B')
+            for i, aa in enumerate(self.sequence):
+                self.encoded.append(encoder.get(aa, encoder["X"]))
 
+            scale_pKa = {"C": 	8.33,
+                        "D": 	3.86,
+                        "E": 	4.25,
+                        "H": 	6.0,
+                        "K": 	11.5,
+                        "R": 	11.5,
+                        "Y": 	10.7,
+                        "cTer": 	3.1,
+                        "nTer":	8.0}
+            scale_sign = charge_table
+
+            # build a look-up table for the pKa scale and the charge sign
+            lut_pKa = [scale_pKa.get(aa, 0.0) for aa in _CODE1]
+            lut_sign = [scale_sign.get(aa, 0.0) for aa in _CODE1]
+
+            # compute charge of each amino-acid, and sum
+            if numpy is None:
+                charge = 0.0
+                for aa in self.encoded:
+                    pKa = lut_pKa[aa]
+                    sign = lut_sign[aa]
+                    charge += sign / (1.0 + 10 ** (sign * (pH - pKa)))
+            else:
+                pKa = numpy.take(lut_pKa, self.encoded)
+                sign = numpy.take(lut_sign, self.encoded)
+                charge = numpy.sum(sign / (1.0 + 10**(sign * (pH - pKa))))
+
+            # add charge for C-terminal and N-terminal ends of the peptide
+            if "nTer" in scale_pKa:
+                charge += 1.0 / (1.0 + 10 ** (pH - scale_pKa["nTer"]))
+            if "cTer" in scale_pKa:
+                charge += -1.0 / (1.0 + 10 ** (scale_pKa["cTer"] - pH))
+            temp[pH] = charge
+            # return the net protein charge
+        return temp

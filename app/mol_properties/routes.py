@@ -33,8 +33,8 @@ def get_lenght_of_protein(protein: Protein):
 @router.post("/api/netcharge", tags=["properties"], description="Returns charge of protein in units")
 def get_netcharge_of_protein(protein: Protein, pH: Optional[float] = 7.0):
     """Returns charge of protein in units"""
-    sequence = SequenceParameters(protein.sequence)
-    return {"netcharge":sequence.get_NCPR(pH=pH)}
+    sequence = ProteinPropeties(protein.sequence)
+    return {"netcharge":sequence.net_charge()}
     
 #|------------------------------------------------------------------------------|#
 
@@ -46,7 +46,7 @@ def get_isoelectricpoint_of_protein(protein: Protein):
 
 #|------------------------------------------------------------------------------|#
 
-@router.post("/api/hydrophobicity-index", tags=["properties"], description="Returns hydrophobicity of protein in units")
+@router.post("/api/averagehydrophobicity", tags=["properties"], description="Returns hydrophobicity of protein in units")
 def get_hydrophobicity_of_protein(protein: Protein):
     """Returns hydrophobicity of protein in units"""
     return {"hydrophobicity":round(ProteinPropeties(protein.sequence).hydrophobicity(), 3)}
