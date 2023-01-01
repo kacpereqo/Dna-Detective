@@ -166,6 +166,14 @@ class ProteinPropeties():
                 return net_charge
 
     #|------------------------------------------------------------------------------|#
+    
+    def net_charge(self, scale = "Rodwell", start = 0.0, end = 14.0, step = 0.5) -> float:
+        net_charge = {} 
+        for pH in np.arange(start, end, step):
+            net_charge[pH] = self.charge_at_ph(scale, pH)
+        
+        return net_charge
 
+    #|------------------------------------------------------------------------------|#
     
-    
+        
