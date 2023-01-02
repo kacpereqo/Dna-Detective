@@ -1,5 +1,6 @@
 from pydantic import BaseModel, validator
 from .constants import PKA_SCALE
+from typing import Optional
 
 #|------------------------------------------------------------------------------|#
 
@@ -17,9 +18,9 @@ class Protein(BaseModel):
 #|------------------------------------------------------------------------------|#
 
 class PH_Range(BaseModel):
-    start: float
-    end: float
-    step: float
+    start: float= 0.0 
+    end: float = 14.0  
+    step: float = 0.5  
 
     @validator('start')
     def validate_start(cls,v):
@@ -56,7 +57,7 @@ class PH_Range(BaseModel):
 #|------------------------------------------------------------------------------|#
 
 class PH(BaseModel):
-    pH: float
+    pH: float = 7.0 
 
     @validator('pH')
     def validate_pH(cls, v):
@@ -69,11 +70,10 @@ class PH(BaseModel):
 #|------------------------------------------------------------------------------|#
 
 class Pka_scale(BaseModel):
-    scale: str
+    scale: str = 'Rodwell'
 
     @validator('scale')
     def validate_scale(cls, v):
-        print(v)
         if v not in PKA_SCALE:
             raise ValueError('pKa scale not found')
         return v
