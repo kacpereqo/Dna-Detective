@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends
 from .schemas import Protein, HydrophobicityScale
 from localcider.sequenceParameters import SequenceParameters
-from typing import Optional
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import PlainTextResponse
 from .service import ProteinHydrophobicity
+
 
 
 #|------------------------------------------------------------------------------|#
@@ -12,11 +14,10 @@ router = APIRouter()
 #|------------------------------------------------------------------------------|#
 
 @router.post("/api/averagehydrophobicity", tags=["Hydrophobicity"], description="Returns average hydrophobicity of protein")
-def get_hydrophobicity_of_protein(protein: Protein, hydrophobicity_scale: HydrophobicityScale = Depends()):
+def get_hydrophobicity_of_protein(protein: Protein, hydrophobicity_scale: HydrophobicityScale = Depends(HydrophobicityScale)):
     """Returns hydrophobicity of protein in units"""
     
     protein = ProteinHydrophobicity(protein.sequence)
-
     return {"hydrophobicity":round(protein.hydrophobicity(scale = hydrophobicity_scale.scale), 2)}
 
 #|------------------------------------------------------------------------------|#
