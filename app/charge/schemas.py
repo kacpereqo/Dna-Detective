@@ -22,34 +22,36 @@ class PH_Range(BaseModel):
     step: float
 
     @validator('start')
-    def validate_start(cls, v, values, **kwargs):
+    def validate_start(cls,v):
         if v < 0.0:
             raise ValueError('Start pH must be greater than 0.0')
         if v > 14.0:
             raise ValueError('Start pH must be less than 14.0')
-        # if v > values['end']:
-        #     raise ValueError('Start pH must be less than end pH')
         return v
     
     @validator('end')
-    def validate_end(cls, v):
+    def validate_end(cls, v, values):
         if v > 14.0:
             raise ValueError('End pH must be less than 14.0')
         if v < 0:
             raise ValueError('End pH must be greater than 0.0')
+        if v < values['start']:
+            raise ValueError('End pH must be greater than start pH')
         return v
 
     @validator('step')
-    def validate_step(cls, v):
+    def validate_step(cls, v, values):
         if v <= 0.0:
             raise ValueError('Step must be greater than 0.0')
         if v > 1.0:
             raise ValueError('Step must be less than 1.0')
-        # if v > (cls.end - cls.start):
-        #     raise ValueError('Step must be less than the range')
+        if v > values['end'] - values['start']:
+            raise ValueError('Step must be less than the range')
+        print(values)
         if v < 0.1:
             raise ValueError('Step must be greater than 0.1')
         return v
+
 
 #|------------------------------------------------------------------------------|#
 
