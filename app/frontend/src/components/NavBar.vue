@@ -9,8 +9,22 @@
                 <ul>
                     <li><router-link to="/">Strona główna</router-link></li>
                     <li><router-link to="/#">Analiza</router-link></li>
-                    <li><router-link to="/#" class="drop-down">Tablice</router-link></li>
-                    <li><router-link to="/#" class="drop-down">Narzędzia</router-link></li>
+                    <li class="drop-down">
+                        <p>Tabele</p>
+                        <div class="drop-down-content">
+                            <router-link to="/#">Tabela 1</router-link>
+                            <router-link to="/#">Tabela 2</router-link>
+                            <router-link to="/#">Tabela 3</router-link>
+                        </div>
+                    </li>
+                    <li class="drop-down">
+                        <p>Narzędzia</p>
+                        <div class="drop-down-content">
+                            <router-link to="/#"><span>Narzędzie 1</span></router-link>
+                            <router-link to="/#">Narzędzie 2</router-link>
+                            <router-link to="/#">Narzędzie 3</router-link>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="login">
@@ -22,9 +36,9 @@
 
 <script>
 </script>
-
 <style scoped>
 nav {
+    z-index: 2;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -32,6 +46,28 @@ nav {
     padding: 0 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     height: 54px;
+}
+
+p {
+    margin: 0;
+}
+
+.drop-down-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-top: 0;
+    left: -0.25rem;
+    white-space: nowrap;
+}
+
+.drop-down:hover .drop-down-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .logo a {
@@ -59,8 +95,6 @@ nav {
     border-right: rgba(0, 0, 0, 0.25) 1px solid;
 }
 
-@media screen and (max-width: 768px) {}
-
 .nav-links ul {
     display: flex;
     justify-content: center;
@@ -73,7 +107,17 @@ nav {
 
 .nav-links ul li {
     list-style: none;
-    margin: 0 1rem;
+    margin: 0 0.75rem;
+}
+
+.nav-links a:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.nav-links ul li a,
+.drop-down {
+    padding: 0 0.75rem;
+    display: block;
 }
 
 a {
@@ -83,6 +127,26 @@ a {
 
 .login {
     position: relative;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes rotate2 {
+    100% {
+        transform: rotate(0deg);
+    }
+
+    0% {
+        transform: rotate(180deg);
+    }
 }
 
 .login::before {
@@ -96,7 +160,9 @@ a {
 }
 
 .drop-down {
+    cursor: pointer;
     position: relative;
+    display: inline-block;
 }
 
 .drop-down::after {
@@ -107,11 +173,16 @@ a {
     background-repeat: no-repeat;
     background-position: center;
     aspect-ratio: 1/1;
-    top: 50%;
-    right: -1rem;
+    top: 40%;
+    right: -0.5rem;
     transform: translateY(-50%);
     height: 0.75rem;
     width: 0.75rem;
+    animation: rotate2 0.25s forwards ease-in-out;
 
+}
+
+.drop-down:hover::after {
+    animation: rotate 0.25s forwards ease-in-out;
 }
 </style>
