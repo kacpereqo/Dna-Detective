@@ -19,9 +19,11 @@
                 </select>
             </div>
             <form action="#" method="POST">
-                <textarea placeholder="Wpisz RNA lub DNA..." v-if="fileType == 'text'"></textarea>
+                <div v-if="fileType == 'text'">
+                    <textarea placeholder="Wpisz RNA lub DNA..."></textarea>
+                </div>
                 <div v-if="fileType == 'file'">
-                    <input type="file" />
+                    <DropFile />
                 </div>
             </form>
             <div class="rna-input__buttons">
@@ -33,8 +35,13 @@
 </template>
 
 <script>
+import DropFile from './DropFile.vue';
+
 export default {
     name: 'RnaInput',
+    components: {
+        DropFile
+    },
     data() {
         return {
             rnaSequence: '',
@@ -55,7 +62,7 @@ form div {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
     height: 206px;
 }
 
@@ -131,7 +138,7 @@ form div {
 }
 
 .rna-input__form__data-type {
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -213,11 +220,11 @@ h4 {
 }
 
 textarea {
+    border: 0;
     overflow-y: auto;
     width: calc(100% - 0.5rem);
     resize: none;
     height: 200px;
-    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     margin: 0;
 }
 

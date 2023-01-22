@@ -7,8 +7,8 @@
             </div>
             <div class="nav-links">
                 <ul>
-                    <li><router-link to="/">Strona główna</router-link></li>
-                    <li><router-link to="/#">Analiza</router-link></li>
+                    <li><router-link to="/" class="nav-link">Strona główna</router-link></li>
+                    <li><router-link to="/#" class="nav-link">Analiza</router-link></li>
                     <li class="drop-down">
                         <p>Tabele</p>
                         <div class="drop-down-content">
@@ -20,7 +20,7 @@
                     <li class="drop-down">
                         <p>Narzędzia</p>
                         <div class="drop-down-content">
-                            <router-link to="/#"><span>Narzędzie 1</span></router-link>
+                            <router-link to="/#">Narzędzie 11</router-link>
                             <router-link to="/#">Narzędzie 2</router-link>
                             <router-link to="/#">Narzędzie 3</router-link>
                         </div>
@@ -28,13 +28,22 @@
                 </ul>
             </div>
             <div class="login">
-                <a href="#">Login</a>
+                <div class="drop-down">
+                    <p>Konto</p>
+                    <div class="drop-down-content">
+                        <router-link to="/#">Zaloguj</router-link>
+                        <router-link to="/#">Zarejestruj</router-link>
+                    </div>
+                </div>
             </div>
         </nav>
     </div>
 </template>
 
 <script>
+export default {
+    name: 'NavBar',
+};
 </script>
 <style scoped>
 nav {
@@ -60,7 +69,15 @@ p {
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-top: 0;
     left: -0.25rem;
+    padding: 0 0.25rem;
     white-space: nowrap;
+}
+
+.drop-down-content a {
+    display: block;
+    width: 100%;
+    padding: 0 0.25rem;
+    text-align: center;
 }
 
 .drop-down:hover .drop-down-content {
@@ -71,7 +88,7 @@ p {
 }
 
 .logo a {
-    position: absolute;
+    /* position: ; */
     display: block;
     height: 48px;
     background-image: url('../assets/logo.png');
@@ -79,6 +96,16 @@ p {
     background-repeat: no-repeat;
     background-position: center;
     aspect-ratio: 4/1;
+}
+
+@media screen and (max-width: 1100px) {
+    .logo a {
+        background-image: url('@/assets/small-logo.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        aspect-ratio: 1/1;
+    }
 }
 
 .logo {
@@ -107,16 +134,21 @@ p {
 
 .nav-links ul li {
     list-style: none;
-    margin: 0 0.75rem;
 }
 
-.nav-links a:hover {
+.nav-links ul li .nav-link {
+    padding: 0 0.75rem;
+}
+
+.nav-links a:hover,
+.login a:hover {
     background-color: rgba(0, 0, 0, 0.25);
 }
 
 .nav-links ul li a,
 .drop-down {
-    padding: 0 0.75rem;
+    /* padding: 0 0.75rem; */
+    margin: 0 1rem;
     display: block;
 }
 
@@ -155,11 +187,18 @@ a {
     left: -1rem;
     top: 3px;
     height: 48px;
+    background-image: url('@/assets/user.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    aspect-ratio: 1/1;
+    background-size: 1.5rem;
     border-left: rgba(0, 0, 0, 0.25) 1px solid;
 
 }
 
 .drop-down {
+    padding: 0 0.75rem;
     cursor: pointer;
     position: relative;
     display: inline-block;
