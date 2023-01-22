@@ -9,40 +9,33 @@
                 <ul>
                     <li><router-link to="/" class="nav-link">Strona główna</router-link></li>
                     <li><router-link to="/#" class="nav-link">Analiza</router-link></li>
-                    <li class="drop-down">
-                        <p>Tabele</p>
-                        <div class="drop-down-content">
-                            <router-link to="/#">Tabela 1</router-link>
-                            <router-link to="/#">Tabela 2</router-link>
-                            <router-link to="/#">Tabela 3</router-link>
-                        </div>
+                    <li>
+                        <DropDownMenu :hrefs="[{ name: 'Tabela 1', href: '/#' },
+                        { name: 'Tablea 2', href: '/#' },]" :name="'Tabele'" />
                     </li>
                     <li class="drop-down">
-                        <p>Narzędzia</p>
-                        <div class="drop-down-content">
-                            <router-link to="/#">Narzędzie 11</router-link>
-                            <router-link to="/#">Narzędzie 2</router-link>
-                            <router-link to="/#">Narzędzie 3</router-link>
-                        </div>
+                        <DropDownMenu :hrefs="[{ name: 'Narzedzie 1', href: '/#' },
+                        { name: 'Narzedzie 2', href: '/#' },]" :name="'Narzędzia'" />
                     </li>
                 </ul>
             </div>
             <div class="login">
-                <div class="drop-down">
-                    <p>Konto</p>
-                    <div class="drop-down-content">
-                        <router-link to="/#">Zaloguj</router-link>
-                        <router-link to="/#">Zarejestruj</router-link>
-                    </div>
-                </div>
+
+                <DropDownMenu :hrefs="[{ name: 'Zaloguj', href: '/#' },
+                { name: 'Zarejestruj', href: '/#' },]" :name="'Konto'" />
             </div>
         </nav>
     </div>
 </template>
 
 <script>
+import DropDownMenu from './DropDownMenu.vue';
+
 export default {
     name: 'NavBar',
+    components: {
+        DropDownMenu
+    }
 };
 </script>
 <style scoped>
@@ -59,33 +52,6 @@ nav {
 
 p {
     margin: 0;
-}
-
-.drop-down-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    border-top: 0;
-    left: -0.25rem;
-    padding: 0 0.25rem;
-    z-index: 10;
-    white-space: nowrap;
-}
-
-.drop-down-content a {
-    display: block;
-    width: 100%;
-    padding: 0 0.25rem;
-    text-align: center;
-}
-
-.drop-down:hover .drop-down-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .logo a {
@@ -141,82 +107,32 @@ p {
     padding: 0 0.75rem;
 }
 
-.nav-links a:hover,
-.login a:hover {
-    background-color: rgba(0, 0, 0, 0.25);
-}
-
-.nav-links ul li a,
-.drop-down {
-    /* padding: 0 0.75rem; */
-    margin: 0 1rem;
-    display: block;
-}
 
 a {
     color: #000;
     text-decoration: none;
+    display: block;
 }
 
 .login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
 }
 
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(180deg);
-    }
+a:hover {
+    background-color: rgba(0, 0, 0, 0.25);
 }
 
-@keyframes rotate2 {
-    100% {
-        transform: rotate(0deg);
-    }
-
-    0% {
-        transform: rotate(180deg);
-    }
-}
 
 .login::before {
     position: absolute;
     content: '';
-    left: 0.25rem;
+    left: 0.15rem;
     top: 3px;
     height: 48px;
     border-left: rgba(0, 0, 0, 0.25) 1px solid;
 
-}
-
-.drop-down {
-    padding: 0 0.75rem;
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-}
-
-.drop-down::after {
-    content: '';
-    position: absolute;
-    background-image: url('@/assets/arrow.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    aspect-ratio: 1/1;
-    top: 40%;
-    right: -0.5rem;
-    transform: translateY(-50%);
-    height: 0.75rem;
-    width: 0.75rem;
-    animation: rotate2 0.25s forwards ease-in-out;
-
-}
-
-.drop-down:hover::after {
-    animation: rotate 0.25s forwards ease-in-out;
 }
 </style>
