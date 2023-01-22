@@ -27,8 +27,10 @@
                 </div>
             </form>
             <div class="rna-input__buttons">
-                <div class="rna-input__button">Analizuj</div>
-                <div class="rna-input__button">Wyczyść</div>
+                <div class="rna-input__button"
+                    style="--first-color:rgba(0,255,0,0.25); --second-color:rgba(0,255,0,0.4);">Analizuj</div>
+                <div class="rna-input__button"
+                    style="--first-color:rgba(255,0,0,0.25); --second-color:rgba(255,0,0,0.4);">Wyczyść</div>
             </div>
         </div>
     </div>
@@ -56,24 +58,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 form div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     border: 0.5px solid rgba(0, 0, 0, 0.2);
-    height: 206px;
+    height: 200px;
 }
 
-.rna-input__form form {
-    position: relative;
+@media screen and (max-width: 1024px) {
+    .rna-input {
+        width: 100% !important;
+    }
 }
 
 .rna-input__buttons {
     display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: center;
 }
 
@@ -87,41 +85,20 @@ form div {
     height: 1.25rem;
     background-image: url('@/assets/accept.svg');
     background-size: contain;
-    background-repeat: no-repeat;
 }
 
-.rna-input__button:first-child:hover {
-    animation: pulse 1s ease-in-out infinite alternate;
+.rna-input__button:hover {
+    animation: pulse ease-in-out .7s infinite alternate;
 }
-
-.rna-input__button:last-child:hover {
-    animation: pulse2 1s ease-in-out infinite alternate;
-}
-
 
 @keyframes pulse {
     from {
-        box-shadow: 0 0 5px 5px rgba(0, 255, 0, 0.15);
+        box-shadow: 0 0 0 0 var(--first-color);
     }
 
     to {
-        box-shadow: 0 0 5px 5px rgba(0, 255, 0, 0.45);
+        box-shadow: 0 0 10px 3px var(--second-color);
     }
-}
-
-@keyframes pulse2 {
-    from {
-        box-shadow: 0 0 5px 5px rgba(255, 0, 0, 0.15);
-    }
-
-    to {
-        box-shadow: 0 0 5px 5px rgba(255, 0, 0, 0.45);
-    }
-}
-
-
-.rna-input__button:last-child:hover {
-    box-shadow: 0 0 5px 5px, rgba(255, 0, 0, 0.1);
 }
 
 .rna-input__button:last-child::after {
@@ -130,7 +107,6 @@ form div {
 
 .rna-input__button {
     position: relative;
-    background-color: #fff;
     border: 1.5px solid rgba(0, 0, 0, 0.5);
     padding: 0.5rem 2.5rem 0.5rem 1.5rem;
     margin: 1rem;
@@ -138,16 +114,14 @@ form div {
 }
 
 .rna-input__form__data-type {
-    padding: 0.5rem 0;
+    margin: 0.5rem 0;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: flex-end;
 }
 
 .rna-input__form__data-type select {
     margin-left: 0.5rem;
-    height: fit-content;
     background-color: #fff;
     border: 1.5px solid rgba(0, 0, 0, 0.5);
     appearance: none;
@@ -157,16 +131,16 @@ form div {
     background-position-x: 95%;
     background-position-y: 50%;
     padding: 0.4rem;
-    padding-right: 2.4rem;
+    padding-right: 3rem;
     cursor: pointer;
 }
 
-option:hover {
+select option:hover {
     cursor: pointer;
 }
 
 .rna-input__form__data-type select:hover {
-    filter: brightness(0.9);
+    filter: brightness(0.85);
 }
 
 .rna-input__settings-icon {
@@ -204,13 +178,12 @@ h4 {
 .rna-input__header {
     position: relative;
     display: flex;
-    flex-direction: row;
+    color: white;
 }
 
 .rna-input__header__text {
     padding: 0.5rem;
     background-color: #5F5CFF;
-    color: white;
 }
 
 .rna-input__header__gradient {
@@ -224,7 +197,6 @@ textarea {
     overflow-y: auto;
     width: calc(100% - 0.5rem);
     resize: none;
-    height: 200px;
     margin: 0;
 }
 

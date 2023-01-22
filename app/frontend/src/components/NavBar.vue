@@ -70,6 +70,7 @@ p {
     border-top: 0;
     left: -0.25rem;
     padding: 0 0.25rem;
+    z-index: 10;
     white-space: nowrap;
 }
 
@@ -184,15 +185,9 @@ a {
 .login::before {
     position: absolute;
     content: '';
-    left: -1rem;
+    left: 0.25rem;
     top: 3px;
     height: 48px;
-    background-image: url('@/assets/user.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    aspect-ratio: 1/1;
-    background-size: 1.5rem;
     border-left: rgba(0, 0, 0, 0.25) 1px solid;
 
 }
