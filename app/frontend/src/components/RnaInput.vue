@@ -12,24 +12,27 @@
         </div>
         <div class="rna-input__form">
             <div class="rna-input__form__data-type">
-                <p>Typ danych</p>
-                <select name="type" id="type" v-model="fileType">
-                    <option value="text">Tekst</option>
-                    <option value="file">Plik</option>
-                </select>
+                <div class="messages">{{ message }}</div>
+                <div class="data-type">
+                    <p>Typ danych</p>
+                    <select name="type" id="type" v-model="fileType">
+                        <option value="text">Tekst</option>
+                        <option value="file">Plik</option>
+                    </select>
+                </div>
             </div>
             <form action="#" method="POST">
                 <div v-if="fileType == 'text'">
-                    <textarea placeholder="Wpisz RNA lub DNA..."></textarea>
+                    <textarea placeholder="Wpisz RNA lub DNA..." v-model="rnaSequence"></textarea>
                 </div>
                 <div v-if="fileType == 'file'">
                     <DropFile />
                 </div>
             </form>
             <div class="rna-input__buttons">
-                <div class="rna-input__button"
+                <div class="rna-input__button" role="button" @click="submit"
                     style="--first-color:rgba(0,255,0,0.25); --second-color:rgba(0,255,0,0.4);">Analizuj</div>
-                <div class="rna-input__button"
+                <div class="rna-input__button" role="button" @click="clear"
                     style="--first-color:rgba(255,0,0,0.25); --second-color:rgba(255,0,0,0.4);">Wyczyść</div>
             </div>
         </div>
@@ -38,6 +41,7 @@
 
 <script>
 import DropFile from './DropFile.vue';
+import axios from 'axios'
 
 export default {
     name: 'RnaInput',
@@ -48,11 +52,24 @@ export default {
         return {
             rnaSequence: '',
             fileType: 'text',
+            message: '',
         }
     },
     methods: {
         submit() {
-            this.$emit('submit', this.rnaSequence)
+            axios.post('http://localhost:5000/api/analyze', {
+                sequence: this.rnaSequence
+            }).then(res => {
+                this.$router.push({
+                    name: 'Results',
+                    params: {
+                        results: res.data
+                    }
+                })
+            })
+        },
+        clear() {
+            this.rnaSequence = ''
         }
     }
 }
@@ -88,6 +105,7 @@ form div {
 }
 
 .rna-input__button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
     animation: pulse ease-in-out .7s infinite alternate;
 }
 
@@ -117,11 +135,21 @@ form div {
     margin: 0.5rem 0;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+}
+
+.data-type {
+    display: flex;
+    align-items: center;
+}
+
+.messages {
+    flex: 3;
 }
 
 .rna-input__form__data-type select {
     margin-left: 0.5rem;
+    height: fit-content;
     background-color: #fff;
     border: 1.5px solid rgba(0, 0, 0, 0.5);
     appearance: none;
@@ -195,8 +223,10 @@ h4 {
 textarea {
     border: 0;
     overflow-y: auto;
-    width: calc(100% - 0.5rem);
+    width: 100%;
     resize: none;
+    padding: 0;
+    height: 100%;
     margin: 0;
 }
 

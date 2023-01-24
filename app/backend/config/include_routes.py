@@ -1,16 +1,19 @@
-from app.rna_translation import routes as rna_translation
-from app.visualization_2d import routes as visualization
-from app.propeties import routes as propeties
-from app.hydrophobicity import routes as hydrophobicity
-from app.charge import routes as charge
-from app.flexibility import routes as flexibility
-from app.aromacity import routes as aromacity
-from app.instability import routes as instability
-from app.statistics import routes as statics
+from backend.services.rna_translation import routes as rna_translation
+from backend.services.visualization_2d import routes as visualization
+from backend.services.propeties import routes as propeties
+from backend.services.hydrophobicity import routes as hydrophobicity
+from backend.services.charge import routes as charge
+from backend.services.flexibility import routes as flexibility
+from backend.services.aromacity import routes as aromacity
+from backend.services.instability import routes as instability
+from backend.services.statistics import routes as statics
+from backend.services.caching import routers as caching
 
-#|------------------------------------------------------------------------------|#
+# |------------------------------------------------------------------------------|#
+
 
 def include_routes(app):
+    app.include_router(caching.router)
     app.include_router(rna_translation.router)
     app.include_router(visualization.router)
     app.include_router(propeties.router)
@@ -21,4 +24,4 @@ def include_routes(app):
     app.include_router(instability.router)
     app.include_router(statics.router)
 
-#|------------------------------------------------------------------------------|#
+# |------------------------------------------------------------------------------|#

@@ -55,7 +55,6 @@ p {
 }
 
 .logo a {
-    /* position: ; */
     display: block;
     height: 48px;
     background-image: url('../assets/logo.png');

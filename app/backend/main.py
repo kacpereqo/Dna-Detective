@@ -2,7 +2,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from app.config.include_routes import include_routes
+from backend.config.include_routes import include_routes
+from backend.services.database.db_session import db
 
 
 def get_application():
@@ -29,3 +30,14 @@ async def value_error_exception_handler(request: Request, exc: ValueError):
         status_code=422,
         content={"message": str(exc)},
     )
+
+
+@app.on_event("startup")
+async def database_connect():
+    await db.connect()
+    await db.migrate()
+
+
+@app.on_event("shutdown")
+async def database_disconnect():
+    await db.disconnect()
