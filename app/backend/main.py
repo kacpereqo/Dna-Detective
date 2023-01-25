@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from backend.config.include_routes import include_routes
-from backend.services.database.db_session import db
+from backend.services.database.db import DB
 
 
 def get_application():
@@ -34,10 +34,9 @@ async def value_error_exception_handler(request: Request, exc: ValueError):
 
 @app.on_event("startup")
 async def database_connect():
-    await db.connect()
-    await db.migrate()
+    DB().migrate()
 
 
 @app.on_event("shutdown")
 async def database_disconnect():
-    await db.disconnect()
+    DB().migrate()

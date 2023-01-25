@@ -1,8 +1,9 @@
-from typing import  Optional, List, Dict
+from typing import Optional, List, Dict
 from pydantic import BaseModel, validator
 from fastapi import HTTPException
 
-#|------------------------------------------------------------------------------|#W
+# |------------------------------------------------------------------------------|#W
+
 
 class Rna_to_translate(BaseModel):
     rna: str
@@ -14,15 +15,16 @@ class Rna_to_translate(BaseModel):
 
         if ("T" in v):
             v = v.replace("T", "U")
-            
+
         if any(x not in ["A", "U", "G", "C"] for x in v):
-            raise HTTPException(status_code=422, detail="RNA must contain only A, U, G, C")
+            raise HTTPException(
+                status_code=422, detail="RNA must contain only A, U, G, C")
         return v
 
-#|------------------------------------------------------------------------------|#
+# |------------------------------------------------------------------------------|#
+
 
 class Rna_translated(BaseModel):
-    frames: Optional[List[str]] = None
-    translated_frames: Optional[List[str]] = None
-    open_reading_frames: Dict[int, List[str]]
-
+    frames: Optional[Dict[str, List[str]]] = None
+    translated_frames: Optional[Dict[str, List[str]]] = None
+    open_reading_frames: Dict[str, Dict[str, List[str]]]

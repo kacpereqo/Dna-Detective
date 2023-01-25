@@ -1,28 +1,31 @@
-from databases import Database
+import sqlite3
+
+from .models import SEQUENCE_TABLE
 
 # |-----------------------------------------------------------------------------|#
 
 
 class DB:
     def __init__(self):
-        self.db = Database("sqlite://app/backend/database/database.sqlite")
+        self.con = sqlite3.connect("backend/database/database.sqlite")
 
 # |-----------------------------------------------------------------------------|#
 
-    async def connect(self):
-        await self.db.connect()
+    def connect(func):
+        def wrapper(self, *args):
+            with self.con as cur:
+                return func(self, cur, *args)
+        return wrapper
 
 # |-----------------------------------------------------------------------------|#
 
-    async def disconnect(self):
-        await self.db.disconnect()
+    @connect
+    def migrate(self, cur):
+        cur.execute(SEQUENCE_TABLE)
+
 
 # |-----------------------------------------------------------------------------|#
 
-    async def migrate(self):
-        await self.db.execute("""CREATE TABLE IF NOT EXISTS sequences (id INTEGER PRIMARY KEY AUTOINCREMENT, sequence TEXT NOT NULL UNIQUE)""")
-
-# |-----------------------------------------------------------------------------|#
 
     async def get_sequence(self, _id : int):
         query = """SELECT id FROM sequences WHERE id = :id"""
