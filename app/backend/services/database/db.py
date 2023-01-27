@@ -1,6 +1,6 @@
 import sqlite3
 
-from .models import SEQUENCE_TABLE
+from .models import SEQUENCE_TABLE, FRAME_TABLE
 
 # |-----------------------------------------------------------------------------|#
 
@@ -22,21 +22,44 @@ class DB:
     @connect
     def migrate(self, cur):
         cur.execute(SEQUENCE_TABLE)
+        cur.execute(FRAME_TABLE)
 
-
-# |-----------------------------------------------------------------------------|#
-
-
-    async def get_sequence(self, _id : int):
-        query = """SELECT id FROM sequences WHERE id = :id"""
-        return await self.db.fetch_one(query=query, values={"id": _id})
+        cur.commit()
 
 # |-----------------------------------------------------------------------------|#
 
-    async def post_sequence(self, sequence: str):
+    @connect
+    def get_sequence(self, cur, _id : int):
+        query = """SELECT sequence FROM sequences WHERE id = :id"""
+        return cur.execute(query, {"id": _id}).fetchone()[0]
 
+# |-----------------------------------------------------------------------------|#
+
+    @connect
+    def get_frame(self, cur, _id : int):
+        query = """SELECT sequence FROM frames WHERE id = :id"""
+        return cur.execute(query, {"id": _id}).fetchone()[0]
+
+# |-----------------------------------------------------------------------------|#
+
+    @connect
+    def post_sequence(self, cur, sequence: str):
         query = """INSERT INTO sequences (sequence) VALUES (:sequence) ON CONFLICT DO NOTHING"""
-        await self.db.execute(query=query, values={"sequence": sequence})
+        cur.execute(query, {"sequence": sequence})
+
+        cur.commit()
 
         query = """SELECT id FROM sequences WHERE sequence = :sequence"""
-        return await self.db.fetch_one(query=query, values={"sequence": sequence})
+        return {"id": cur.execute(query, {"sequence": sequence}).fetchone()[0]}
+
+# |-----------------------------------------------------------------------------|#
+
+    @connect
+    def post_frame(self, cur, frame: str):
+        query = """INSERT INTO frames (sequence) VALUES (:frame) ON CONFLICT DO NOTHING"""
+        cur.execute(query, {"frame": frame})
+
+        cur.commit()
+
+        query = """SELECT id FROM frames WHERE sequence = :frame"""
+        return {"id": cur.execute(query, {"frame": frame}).fetchone()[0]}

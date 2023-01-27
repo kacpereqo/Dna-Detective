@@ -1,6 +1,7 @@
 from .constants import RNA_CODON_TABLE, COMPLEMENTARY_TABLE
 from typing import List
 import re
+from backend.services.database.db import DB
 
 # |------------------------------------------------------------------------------|#
 
@@ -8,9 +9,8 @@ import re
 class Translator():
     def __init__(self, rna: str, is_reversed: bool = False, is_forward: bool = True):
         self.rna = rna
-        self.frames = self.get_frames(is_reversed, is_forward)
-        self.translated_frames = self.translate_frames()
-        self.open_reading_frames = self.find_open_reading_frames()
+        self.is_reversed = is_reversed
+        self.is_forward = is_forward
 
     # |------------------------------------------------------------------------------|#
 
@@ -30,41 +30,62 @@ class Translator():
 
     # |------------------------------------------------------------------------------|#
 
-    def translate_frames(self):
-        _transladed_frames = {}
+    def translate_frames(self, sequence: str) -> str:
 
-        for direction, frames in self.frames.items():
-            _transladed_frames[direction] = []
-            for frame in frames:
-                open_frame = ""
-                for i in range(0, len(frame), 3):
-                    codon = frame[i:i + 3]
-                    if codon in RNA_CODON_TABLE:
-                        open_frame += RNA_CODON_TABLE[codon]
-                    else:
-                        break
+        translated_frame = ""
+        for i in range(0, len(sequence), 3):
+            codon = sequence[i:i + 3]
+            if codon in RNA_CODON_TABLE:
+                translated_frame += RNA_CODON_TABLE[codon]
+            else:
+                break
 
-                _transladed_frames[direction].append(open_frame)
-        return _transladed_frames
+        return translated_frame
 
     # |------------------------------------------------------------------------------|#
 
-    def find_open_reading_frames(self):
-        _open_frames = {}
+    def find_open_reading_frames(self, translated_sequence: str) -> List[str]:
+        seq = ""
 
-        for direction, frames in self.translated_frames.items():
-            _open_frames[direction] = {}
-            for i, frame in enumerate(frames):
-                _open_frames[direction][i] = []
-                for protein in frame.split("-"):
-                    if len(protein) > 0:
-                        if protein[0] != "M":
-                            _open_frames[direction][i].append(protein[0])
-                        _open_frames[direction][i].extend(
-                            re.findall(r"M[A-Z]+", protein))
+        index = 0
+        for protein in translated_sequence.split("-"):
+            if len(protein) > 0:
+                if protein[0] != "M":
+                    _id = DB().post_frame(protein[0])['id']
 
-        print(_open_frames)
-        return _open_frames
+                    protein = f"""<a href="#/analize/{_id}" class = "frame">{protein[0]}</a>""" + protein[1:]
+                    seq += protein
+                else:
+                    seq += re.sub(r"M[A-Z]+",
+                                  lambda x: f"""<a href="#/analize/{DB().post_frame(x.group(0))['id']}" class="frame">{x.group(0)}</a>""", protein)
 
+            seq += "-"
+            index += len(protein) + 1
+
+        return seq[:-1]
+
+
+# |------------------------------------------------------------------------------|#
+
+
+    def parse(self):
+        frames = self.get_frames(self.is_reversed, self.is_forward)
+        result = {}
+
+        for i, (direction, _frames) in enumerate(frames.items()):
+            for j, frame in enumerate(_frames):
+                translated_frame = self.translate_frames(frame)
+                open_reading_frames = self.find_open_reading_frames(
+                    translated_frame)
+
+                result[i * 3 + j] = {
+                    "frame": frame,
+                    "shift": j,
+                    "direction": ["5'3", "3'5"] if direction == "5'3'" else ["3'5", "5'3"],
+                    "translatedFrame": translated_frame,
+                    "openReadingFrames": open_reading_frames,
+                }
+
+        return result
 
 # |------------------------------------------------------------------------------|#

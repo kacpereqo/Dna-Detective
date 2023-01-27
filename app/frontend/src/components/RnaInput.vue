@@ -57,13 +57,14 @@ export default {
     },
     methods: {
         submit() {
-            axios.post('http://localhost:5000/api/analyze', {
+            axios.post('http://127.0.0.1:8000/api/sequence', {
                 sequence: this.rnaSequence
             }).then(res => {
+                console.log(res.data)
                 this.$router.push({
-                    name: 'Results',
+                    name: 'translations',
                     params: {
-                        results: res.data
+                        id: res.data.id
                     }
                 })
             })
