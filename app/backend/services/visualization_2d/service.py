@@ -28,10 +28,8 @@ class Visualization2DService:
         smiles = self.protein_to_smiles()
         mol = Chem.MolFromSmiles(smiles)
 
-        drawer = rdMolDraw2D.MolDrawOptions()
-        drawer.setBackgroundColour((255, 255, 255))
-
-        Draw.MolToFile(mol, "test.png", options=drawer)
+        Draw.MolToFile(mol, "backend/visualizations/test.png",
+                       size=((100 * len(self.sequence)), 200))
 
         # with open('test.svg', 'w') as f:
         #     f.write(drawer.GetDrawingText())
