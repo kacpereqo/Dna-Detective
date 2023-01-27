@@ -12,6 +12,8 @@ class Rna_to_translate(BaseModel):
         if not v.isupper():
             v = v.upper()
 
+        v = v.replace(" ", "").replace("\n", "")
+
         if ("T" in v):
             v = v.replace("T", "U")
 

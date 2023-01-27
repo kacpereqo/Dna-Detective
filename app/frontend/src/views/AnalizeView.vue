@@ -1,9 +1,9 @@
 <template>
     <div class="wrapper">
-        <Visualization />
-        <Propeties />
-        <Hydro />
         <Charge />
+        <Hydro />
+        <Propeties />
+        <Visualization />
     </div>
 </template>
 

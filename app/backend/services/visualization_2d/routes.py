@@ -3,6 +3,9 @@ from .schemas import Protein
 from .service import Visualization2DService
 from fastapi.responses import FileResponse
 from backend.services.database.db import DB
+from starlette.concurrency import run_in_threadpool
+import threading
+import asyncio
 
 # |------------------------------------------------------------------------------|#
 
@@ -26,8 +29,10 @@ def get_2d_visualization(protein: Protein):
 
 
 @router.get("/api/visualizaiton/{_id}", tags=["converting"], description="Returns 2D visualization for a given sequence")
-def get_2d_visualization(_id: int):
+async def get_2d_visualization(_id: int):
     sequence = DB().get_frame(_id)
     visualizer = Visualization2DService(sequence)
-    visualizer.protein_to_svg()
+
+    await visualizer.protein_to_svg()
+
     return FileResponse("backend/visualizations/test.png", media_type="image/png", headers={'Access-Control-Expose-Headers': 'Content-Disposition'}, filename="test.png")
