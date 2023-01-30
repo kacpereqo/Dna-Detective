@@ -56,7 +56,8 @@ class DB:
 
     @connect
     def post_frame(self, cur, frame: str):
-        query = """INSERT INTO frames (sequence) VALUES (:frame) ON CONFLICT DO NOTHING"""
+        # insert if frame does not exist
+        query = """INSERT INTO frames (sequence) SELECT :frame WHERE NOT EXISTS (SELECT 1 FROM frames WHERE sequence = :frame)"""
         cur.execute(query, {"frame": frame})
 
         cur.commit()

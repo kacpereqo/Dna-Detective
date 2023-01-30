@@ -1,6 +1,9 @@
 <template>
     <div class="visualization-wrapper">
         <h1>Wzór szkieletowy</h1>
+        <div v-if="isLoading">
+            Ładowanie...
+        </div>
         <img :src='visualizationSrc'>
     </div>
 </template>
@@ -13,6 +16,7 @@ export default {
     data() {
         return {
             visualizationSrc: '',
+            isLoading: true,
         }
 
     },
@@ -34,7 +38,7 @@ export default {
                     return res.data;
                 }).then(blob => {
                     this.visualizationSrc = window.URL.createObjectURL(blob);
-
+                    this.isLoading = false;
                 });
         }
 

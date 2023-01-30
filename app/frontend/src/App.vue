@@ -21,7 +21,7 @@ export default {
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - 54px);
   flex: 1;
   justify-content: center;
   align-items: center;

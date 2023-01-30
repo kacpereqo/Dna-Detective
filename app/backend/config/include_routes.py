@@ -8,6 +8,7 @@ from backend.services.aromacity import routes as aromacity
 from backend.services.instability import routes as instability
 from backend.services.statistics import routes as statics
 from backend.services.caching import routers as caching
+from backend.services.facts import routers as facts
 
 # |------------------------------------------------------------------------------|#
 
@@ -23,5 +24,6 @@ def include_routes(app):
     app.include_router(aromacity.router)
     app.include_router(instability.router)
     app.include_router(statics.router)
+    app.include_router(facts.router)
 
 # |------------------------------------------------------------------------------|#

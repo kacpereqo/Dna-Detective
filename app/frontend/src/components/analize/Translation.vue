@@ -34,7 +34,7 @@ export default {
             axios.get(`http://127.0.0.1:8000/api/${this.id}/translate?is_reversed=true&is_forward=true`)
                 .then(res => {
                     this.translations = res.data;
-
+                    this.$emit('loaded', true);
                 })
         },
 

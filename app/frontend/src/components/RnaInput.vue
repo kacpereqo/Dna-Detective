@@ -216,7 +216,6 @@ h4 {
 }
 
 .rna-input__header__gradient {
-    background: rgb(95, 92, 255);
     background: linear-gradient(90deg, rgba(95, 92, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
     flex: 1;
 }

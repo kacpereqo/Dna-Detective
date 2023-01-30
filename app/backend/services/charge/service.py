@@ -67,9 +67,9 @@ class ProteinCharge():
     # |------------------------------------------------------------------------------|#
 
     def net_charge(self, scale="Rodwell", start=0.0, end=14.0, step=0.5) -> float:
-        print("2")
         net_charge = {}
         for pH in np.arange(start, end, step):
+            pH = round(pH, 2)
             net_charge[pH] = round(self.charge_at_ph(scale, pH), 2)
 
         return net_charge
