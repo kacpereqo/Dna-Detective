@@ -1,9 +1,20 @@
 <template>
     <div class="wrapper">
-        <Visualization />
-        <Propeties />
-        <Charge />
-        <Hydro />
+        <Sidebar />
+        <div class="sequence-data">
+            <Visualization />
+            <Propeties />
+            <Charge />
+            <Hydro />
+            <Hydro />
+            <Hydro />
+            <Hydro />
+            <Hydro />
+            <Hydro />
+            <Hydro />
+            <Hydro />
+            <Hydro />
+        </div>
     </div>
 </template>
 
@@ -13,6 +24,8 @@ import Propeties from '@/components/analize/Propeties.vue'
 import Hydro from '@/components/analize/Hydro.vue'
 import Charge from '@/components/analize/Charge.vue'
 
+import Sidebar from '@/components/Sidebar.vue'
+
 
 export default {
     name: 'AnalizeView',
@@ -21,6 +34,7 @@ export default {
         Propeties,
         Hydro,
         Charge,
+        Sidebar,
     },
     created() {
         this.id = this.$route.params.id;
@@ -29,5 +43,17 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
 
+.sequence-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
+}
 </style>

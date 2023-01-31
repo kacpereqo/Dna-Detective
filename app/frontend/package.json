@@ -14,6 +14,8 @@
     "vue": "^3.2.13",
     "vue-frappe-chart": "^0.1.10",
     "vue-router": "^4.0.3",
+    "vue-sticky-directive": "^0.0.10",
+    "vue-sticky-element": "^1.2.5",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

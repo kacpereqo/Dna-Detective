@@ -40,9 +40,4 @@ class Visualization2DService:
 
         return "backend/visualizations/test.png"
 
-        # with open('test.svg', 'w') as f:
-        #     f.write(drawer.GetDrawingText())
-
-        # return drawer.GetDrawingText()
-
     # |------------------------------------------------------------------------------|#

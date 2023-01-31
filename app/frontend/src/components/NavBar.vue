@@ -40,7 +40,8 @@ export default {
 </script>
 <style scoped>
 nav {
-    z-index: 2;
+    z-index: 4;
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -78,16 +79,6 @@ p {
     position: relative;
 }
 
-.logo a::after {
-    position: absolute;
-    content: '';
-    top: 3px;
-    left: 1rem;
-    width: 100%;
-    height: 48px;
-    border-right: rgba(0, 0, 0, 0.25) 1px solid;
-}
-
 .nav-links ul {
     display: flex;
     justify-content: center;
@@ -122,16 +113,5 @@ a {
 
 a:hover {
     background-color: rgba(0, 0, 0, 0.25);
-}
-
-
-.login::before {
-    position: absolute;
-    content: '';
-    left: 0.15rem;
-    top: 3px;
-    height: 48px;
-    border-left: rgba(0, 0, 0, 0.25) 1px solid;
-
 }
 </style>

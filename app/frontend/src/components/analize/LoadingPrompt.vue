@@ -21,7 +21,9 @@ export default {
     data() {
         return {
             dots: 0,
-            fact: "W 2001 roku, w wyniku badań genetycznych, odkryto, że ludzie mają 69 chromosomów, a nie 48 jak się wcześniej myślało."
+            factInterval: null,
+            dotsInterval: null,
+            fact: "W 2001 roku, w wyniku badań genetycznych, odkryto, że ludzie mają 48 chromosomów, a nie 69 jak się wcześniej myślano."
         }
     },
     props: {
@@ -38,33 +40,33 @@ export default {
     },
     methods: {
         addDots() {
-            this.dotsInterval = setInterval(() => {
-                if (this.dots < 3) {
-                    this.dots += 1;
-                } else {
-                    this.dots = 0;
-                }
-            }, 500);
+            if (this.dots < 3) {
+                this.dots += 1;
+            } else {
+                this.dots = 0;
+            }
         },
         getFact() {
-            this.factInterval = setInterval(() => {
-                axios.get('http://127.0.0.1:8000/fact')
-                    .then(response => {
-                        this.fact = response.data.fact;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            }, 10000);
+            axios.get('http://127.0.0.1:8000/fact')
+                .then(response => {
+                    this.fact = response.data.fact;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
 
-        }
+        },
     },
-    created() {
-        this.addDots();
+    mounted() {
+        this.dotsInterval = setInterval(this.addDots(), 500);
         if (this.display_facts) {
-            this.getFact();
+            this.factInterval = setInterval(this.getFact(), 8500);
         }
     },
+    destroyed() {
+        clearInterval(this.dotsInterval);
+        clearInterval(this.factInterval);
+    }
 }
 </script>
 
@@ -90,7 +92,7 @@ export default {
 
 .facts {
     margin-top: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-align: center;
     width: 40%;
 }

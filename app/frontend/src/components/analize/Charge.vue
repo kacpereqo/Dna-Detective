@@ -65,7 +65,7 @@ export default {
 
 <style >
 .charge-wrapper {
-    width: 70%;
+    width: 80%;
 }
 
 .charge-wrapper .chart-container::after,

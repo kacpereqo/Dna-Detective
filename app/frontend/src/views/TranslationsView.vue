@@ -1,8 +1,11 @@
 
 <template>
     <div class="wrapper">
-        <!-- <Translations v-show="loaded" @loaded="loaded = true" /> -->
-        <LoadingPrompt v-show="!loaded" :text="'Translacja'" :display_facts="true" />
+        <Translations v-show="loaded" @loaded="loaded = true" />
+
+        <span v-if="!loaded">
+            <LoadingPrompt :text="'Translacja'" :display_facts="true" />
+        </span>
     </div>
 </template>
 
@@ -21,6 +24,11 @@ export default {
             loaded: false,
         }
     },
+    methods: {
+        destroy() {
+            this.$destroy();
+        }
+    }
 }
 </script>
 

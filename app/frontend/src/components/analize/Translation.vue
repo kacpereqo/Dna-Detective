@@ -5,7 +5,6 @@
             <ul>
                 <li v-for="(translation, index) in translations">
                     <p>{{ translation.direction[0] }} {{ translation.frame }} {{ translation.direction[1] }}</p>
-                    <!-- <div>{{ translation.translatedFrame }}</div> -->
                     <p v-html="translation.openReadingFrames"></p>
                 </li>
             </ul>
