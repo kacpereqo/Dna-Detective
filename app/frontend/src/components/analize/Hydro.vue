@@ -1,24 +1,24 @@
 <template>
-    <div class="hydro-wrapper">
+    <div class="property-wrapper">
         <h1>Hydrofobowość</h1>
         <li> Średnia hydrofobowość {{ gravy }}</li>
-        <v-frappe-chart type="line" :labels="labels" :data="[{ values: hydrophobicity }]" :colors="['red']" />
+        <ChartWrapper :labels="labels" :data="hydrophobicity" />
     </div>
 </template>
 
 <script>
-import { VFrappeChart } from "vue-frappe-chart"
+import ChartWrapper from '../ChartWrapper.vue';
 import axios from 'axios'
 
 export default {
     name: 'Hydro',
     components: {
-        VFrappeChart,
+        ChartWrapper
     },
     data() {
         return {
             gravy: '',
-            hydrophobicity: '',
+            hydrophobicity: [],
             labels: [],
         }
     },
@@ -55,9 +55,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-.hydro-wrapper {
-    width: 70%;
-}
-</style>

@@ -35,16 +35,17 @@ export default {
   flex-direction: column;
   min-height: 100vh;
   height: fit-content;
-  overflow: hidden;
 }
 
 
 body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   font-family: 'Nunito', sans-serif;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  overflow: auto;
+
 }
 </style>

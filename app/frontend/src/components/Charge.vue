@@ -1,25 +1,20 @@
 <template>
-    <div class="charge-wrapper">
+    <div class="property-wrapper">
         <h1>Ładunek</h1>
         <li> Punkt izoelektryczny {{ isoelectricpoint }}</li>
-        <v-frappe-chart type="line" :labels="labels" :data="[{ values: charge }]" :colors="['red']" :axisOptions="{
-            xIsSeries: true,
-            xAxisMode: 'tick', yAxisMode: 'span'
-        }" :lineOptions="{
-    hideDots: 1,   //default:0
-    regionFill: 1
-}" />
+        <ChartWrapper :data="charge" :labels="labels" />
     </div>
 </template>
 
 <script>
-import { VFrappeChart } from "vue-frappe-chart"
+import ChartWrapper from '@/components/ChartWrapper.vue'
+
 import axios from 'axios'
 
 export default {
     name: 'Charge',
     components: {
-        VFrappeChart,
+        ChartWrapper,
     },
     data() {
         return {
@@ -64,29 +59,5 @@ export default {
 
 
 <style >
-.charge-wrapper {
-    width: 80%;
-}
 
-.charge-wrapper .chart-container::after,
-.chart-container::before {
-    content: "Ładunek";
-    font-size: 1.25rem;
-    display: block;
-
-    top: 50%;
-    left: 0;
-    position: absolute;
-    transform: rotate(-90deg) translate(-50%, -50%);
-    transform-origin: left top 0;
-}
-
-.chart-container::before {
-    content: "pH";
-    transform: rotate(0deg) translate(0, 90%);
-
-    bottom: 0;
-    left: 50%;
-
-}
 </style>

@@ -94,4 +94,9 @@ ul {
 li {
     margin: 0.5rem 0;
 }
+
+li:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
 </style>
