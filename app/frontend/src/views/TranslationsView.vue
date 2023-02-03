@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { useMeta } from 'vue-meta'
+
 import Translations from '@/components/analize/Translation.vue';
 import LoadingPrompt from '@/components/analize/LoadingPrompt.vue';
 
@@ -28,7 +30,12 @@ export default {
         destroy() {
             this.$destroy();
         }
-    }
+    },
+    setup() {
+        useMeta({
+            title: 'Translacja',
+        })
+    },
 }
 </script>
 

@@ -1,10 +1,10 @@
 <template>
     <div class="visualization-wrapper">
-        <h1>Wzór szkieletowy</h1>
+        <h2>Wzór szkieletowy</h2>
         <div v-if="isLoading">
             Ładowanie...
         </div>
-        <img :src='visualizationSrc'>
+        <img :src='visualizationSrc' alt="Wzór szkieletowy białka">
     </div>
 </template>
 
@@ -34,7 +34,6 @@ export default {
                         filename = decodeURIComponent(filename.replace("utf-8''", ''));
                     else
                         filename = filename.replace(/['"]/g, '');
-                    console.log(filename);
                     return res.data;
                 }).then(blob => {
                     this.visualizationSrc = window.URL.createObjectURL(blob);

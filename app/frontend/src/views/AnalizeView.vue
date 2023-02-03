@@ -1,11 +1,12 @@
 <template>
     <div class="wrapper">
-        <Sidebar />
-        <SequenceData />
+        <Sidebar @changeComponent="changeComponent" />
+        <SequenceData :component="component" />
     </div>
 </template>
 
 <script>
+import { useMeta } from 'vue-meta'
 
 import Sidebar from '@/components/Sidebar.vue'
 import SequenceData from '@/components/SequenceData.vue'
@@ -17,8 +18,20 @@ export default {
         SequenceData,
         Sidebar,
     },
-    created() {
-        this.id = this.$route.params.id;
+    data() {
+        return {
+            component: 'hydro',
+        }
+    },
+    setup() {
+        useMeta({
+            title: 'Analiza',
+        })
+    },
+    methods: {
+        changeComponent(value) {
+            this.component = value;
+        },
     },
 }
 </script>

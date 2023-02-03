@@ -13,9 +13,12 @@
     "frappe-charts": "^1.6.2",
     "vue": "^3.2.13",
     "vue-frappe-chart": "^0.1.10",
+    "vue-meta": "^3.0.0-alpha.10",
+    "vue-observe-visibility": "^1.0.0",
     "vue-router": "^4.0.3",
     "vue-sticky-directive": "^0.0.10",
     "vue-sticky-element": "^1.2.5",
+    "vue-visibility-change": "^1.2.1",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

@@ -1,9 +1,9 @@
 <template>
     <div class="sequence-data">
-        <Visualization />
-        <Propeties />
-        <Charge />
-        <!-- <Hydro /> -->
+        <Visualization v-show="component == 'visualization'" />
+        <Propeties v-show="component == 'propeties'" />
+        <Charge v-show="component == 'charge'" />
+        <Hydro v-show="component == 'hydro'" />
     </div>
 </template>
 
@@ -21,8 +21,26 @@ export default {
         Hydro,
         Charge,
     },
-    created() {
-        this.id = this.$route.params.id;
+    props: {
+        component: {
+            type: String,
+            required: true
+        }
+    },
+    data() {
+        return {
+            visibilityHistory: {
+                visualization: false,
+                propeties: false,
+                charge: true,
+                hydro: false,
+            }
+        }
+    },
+    watch: {
+        component: function (value) {
+            this.visibilityHistory[value] = true;
+        }
     },
 }
 

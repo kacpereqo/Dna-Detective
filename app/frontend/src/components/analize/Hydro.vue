@@ -1,6 +1,6 @@
 <template>
     <div class="property-wrapper">
-        <h1>Hydrofobowość</h1>
+        <h2>Hydrofobowość</h2>
         <li> Średnia hydrofobowość {{ gravy }}</li>
         <ChartWrapper :labels="labels" :data="hydrophobicity" />
     </div>

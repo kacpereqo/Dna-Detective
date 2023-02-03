@@ -7,7 +7,7 @@
             </div>
             <div class="nav-links">
                 <ul>
-                    <li><router-link to="/" class="nav-link">Strona główna</router-link></li>
+                    <li><router-link to="/#" class="nav-link">Strona główna</router-link></li>
                     <li><router-link to="/#" class="nav-link">Analiza</router-link></li>
                     <li>
                         <DropDownMenu :hrefs="[{ name: 'Tabela 1', href: '/#' },

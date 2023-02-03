@@ -1,8 +1,8 @@
 <template>
     <div class="property-wrapper">
-        <h1>Ładunek</h1>
+        <h2>Ładunek</h2>
         <li> Punkt izoelektryczny {{ isoelectricpoint }}</li>
-        <ChartWrapper :data="charge" :labels="labels" />
+        <ChartWrapper :data="charge" :labels="labels" :lineOptions="lineOptions" />
     </div>
 </template>
 
@@ -21,6 +21,10 @@ export default {
             isoelectricpoint: '',
             charge: [],
             labels: [],
+            lineOptions: {
+                regionFill: 1,
+                hideDots: 1
+            },
         }
     },
     created() {

@@ -1,16 +1,27 @@
 <template>
+  <metainfo>
+    <template v-slot:title="{ content }">{{ content? `${content} - DNA detective` : `SITE_NAME` }}</template>
+  </metainfo>
   <NavBar />
   <router-view />
 </template>
 
 <script>
+import { useMeta } from 'vue-meta'
 import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'App',
   components: {
     NavBar
+  },
+  setup() {
+    useMeta({
+      title: 'NONE',
+      htmlAttrs: { lang: 'pl-PL', amp: true }
+    })
   }
+
 }
 
 </script>
