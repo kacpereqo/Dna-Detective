@@ -4,8 +4,8 @@
             <img src="@/assets/settings.svg" alt="settings" class="rna-input__settings-icon" role="button" />
             <div class="rna-input__header__text">
                 <span>
-                    <h2>Analiza RNA/DNA</h2>
-                    <h4>Narzędzie służące do dogłębnej analizy łańcuchów DNA/RNA </h4>
+                    <h1>Analiza RNA/DNA</h1>
+                    <h2>Narzędzie służące do dogłębnej analizy łańcuchów DNA/RNA </h2>
                 </span>
             </div>
             <div class="rna-input__header__gradient"></div>
@@ -191,17 +191,19 @@ select option:hover {
     width: 70%;
 }
 
-h2,
-h4 {
+h1,
+h2 {
     margin: 0;
 }
 
-h2 {
+h1 {
+    font-size: 1.4rem;
     font-weight: 400;
 }
 
-h4 {
+h2 {
     font-weight: 200;
+    font-size: 1rem;
 }
 
 .rna-input__header {

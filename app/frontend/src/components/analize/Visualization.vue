@@ -1,5 +1,5 @@
 <template>
-    <div class="visualization-wrapper">
+    <div class="property-wrapper">
         <h2>Wzór szkieletowy</h2>
         <div v-if="isLoading">
             Ładowanie...

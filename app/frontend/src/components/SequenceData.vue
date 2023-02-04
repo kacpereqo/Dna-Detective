@@ -1,5 +1,6 @@
 <template>
     <div class="sequence-data">
+
         <Visualization v-show="component == 'visualization'" />
         <Propeties v-show="component == 'propeties'" />
         <Charge v-show="component == 'charge'" />
@@ -8,6 +9,7 @@
 </template>
 
 <script>
+import SequenceName from '@/components/SequenceName.vue'
 import Visualization from '@/components/analize/Visualization.vue'
 import Propeties from '@/components/analize/Propeties.vue'
 import Hydro from '@/components/analize/Hydro.vue'
@@ -16,6 +18,7 @@ import Charge from '@/components/Charge.vue'
 export default {
     name: 'SequenceData',
     components: {
+        SequenceName,
         Visualization,
         Propeties,
         Hydro,
@@ -48,6 +51,7 @@ export default {
 
 <style scoped>
 .sequence-data {
+    flex: 1;
     padding: 1.5rem;
 }
 

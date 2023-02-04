@@ -1,13 +1,17 @@
 <template>
     <div class="sidebar-wrapper" :class="{ 'fixed': position }">
         <div class="items">
+            <SequenceName />
             <input type="text" placeholder="Szukaj" id="search" v-model="search" />
             <ul>
-                <li v-for="item in list" @click="changeComponent(item.value)"><span class="heading">{{
-                    item.text
-                }}</span>
-                    <ul v-for="item in item.nested">
-                        <li><span @click="scrollToContent(item.value)">{{ item.text }}</span></li>
+                <li v-for="item in list" @click="changeComponent(item.value)" class="parent-li">
+                    <p class="heading">{{
+                        item.text
+                    }}</p>
+                    <ul>
+                        <li class="sub-li" v-for="item, index in item.nested">
+                            <p @click="scrollToContent(item.value)" :style="{ '--i': index }">{{ item.text }}</p>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -16,9 +20,14 @@
 </template>
 
 <script>
+import SequenceName from '@/components/SequenceName.vue';
 
 export default {
     name: 'Sidebar',
+
+    components: {
+        SequenceName,
+    },
 
     data() {
         return {
@@ -84,11 +93,11 @@ export default {
 
 <style scoped>
 #search {
-    width: calc(100% - 1rem);
+    width: calc(100% - 1.5rem);
     padding: 0.5rem;
     border: rgba(0, 0, 0, 0.25) 1px solid;
     border-radius: 0.25rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .sidebar-wrapper {
@@ -100,7 +109,7 @@ export default {
 .items {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     height: 100%;
     padding: 0.75rem;
@@ -121,11 +130,12 @@ ul {
 }
 
 li {
-    margin: 0.65rem 0;
+    margin: 0.25rem 0;
 }
 
 
 ul li {
+    margin: 0;
     padding-left: 0.25rem;
     border-left: 1px solid rgba(0, 0, 0, 0.25);
 }
@@ -135,20 +145,55 @@ ul li ul li {
 }
 
 
-li span {
+li p {
+    display: block;
     white-space: nowrap;
     font-size: 0.9rem;
     display: block;
-    padding: 0.15rem 0;
-    border-radius: 0.1rem;
+    padding: 0.5rem 0.25rem;
+    margin: 0;
 }
 
-span:hover {
+li p:hover {
     cursor: pointer;
-    font-weight: bold;
+}
+
+p:hover {
+    text-decoration: underline;
+}
+
+.heading:hover::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -2px;
+    height: 36px;
+    border-right: 2px solid;
+}
+
+.sub-li:hover p::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--i) * 36px + 41px);
+    left: -2px;
+    height: 36px;
+    border-right: 2px solid;
+}
+
+.parent-li li:hover .heading::after {
+    display: none;
+}
+
+li {
+    margin: 0 0.5rem;
 }
 
 .heading {
     font-size: 1.15rem;
+}
+
+.parent-li {
+    position: relative;
+    margin-bottom: 0.5rem;
 }
 </style>
