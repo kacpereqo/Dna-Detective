@@ -1,10 +1,14 @@
 <template>
 
-    <div class="chart-wrapper" v-observe-visibility="visibilityChanged">
-        <v-frappe-chart type="line" :labels="labels" :data="[{ values: data }]" :colors="['red']" :axisOptions="{
+    <div class="chart-wrapper" v-observe-visibility="visibilityChanged" :style="{'--xTitle': `'${xTitle}'`, '--yTitle'
+    :`'${yTitle}'`}">
+        <v-frappe-chart type="line" :labels="labels" :data="[{ values: data }]" :colors="['blue']" :axisOptions="{
             xIsSeries: true,
             xAxisMode: 'tick', yAxisMode: 'span'
-        }" :lineOptions="lineOptions" :width="1" v-if="isVisible" />
+        }" :lineOptions="lineOptions" :width="1" v-if="isVisible" :TooltipOptions="{
+    formatTooltipX: d => (d + ' ' + ''),
+    formatTooltipY: d => (d + ' ' + '')
+}" />
     </div>
 </template>
 
@@ -24,27 +28,46 @@ export default {
     props: {
         data: {
             type: Array,
-            required: true
+            required: true,
+            default: [],
         },
         labels: {
             type: Array,
-            required: true
+            required: true,
+            default: [],
         },
         axisOptions: {
             type: Object,
-            required: false
+            required: false,
+            default: {}
         },
         lineOptions: {
             type: Object,
-            required: false
+            required: false,
+            default: {
+                hideDots: 1,
+                regionFill: 1,
+            },
         },
-        xTittle: {
+        xTitle: {
             type: String,
-            required: false
+            required: false,
+            default: "",
         },
-        yTittle: {
+        yTitle: {
             type: String,
-            required: false
+            required: false,
+            default: "",
+        },
+        xUnit: {
+            type: String,
+            required: false,
+            default: "",
+        },
+        yUnit: {
+            type: String,
+            required: false,
+            default: "",
         },
     },
     methods: {
@@ -52,7 +75,7 @@ export default {
             if (this.isVisible == false && isVisible == true) {
                 this.isVisible = isVisible
             }
-            console.log("123", isVisible, entry)
+
         },
     },
 }
@@ -60,7 +83,5 @@ export default {
 </script>
 
 <style>
-.chart-wrapper {
-    width: calc(100vw - 216px - 3rem);
-}
+
 </style>

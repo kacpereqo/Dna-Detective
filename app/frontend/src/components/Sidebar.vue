@@ -93,17 +93,19 @@ export default {
 
 <style scoped>
 #search {
+    background: transparent;
     width: calc(100% - 1.5rem);
     padding: 0.5rem;
-    border: rgba(0, 0, 0, 0.25) 1px solid;
+    border: var(--accent-color) 1px solid;
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
 }
 
 .sidebar-wrapper {
+    margin-top: 2px;
     flex-shrink: 0;
     width: 216px;
-    border-right: rgba(0, 0, 0, 0.25) 1px solid;
+    border-right: var(--accent-color) 1px solid;
 }
 
 .items {
@@ -137,7 +139,7 @@ li {
 ul li {
     margin: 0;
     padding-left: 0.25rem;
-    border-left: 1px solid rgba(0, 0, 0, 0.25);
+    border-left: 1px solid var(--accent-color);
 }
 
 ul li ul li {

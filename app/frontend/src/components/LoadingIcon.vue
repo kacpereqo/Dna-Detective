@@ -66,12 +66,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(95, 92, 255, 1);
+    background-color: var(--accent-color);
     border-radius: 50%;
 }
 
 .top-wave>div::before {
-    background-color: rgba(95, 92, 255, 0.5);
+    background-color: var(--accent-color);
 }
 
 .top-wave>div {

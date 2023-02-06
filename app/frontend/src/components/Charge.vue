@@ -2,7 +2,7 @@
     <div class="property-wrapper">
         <h2>Ładunek</h2>
         <li> Punkt izoelektryczny {{ isoelectricpoint }}</li>
-        <ChartWrapper :data="charge" :labels="labels" :lineOptions="lineOptions" />
+        <ChartWrapper :data="charge" :labels="labels" />
     </div>
 </template>
 
@@ -21,10 +21,6 @@ export default {
             isoelectricpoint: '',
             charge: [],
             labels: [],
-            lineOptions: {
-                regionFill: 1,
-                hideDots: 1
-            },
         }
     },
     created() {

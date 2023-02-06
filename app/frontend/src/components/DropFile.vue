@@ -78,6 +78,7 @@ p img {
 }
 
 .file-label img {
+    filter: var(--icon-filter);
     width: 4rem;
     height: 4rem;
 }
@@ -156,7 +157,7 @@ p img {
     width: 50px;
     height: 50px;
     border-radius: 5px;
-    border: 1px solid #a2a2a2;
-    background-color: #a2a2a2;
+    border: 1px solid var(--accent-color-dark);
+    background-color: var(--accent-color-light);
 }
 </style>

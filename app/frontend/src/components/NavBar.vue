@@ -20,9 +20,13 @@
                 </ul>
             </div>
             <div class="login">
-
-                <DropDownMenu :hrefs="[{ name: 'Zaloguj', href: '/#' },
-                { name: 'Zarejestruj', href: '/#' },]" :name="'Konto'" />
+                <ul>
+                    <li class="toogle-switch" @click="toggleDarkMode">Darkmode</li>
+                    <li>
+                        <DropDownMenu :hrefs="[{ name: 'Zaloguj', href: '/#' },
+                        { name: 'Zarejestruj', href: '/#' },]" :name="'Konto'" />
+                    </li>
+                </ul>
             </div>
         </nav>
     </div>
@@ -35,10 +39,19 @@ export default {
     name: 'NavBar',
     components: {
         DropDownMenu
+    },
+    methods: {
+        toggleDarkMode() {
+            this.$store.commit('toggleDarkMode');
+        }
     }
 };
 </script>
 <style scoped>
+.toogle-switch {
+    cursor: pointer;
+}
+
 nav {
     z-index: 4;
     position: relative;
@@ -47,7 +60,7 @@ nav {
     justify-content: space-between;
     line-height: 54px;
     padding: 0 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 4px var(--accent-color);
     height: 54px;
 }
 
@@ -79,7 +92,7 @@ p {
     position: relative;
 }
 
-.nav-links ul {
+ul {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,17 +102,17 @@ p {
     padding: 0;
 }
 
-.nav-links ul li {
+ul li {
     list-style: none;
 }
 
-.nav-links ul li .nav-link {
+ul li {
     padding: 0 0.75rem;
 }
 
 
 a {
-    color: #000;
+    padding: 0 0.4rem;
     text-decoration: none;
     display: block;
 }
@@ -112,6 +125,6 @@ a {
 }
 
 a:hover {
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--accent-color);
 }
 </style>

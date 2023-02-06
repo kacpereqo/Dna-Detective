@@ -3,6 +3,7 @@ from .schemas import Protein
 from localcider.sequenceParameters import SequenceParameters
 from typing import Optional
 from backend.services.database.db import DB
+from .service import SequncePropeties
 
 
 # |------------------------------------------------------------------------------|#
@@ -42,5 +43,5 @@ def get_charge_of_protein(_id: int):
 @router.get("/api/weight/{_id}", tags=["properties"], description="Returns weight of protein in daltons")
 def get_weight_of_protein(_id: int):
     """Returns weight of protein in units"""
-    sequence = SequenceParameters(DB().get_frame(_id))
-    return {"weight": round(sequence.get_molecular_weight(), 3)}
+    weight = SequncePropeties(DB().get_frame(_id)).get_weight()
+    return {"weight": weight}

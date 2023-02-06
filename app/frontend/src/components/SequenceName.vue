@@ -5,7 +5,6 @@
             <img src="@/assets/edit.svg" @click="focusInput">
         </div>
     </div>
-
 </template>
 
 <script>
@@ -28,6 +27,7 @@ export default {
 
 <style scoped>
 input {
+    background-color: transparent;
     text-align: center;
     box-sizing: border-box;
     font-size: 1rem;
@@ -41,7 +41,7 @@ input {
 
 input:focus {
     outline: none;
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.3), 0 2px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 0px var(--accent-color), 0px 2px 0px var(--accent-color-light);
 }
 
 .sequence-name {
@@ -55,7 +55,6 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
 }
 
 h1 {
@@ -68,5 +67,6 @@ img {
     height: 1.4rem;
     cursor: pointer;
     margin-left: 0.25rem;
+    filter: var(--icon-filter)
 }
 </style>

@@ -15,12 +15,26 @@ export default {
   components: {
     NavBar
   },
+
+  data() {
+    return {
+      isDarkMode: this.$store.state.isDarkMode
+    }
+  },
+
   setup() {
     useMeta({
       title: 'NONE',
       htmlAttrs: { lang: 'pl-PL', amp: true }
     })
-  }
+  },
+  watch: {
+    dark: {
+      handler() {
+        console.log('dark mode changed')
+      },
+    }
+  },
 
 }
 
@@ -28,6 +42,26 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,400;0,500;1,300&family=Roboto+Mono&family=Roboto:wght@100;300;400;500;700&display=swap');
+
+:root {
+  --text-color: #000000;
+  --accent-color-dark: #00000080;
+  --accent-color: #00000040;
+  --accent-color-light: #0000001a;
+  --main-color: #5f5cffb3;
+  --background-color: #ffffff;
+  --icon-filter: invert(0);
+}
+
+:root.dark-mode {
+  --text-color: #ffffff;
+  --accent-color-dark: #ffffff80;
+  --accent-color: #ffffff40;
+  --accent-color-light: #ffffff1a;
+  --main-color: #5f5cffb3;
+  --background-color: #191919;
+  --icon-filter: invert(1);
+}
 
 .wrapper {
   position: relative;
@@ -46,6 +80,7 @@ export default {
   flex-direction: column;
   min-height: 100vh;
   height: fit-content;
+  background-color: var(--background-color);
 }
 
 
@@ -57,6 +92,9 @@ body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
 
+* {
+  color: var(--text-color);
 }
 </style>

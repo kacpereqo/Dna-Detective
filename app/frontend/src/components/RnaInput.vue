@@ -8,7 +8,6 @@
                     <h2>Narzędzie służące do dogłębnej analizy łańcuchów DNA/RNA </h2>
                 </span>
             </div>
-            <div class="rna-input__header__gradient"></div>
         </div>
         <div class="rna-input__form">
             <div class="rna-input__form__data-type">
@@ -102,11 +101,12 @@ form div {
     width: 1.25rem;
     height: 1.25rem;
     background-image: url('@/assets/accept.svg');
+    filter: var(--icon-filter);
     background-size: contain;
 }
 
 .rna-input__button:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--accent-color-light);
     animation: pulse ease-in-out .7s infinite alternate;
 }
 
@@ -126,7 +126,7 @@ form div {
 
 .rna-input__button {
     position: relative;
-    border: 1.5px solid rgba(0, 0, 0, 0.5);
+    border: 1.5px solid var(--accent-color-dark);
     padding: 0.5rem 2.5rem 0.5rem 1.5rem;
     margin: 1rem;
     cursor: pointer;
@@ -151,10 +151,11 @@ form div {
 .rna-input__form__data-type select {
     margin-left: 0.5rem;
     height: fit-content;
-    background-color: #fff;
-    border: 1.5px solid rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+    border: 1.5px solid var(--accent-color-dark);
     appearance: none;
     background-image: url('@/assets/arrow.svg');
+    filter: var(--icon-filter);
     background-size: 0.5rem;
     background-repeat: no-repeat;
     background-position-x: 95%;
@@ -187,7 +188,7 @@ select option:hover {
 }
 
 .rna-input {
-    border: 1.5px solid rgba(0, 0, 0, 0.5);
+    border: 1.5px solid var(--accent-color-dark);
     width: 70%;
 }
 
@@ -214,13 +215,10 @@ h2 {
 
 .rna-input__header__text {
     padding: 0.5rem;
-    background-color: #5F5CFF;
+    background-color: var(--main-color);
+    width: 100%;
 }
 
-.rna-input__header__gradient {
-    background: linear-gradient(90deg, rgba(95, 92, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    flex: 1;
-}
 
 textarea {
     border: 0;
@@ -230,6 +228,8 @@ textarea {
     padding: 0;
     height: 100%;
     margin: 0;
+    border: 1px solid var(--accent-color-dark);
+    background-color: transparent;
 }
 
 .rna-input__form {
