@@ -3,7 +3,7 @@
 
         <p>{{ name }}</p>
         <div class="drop-down-content">
-            <router-link v-for="href in hrefs" to="{{ href.href }}">{{ href.name }}</router-link>
+            <router-link v-for="element in hrefs" :to="`${element.path}`">{{ element.name }}</router-link>
         </div>
     </div>
 </template>
@@ -16,6 +16,11 @@ export default {
         name: String,
         hrefs: Array
 
+    },
+    data() {
+        return {
+            a: 'aaa'
+        }
     }
 }
 </script>
@@ -26,8 +31,10 @@ p {
 }
 
 a {
+    color: var(--text-color);
     text-decoration: none;
 }
+
 
 .drop-down-content {
     display: none;
@@ -36,7 +43,8 @@ a {
     background-color: var(--background-color);
     border: 1px solid var(--accent-color);
     border-top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(calc(-50% + 0.4rem));
     padding: 0 0.4rem;
     z-index: 10;
     white-space: nowrap;

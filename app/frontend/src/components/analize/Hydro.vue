@@ -2,8 +2,7 @@
     <div class="property-wrapper">
         <h2>Hydrofobowość</h2>
         <li> Średnia hydrofobowość {{ gravy }}</li>
-        <ChartWrapper :labels="labels" :data="hydrophobicity" :xUnit="' Aminokwas'" :yUnit="''"
-            :xTitle="'Pozycja Aminokwasu'" yTitle="Hydrofobowośćaaaa" />
+        <ChartWrapper v-if="loaded" :data="hydrophobicity" :labels="labels" />
     </div>
 </template>
 
@@ -21,6 +20,7 @@ export default {
             gravy: '',
             hydrophobicity: [],
             labels: [],
+            loaded: false,
         }
     },
     created() {
@@ -33,14 +33,14 @@ export default {
         getHydrophobicity() {
             axios.get(`http://127.0.0.1:8000/api/hydrophobicity/${this.id}?scale=Kyte-Doolittle`)
                 .then(response => {
-                    this.hydrophobicity = response.data.hydrophobicity;
-                    for (let i = 2; i < this.hydrophobicity.length + 2; i++) {
-                        this.labels.push(i.toString());
-                    }
 
-                })
-                .catch(error => {
-                    console.log(error);
+
+                    this.hydrophobicity = response.data.hydrophobicity;
+
+                    for (let i = 0; i < this.hydrophobicity.length; i++) {
+                        this.labels.push(i + 1);
+                    }
+                    this.loaded = true;
                 })
         },
         getGRAVY() {

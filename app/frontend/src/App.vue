@@ -16,26 +16,17 @@ export default {
     NavBar
   },
 
-  data() {
-    return {
-      isDarkMode: this.$store.state.isDarkMode
-    }
-  },
-
   setup() {
     useMeta({
       title: 'NONE',
       htmlAttrs: { lang: 'pl-PL', amp: true }
     })
   },
-  watch: {
-    dark: {
-      handler() {
-        console.log('dark mode changed')
-      },
-    }
-  },
 
+  mounted() {
+    const theme = localStorage.getItem('theme')
+    document.documentElement.className = theme
+  }
 }
 
 </script>
@@ -44,16 +35,18 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,400;0,500;1,300&family=Roboto+Mono&family=Roboto:wght@100;300;400;500;700&display=swap');
 
 :root {
+  --heading-color: #ffffff;
   --text-color: #000000;
   --accent-color-dark: #00000080;
   --accent-color: #00000040;
   --accent-color-light: #0000001a;
-  --main-color: #5f5cffb3;
+  --main-color: rgba(95, 92, 255, 1);
   --background-color: #ffffff;
   --icon-filter: invert(0);
 }
 
-:root.dark-mode {
+:root.dark-theme {
+  --heading-color: #ffffff;
   --text-color: #ffffff;
   --accent-color-dark: #ffffff80;
   --accent-color: #ffffff40;
@@ -80,12 +73,16 @@ export default {
   flex-direction: column;
   min-height: 100vh;
   height: fit-content;
+  overflow: hidden;
   background-color: var(--background-color);
+
 }
 
 
 body {
+  color: var(--text-color);
   display: flex;
+  overflow: auto;
   flex-direction: column;
   min-height: 100vh;
   font-family: 'Nunito', sans-serif;
@@ -94,7 +91,13 @@ body {
   margin: 0;
 }
 
-* {
+a,
+input,
+textarea {
   color: var(--text-color);
+}
+
+* {
+  transition: var(--transition);
 }
 </style>

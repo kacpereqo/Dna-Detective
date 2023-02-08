@@ -2,7 +2,7 @@
     <div class="property-wrapper">
         <h2>Ładunek</h2>
         <li> Punkt izoelektryczny {{ isoelectricpoint }}</li>
-        <ChartWrapper :data="charge" :labels="labels" />
+        <ChartWrapper v-if="loaded" :data="charge" :labels="labels" />
     </div>
 </template>
 
@@ -21,6 +21,7 @@ export default {
             isoelectricpoint: '',
             charge: [],
             labels: [],
+            loaded: false,
         }
     },
     created() {
@@ -35,7 +36,8 @@ export default {
                 .then(response => {
                     for (let x in response.data.netcharge) {
                         this.charge.push(response.data.netcharge[x]);
-                        this.labels.push(x);
+                        this.labels.push(parseFloat(x));
+                        this.loaded = true;
                     }
 
                 })

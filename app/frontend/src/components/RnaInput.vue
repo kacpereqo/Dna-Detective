@@ -22,7 +22,7 @@
             </div>
             <form action="#" method="POST">
                 <div v-if="fileType == 'text'">
-                    <textarea placeholder="Wpisz RNA lub DNA..." v-model="rnaSequence"></textarea>
+                    <textarea placeholder="Wpisz RNA lub DNA..." v-model="rnaSequence" spellcheck="false"></textarea>
                 </div>
                 <div v-if="fileType == 'file'">
                     <DropFile />
@@ -220,6 +220,7 @@ h2 {
 }
 
 
+
 textarea {
     border: 0;
     overflow-y: auto;
@@ -230,6 +231,10 @@ textarea {
     margin: 0;
     border: 1px solid var(--accent-color-dark);
     background-color: transparent;
+}
+
+::placeholder {
+    color: var(--accent-color-dark);
 }
 
 .rna-input__form {

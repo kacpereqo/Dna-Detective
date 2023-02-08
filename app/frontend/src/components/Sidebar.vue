@@ -1,6 +1,6 @@
 <template>
-    <div class="sidebar-wrapper" :class="{ 'fixed': position }">
-        <div class="items">
+    <div class="sidebar-wrapper">
+        <div class="items" :style="{ 'position': position, 'top': 0 }">
             <SequenceName />
             <input type="text" placeholder="Szukaj" id="search" v-model="search" />
             <ul>
@@ -16,6 +16,7 @@
                 </li>
             </ul>
         </div>
+
     </div>
 </template>
 
@@ -75,9 +76,9 @@ export default {
             const sidebarTop = sidebar.getBoundingClientRect().top;
 
             if (sidebarTop <= 0) {
-                this.isFixed = 'fixed';
+                this.position = 'fixed';
             } else {
-                this.isFixed = 'inherit';
+                this.position = 'inherit';
             }
         },
         changeComponent(componentName) {

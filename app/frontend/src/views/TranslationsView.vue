@@ -1,13 +1,15 @@
 
 <template>
     <div class="wrapper">
-        <Translations v-show="loaded" @loaded="loaded = true" />
-
-        <span v-if="!loaded">
-            <LoadingPrompt :text="'Translacja'" :display_facts="true" />
-        </span>
+        <Suspense :display_facts="true">
+            <Translations />
+            <template #fallback>
+                <LoadingPrompt />
+            </template>
+        </Suspense>
     </div>
 </template>
+
 
 <script>
 import { useMeta } from 'vue-meta'
@@ -18,8 +20,8 @@ import LoadingPrompt from '@/components/analize/LoadingPrompt.vue';
 export default {
     name: 'AnalizeView',
     components: {
-        Translations,
         LoadingPrompt,
+        Translations,
     },
     data() {
         return {
@@ -40,5 +42,7 @@ export default {
 </script>
 
 <style scoped>
-
+.wrapper {
+    margin-top: -54px;
+}
 </style>

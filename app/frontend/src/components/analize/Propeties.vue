@@ -1,6 +1,6 @@
 <template>
     <div class="propeties-wrapper">
-        <ChartWrapper :data="weight" :labels="labels" :xTitle="'Aminowkas'" :yTitle="'Masa [Dal]'" />
+        <ChartWrapper v-if="loaded" :data="weight" :labels="labels" />
     </div>
 </template>
 
@@ -15,6 +15,7 @@ export default {
             weight: [],
             labels: [],
             window: 3,
+            loaded: false,
         };
     },
     methods: {
@@ -25,6 +26,7 @@ export default {
                     for (let i = this.window; i < this.window + this.weight.length; i++) {
                         this.labels.push(i);
                     }
+                    this.loaded = true;
                 });
         }
     },

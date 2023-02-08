@@ -11,6 +11,7 @@
     "axios": "^1.2.3",
     "core-js": "^3.8.3",
     "frappe-charts": "^1.6.2",
+    "uplot": "^1.6.24",
     "vue": "^3.2.13",
     "vue-frappe-chart": "^0.1.10",
     "vue-meta": "^3.0.0-alpha.10",

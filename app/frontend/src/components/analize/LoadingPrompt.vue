@@ -47,20 +47,22 @@ export default {
             }
         },
         getFact() {
-            axios.get('http://127.0.0.1:8000/fact')
-                .then(response => {
-                    this.fact = response.data.fact;
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            this.interval =
+                axios.get('http://127.0.0.1:8000/fact')
+                    .then(response => {
+                        this.fact = response.data.fact;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
 
         },
     },
     mounted() {
-        this.dotsInterval = setInterval(this.addDots(), 500);
+        this.dotsInterval = setInterval(this.addDots, 500);
+        console.log(this.display_facts)
         if (this.display_facts) {
-            this.factInterval = setInterval(this.getFact(), 8500);
+            this.factInterval = setInterval(this.getFact, 1000);
         }
     },
     destroyed() {

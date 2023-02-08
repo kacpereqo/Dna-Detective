@@ -1,29 +1,27 @@
 <template>
+    <div class="chart-wrapper" v-observe-visibility="visibilityChanged">
+        <Chart v-if="isVisible" :data="data" :labels="labels" :element="element" ref="chart" />
+        <div id="chart">
 
-    <div class="chart-wrapper" v-observe-visibility="visibilityChanged" :style="{'--xTitle': `'${xTitle}'`, '--yTitle'
-    :`'${yTitle}'`}">
-        <v-frappe-chart type="line" :labels="labels" :data="[{ values: data }]" :colors="['blue']" :axisOptions="{
-            xIsSeries: true,
-            xAxisMode: 'tick', yAxisMode: 'span'
-        }" :lineOptions="lineOptions" :width="1" v-if="isVisible" :TooltipOptions="{
-    formatTooltipX: d => (d + ' ' + ''),
-    formatTooltipY: d => (d + ' ' + '')
-}" />
+        </div>
     </div>
 </template>
 
 <script>
-import { VFrappeChart } from "vue-frappe-chart"
+
+import Chart from '@/components/Chart.vue'
 
 export default {
-    name: 'ChartWrapper',
+    name: "ChartWrapper",
     components: {
-        VFrappeChart,
+        Chart
     },
     data() {
         return {
             isVisible: false,
+            element: null,
         }
+
     },
     props: {
         data: {
@@ -72,16 +70,32 @@ export default {
     },
     methods: {
         visibilityChanged(isVisible, entry) {
-            if (this.isVisible == false && isVisible == true) {
-                this.isVisible = isVisible
+            if (this.isVisible == true) {
+                this.$refs.chart.resizeChart()
             }
 
+            if (this.isVisible == false && isVisible == true) {
+                this.isVisible = true
+            }
         },
     },
+    mounted() {
+        this.element = this.$el.querySelector("#chart")
+    },
+
 }
 
 </script>
 
 <style>
+.chart-wrapper {
+    width: 100%;
+    height: 250px;
+}
 
+
+#chart {
+    width: calc(100vw - 216px - 3rem);
+    height: 250px
+}
 </style>

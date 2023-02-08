@@ -10,21 +10,23 @@
                     <li><router-link to="/#" class="nav-link">Strona główna</router-link></li>
                     <li><router-link to="/#" class="nav-link">Analiza</router-link></li>
                     <li>
-                        <DropDownMenu :hrefs="[{ name: 'Tabela 1', href: '/#' },
-                        { name: 'Tablea 2', href: '/#' },]" :name="'Tabele'" />
+                        <DropDownMenu :hrefs="[{ name: 'Tabela 1', path: '/' },
+                        { name: 'Tablea 2', path: '/' },]" :name="'Tabele'" />
                     </li>
                     <li class="drop-down">
-                        <DropDownMenu :hrefs="[{ name: 'Narzedzie 1', href: '/#' },
-                        { name: 'Narzedzie 2', href: '/#' },]" :name="'Narzędzia'" />
+                        <DropDownMenu :hrefs="[{ name: 'Narzedzie 1', path: '/' },
+                        { name: 'Narzedzie 2', path: '/' },]" :name="'Narzędzia'" />
                     </li>
                 </ul>
             </div>
             <div class="login">
                 <ul>
-                    <li class="toogle-switch" @click="toggleDarkMode">Darkmode</li>
+                    <li class="toogle-switch">
+                        <ThemeToogle />
+                    </li>
                     <li>
-                        <DropDownMenu :hrefs="[{ name: 'Zaloguj', href: '/#' },
-                        { name: 'Zarejestruj', href: '/#' },]" :name="'Konto'" />
+                        <DropDownMenu :hrefs="[{ name: 'Zaloguj', path: '/' },
+                        { name: 'Zarejestruj', path: '/' }, { name: 'Preferencje' }]" :name="'Konto'" />
                     </li>
                 </ul>
             </div>
@@ -34,24 +36,18 @@
 
 <script>
 import DropDownMenu from './DropDownMenu.vue';
+import ThemeToogle from './ThemeToogle.vue';
 
 export default {
     name: 'NavBar',
     components: {
-        DropDownMenu
+        DropDownMenu,
+        ThemeToogle
     },
-    methods: {
-        toggleDarkMode() {
-            this.$store.commit('toggleDarkMode');
-        }
-    }
+
 };
 </script>
 <style scoped>
-.toogle-switch {
-    cursor: pointer;
-}
-
 nav {
     z-index: 4;
     position: relative;
@@ -66,6 +62,11 @@ nav {
 
 p {
     margin: 0;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
 }
 
 .logo a {
@@ -122,6 +123,7 @@ a {
     justify-content: center;
     align-items: center;
     position: relative;
+    margin-right: 0.4rem;
 }
 
 a:hover {
