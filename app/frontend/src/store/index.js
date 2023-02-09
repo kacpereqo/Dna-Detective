@@ -2,14 +2,19 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    isDarkMode: false,
+    theme: localStorage.getItem('theme'),
   },
   getters: {
-    isDarkMode: state => state.isDarkMode,
+    theme: state => state.theme,
   },
   mutations: {
-    toggleDarkMode(state) {
-      state.isDarkMode = !state.isDarkMode;
+    toogleTheme(state) {
+      if (state.theme === 'light-theme') {
+        state.theme = 'dark-theme'
+      }
+      else {
+        state.theme = 'light-theme'
+      }
     }
   },
   actions: {

@@ -5,80 +5,7 @@ import uPlot from 'uplot';
 export default {
     name: 'Chat',
     data() {
-        return {
-            chart: null,
-            opts: {
-                scales: {
-                    x: {
-                        time: false,
-                        auto: true,
-                        range: (u, dataMin, dataMax) => [dataMin, dataMax],
-                    },
-                    y: {
-                        auto: true,
-                        range: (u, dataMin, dataMax) => [dataMin, dataMax],
-                    },
-                },
-                title: "",
-                id: "chart1",
-                class: "my-chart",
-                width: this.element.offsetWidth,
-                height: this.element.offsetHeight,
-                axes: [
-                    {
-                        stroke: "rgba(255, 255, 255, 0.25)", grid: {
-                            show: true,
-                            stroke: "rgba(255, 255, 255, 0.05)",
-                            width: 2,
-                            dash: [],
-                        },
-                        ticks: {
-                            show: true,
-                            stroke: "rgba(255, 255, 255, 0.25)",
-                            width: 2,
-                            dash: [],
-                            size: 10,
-                        }
-                    },
-                    {
-                        show: true,
-                        label: "Population",
-                        labelSize: 30,
-                        gap: 5,
-                        size: 50,
-                        stroke: "rgba(255, 255, 255, 0.25)",
-                        grid: {
-                            show: true,
-                            stroke: "rgba(255, 255, 255, 0.05)",
-                            width: 2,
-                            dash: [],
-                        },
-                        ticks: {
-                            show: true,
-                            stroke: "rgba(255, 255, 255, 0.25)",
-                            width: 2,
-                            dash: [],
-                            size: 10,
-                        }
-                    }
-                ],
-                series: [
-                    {
-                        label: "Low",
-                        fill: "rgba(0, 255, 0, .2)",
-                        band: true,
-                    },
-
-                    {
-                        label: "Ładuenk",
-                        stroke: "blue",
-                        width: 2,
-                        fill: "rgba(0, 0, 255,0.3)",
-                    }
-                ],
-            },
-
-        }
+        return this.initState();
     },
     props: {
         data: {
@@ -129,6 +56,12 @@ export default {
             required: true,
             default: null,
         },
+        wholeNumbers: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
+
     },
     methods: {
         resizeChart() {
@@ -137,6 +70,96 @@ export default {
                 height: this.element.clientHeight,
             });
         },
+        reInit() {
+            const data = [
+                this.$props.labels,
+                this.$props.data,
+            ]
+            Object.assign(this.$data, this.initState());
+            this.element.innerHTML = "";
+            this.chart = new uPlot(this.opts, data, this.element);
+        },
+        initState() {
+            const root = getComputedStyle(document.body);
+
+            return {
+                chart: null,
+                opts: {
+                    scales: {
+                        x: {
+                            distr: this.wholeNumbers ? 2 : 1,
+                            time: false,
+                            auto: false,
+                        },
+                        y: {
+                            auto: true,
+
+                        },
+                    },
+                    title: "",
+                    id: "chart1",
+                    class: "my-chart",
+                    width: this.element.offsetWidth,
+                    height: this.element.offsetHeight,
+                    axes: [
+                        {
+                            label: this.xUnit,
+                            labelFont: "16px Arial ",
+                            stroke: root.getPropertyValue('--text-color'), grid: {
+                                show: true,
+                                stroke: root.getPropertyValue('--accent-color-light'),
+                                width: 2,
+                                dash: [],
+                            },
+                            ticks: {
+                                show: true,
+                                stroke: root.getPropertyValue('--accent-color-dark'),
+                                width: 2,
+                                dash: [],
+                                size: 10,
+                            }
+                        },
+                        {
+                            labelFont: "16px Arial ",
+                            show: true,
+                            label: this.yUnit,
+                            labelSize: 30,
+                            gap: 5,
+                            size: 50,
+                            stroke: root.getPropertyValue('--text-color'),
+                            grid: {
+                                show: true,
+                                stroke: root.getPropertyValue('--accent-color-light'),
+                                width: 2,
+                                dash: [],
+                            },
+                            ticks: {
+                                show: true,
+                                stroke: root.getPropertyValue('--accent-color-dark'),
+                                width: 2,
+                                dash: [],
+                                size: 10,
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            label: this.xUnit,
+
+
+                        },
+
+                        {
+                            label: this.yUnit,
+                            stroke: "blue",
+                            width: 2,
+                            fill: root.getPropertyValue('--chart-color'),
+                        }
+                    ],
+                },
+
+            }
+        }
     },
     mounted() {
         const data = [
@@ -144,10 +167,15 @@ export default {
             this.$props.data,
         ]
 
-
         this.chart = new uPlot(this.opts, data, this.element);
     },
     created() {
+        this.unwatch = this.$store.watch(
+            (state) => state.theme,
+            (theme) => {
+                this.reInit();
+            }
+        );
         window.addEventListener('resize', this.resizeChart);
     },
     beforeDestroy() {

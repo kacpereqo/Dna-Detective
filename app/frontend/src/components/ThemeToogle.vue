@@ -1,6 +1,6 @@
 <template>
     <div class="toogle-wrapper">
-        <input id="chck" type="checkbox" ref="chck" @click="toggleDarkMode">
+        <input id="chck" type="checkbox" ref="chck" @click="toogleTheme">
         <label for="chck" class="check-trail">
             <span class="check-handler"></span>
         </label>
@@ -8,10 +8,13 @@
 </template>
 
 <script>
+import ChartWrapper from './ChartWrapper.vue';
+
 export default {
     name: 'ThemeToogle',
+    components: { ChartWrapper },
     methods: {
-        toggleDarkMode() {
+        toogleTheme() {
             const theme = localStorage.getItem('theme');
 
             document.documentElement.style.setProperty('--transition', '0.4s');
@@ -26,6 +29,7 @@ export default {
                 localStorage.setItem('theme', 'dark-theme');
                 document.documentElement.className = 'dark-theme';
             }
+            this.$store.commit('toogleTheme', theme);
         }
     },
     mounted() {

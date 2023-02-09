@@ -2,7 +2,8 @@
     <div class="property-wrapper">
         <h2>Hydrofobowość</h2>
         <li> Średnia hydrofobowość {{ gravy }}</li>
-        <ChartWrapper v-if="loaded" :data="hydrophobicity" :labels="labels" />
+        <ChartWrapper v-if="loaded" :data="hydrophobicity" :labels="labels" :wholeNumbers="true" :xUnit="'Aminokwas'"
+            :yUnit="'Hydrofobowość'" />
     </div>
 </template>
 

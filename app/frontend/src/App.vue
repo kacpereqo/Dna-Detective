@@ -40,8 +40,9 @@ export default {
   --accent-color-dark: #00000080;
   --accent-color: #00000040;
   --accent-color-light: #0000001a;
-  --main-color: rgba(95, 92, 255, 1);
+  --main-color: #5f5cff;
   --background-color: #ffffff;
+  --chart-color: #0000ff4d;
   --icon-filter: invert(0);
 }
 
@@ -54,6 +55,7 @@ export default {
   --main-color: #5f5cffb3;
   --background-color: #191919;
   --icon-filter: invert(1);
+  --chart-color: #6183ff33;
 }
 
 .wrapper {

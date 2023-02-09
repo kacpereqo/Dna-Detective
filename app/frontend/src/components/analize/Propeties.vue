@@ -1,6 +1,6 @@
 <template>
     <div class="propeties-wrapper">
-        <ChartWrapper v-if="loaded" :data="weight" :labels="labels" />
+        <ChartWrapper v-if="loaded" :data="weight" :labels="labels" :xUnit="'Aminokwas'" :yUnit="'Masa [kDal]'" />
     </div>
 </template>
 

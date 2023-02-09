@@ -1,6 +1,8 @@
 <template>
     <div class="chart-wrapper" v-observe-visibility="visibilityChanged">
-        <Chart v-if="isVisible" :data="data" :labels="labels" :element="element" ref="chart" />
+        <div @click="saveChart">wyeksportuj</div>
+        <Chart v-if="isVisible" :data="data" :labels="labels" :element="element" :wholeNumbers="wholeNumbers"
+            :xUnit="xUnit" :yTitle="yTitle" ref="chart" :yUnit="yUnit" />
         <div id="chart">
 
         </div>
@@ -8,7 +10,7 @@
 </template>
 
 <script>
-
+import domtoimage from "dom-to-image-more";
 import Chart from '@/components/Chart.vue'
 
 export default {
@@ -21,7 +23,6 @@ export default {
             isVisible: false,
             element: null,
         }
-
     },
     props: {
         data: {
@@ -67,6 +68,11 @@ export default {
             required: false,
             default: "",
         },
+        wholeNumbers: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     methods: {
         visibilityChanged(isVisible, entry) {
@@ -78,6 +84,24 @@ export default {
                 this.isVisible = true
             }
         },
+        reInit() {
+            this.$refs.chart.reInit()
+        },
+        saveChart() {
+            const canvas = document.getElementsByClassName('u-wrap')[0];
+            const copy = canvas.cloneNode(true);
+            domtoimage.toPng(
+                canvas, { bgcolor: getComputedStyle(document.body).getPropertyValue('--background-color') }
+            ).then(
+                function (dataUrl) {
+                    var link = document.createElement("a");
+                    link.download = "chart";
+                    link.href = dataUrl;
+                    link.click();
+                }
+            )
+
+        }
     },
     mounted() {
         this.element = this.$el.querySelector("#chart")
@@ -91,11 +115,13 @@ export default {
 .chart-wrapper {
     width: 100%;
     height: 250px;
+    margin: 3rem 0;
 }
 
 
 #chart {
     width: calc(100vw - 216px - 3rem);
-    height: 250px
+    height: 250px;
+    margin-bottom: 2rem;
 }
 </style>

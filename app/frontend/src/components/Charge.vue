@@ -1,9 +1,8 @@
 <template>
     <div class="property-wrapper">
         <h2>Ładunek</h2>
-        {{ charge }}
         <li> Punkt izoelektryczny {{ isoelectricpoint }}</li>
-        <ChartWrapper v-if="loaded" :data="charge" :labels="labels" />
+        <ChartWrapper v-if="loaded" :data="charge" :labels="labels" :xUnit="'pH'" :yUnit="'Ładunek'" />
     </div>
 </template>
 
