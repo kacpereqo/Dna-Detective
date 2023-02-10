@@ -15,7 +15,6 @@
                     <div>
                         <p>
                             <img src="@/assets/file.svg">{{ file.name }} ({{ (file.size / 1000).toFixed(2) + "KB" }})
-
                         </p>
                     </div>
                     <div>
@@ -26,6 +25,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -36,14 +36,26 @@ export default {
         return {
             isDragging: false,
             files: [],
+            fileContent: '',
+            fileExtension: '',
         };
     },
     methods: {
         remove(i) {
             this.files.splice(i, 1);
+            this.fileContent = '';
+            this.fileExtension = '';
         },
         onChange() {
+            console.log(this.$refs.file.files);
             this.files = [...this.$refs.file.files];
+            const read = new FileReader();
+            read.readAsText(this.files[0]);
+            read.onload = () => {
+                this.fileContent = read.result;
+            };
+            this.fileExtension = this.files[0].name.split('.').pop();
+
         },
         dragover(e) {
             e.preventDefault();
@@ -74,7 +86,7 @@ p {
 }
 
 p img {
-    margin-left: 0.5rem;
+    filter: var(--icon-filter);
 }
 
 .file-label img {
@@ -148,7 +160,7 @@ p img {
     align-items: center;
     justify-content: space-between;
 
-    border-bottom: rgba(0, 0, 0, 0.2) 1px solid;
+    border-bottom: var(--accent-color-dark) 1px solid;
     padding: 5px;
 
 }

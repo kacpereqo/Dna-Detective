@@ -12,7 +12,6 @@ router = APIRouter()
 
 @router.post("/api/translate", tags=["Rna translation"], description="Translates RNA to proteins")
 async def translate_rna(rna: Rna_to_translate, is_reversed: bool = False, is_forward: bool = True):
-
     translator = Translator(rna.rna, is_reversed, is_forward)
 
     return Rna_translated(

@@ -12,7 +12,7 @@ class ProteinCharge():
 
 # |------------------------------------------------------------------------------|#
 
-    def isoelectric_point(self, scale="Rodwell", precision=0.01) -> float:
+    def isoelectric_point(self, scale="Rodwell", precision=0.001) -> float:
 
         max_ = 14.0
         min_ = 0.0
@@ -20,10 +20,11 @@ class ProteinCharge():
         while not math.isclose(max_, min_):
             pH = (max_ + min_) / 2
             c = self.charge_at_ph(pH=pH, scale=scale)
-            if c >= 0:
-                max_ = pH
             if c <= 0:
+                max_ = pH
+            if c >= 0:
                 min_ = pH
+
         return pH
 
     # |------------------------------------------------------------------------------|#
@@ -48,7 +49,7 @@ class ProteinCharge():
         net_charge = {}
         for pH in np.arange(start, end, step):
             pH = round(pH, 2)
-            net_charge[pH] = round(self.charge_at_ph(scale, pH), 3)
+            net_charge[pH] = format(self.charge_at_ph(scale, pH), '.3f')
 
         return net_charge
 

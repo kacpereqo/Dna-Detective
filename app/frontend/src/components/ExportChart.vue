@@ -40,11 +40,13 @@
             </div>
             <div class="sidebar">
                 <div>
-                    <p>Szerokość:</p> <input type="text" min="1" v-model="width" v-on:change="resizeChart">
+                    <p>Szerokość:</p> <input type="text" min="1" v-model="width"
+                        v-on:change="() => { resizeChart(); getSrc() }">
                 </div>
 
                 <div>
-                    <p>Wysokość:</p> <input type="text" min="1" v-model="height" v-on:change="resizeChart">
+                    <p>Wysokość:</p> <input type="text" min="1" v-model="height"
+                        v-on:change="() => { resizeChart(); getSrc() }">
                 </div>
                 <div>
                     <p>Format:</p>

@@ -11,7 +11,9 @@
         </div>
         <div class="rna-input__form">
             <div class="rna-input__form__data-type">
-                <div class="messages">{{ message }}</div>
+                <div class="messages">
+                    <p v-if="errorMessage">{{ errorMessage }} <img src="@/assets/error.svg"></p>
+                </div>
                 <div class="data-type">
                     <p>Typ danych</p>
                     <select name="type" id="type" v-model="fileType">
@@ -51,33 +53,61 @@ export default {
         return {
             rnaSequence: '',
             fileType: 'text',
-            message: '',
+            errorMessage: '',
         }
     },
     methods: {
         submit() {
-            axios.post('http://127.0.0.1:8000/api/sequence', {
-                sequence: this.rnaSequence
-            }).then(res => {
-                console.log(res.data)
-                this.$router.push({
-                    name: 'translations',
-                    params: {
-                        id: res.data.id
+            this.validate().then(() => {
+                axios.post('http://127.0.0.1:8000/api/sequence', {
+                    sequence: this.rnaSequence
+                }).then(res => {
+                    this.$router.push({
+                        name: 'translations',
+                        params: {
+                            id: res.data.id
+                        }
+                    })
+
+                }).catch(err => {
+                    if (err.response) {
+                        this.errorMessage = err.response.data.detail
                     }
                 })
+            }).catch(err => {
+                this.errorMessage = err.message
             })
         },
         clear() {
             this.rnaSequence = ''
+        },
+        validate() {
+            return new Promise((resolve, reject) => {
+                if (this.rnaSequence.length < 1) {
+                    reject(new Error('Pole nie może być puste'))
+                }
+
+                if (this.fileType == 'text') {
+                    if (this.rnaSequence.length < 3) {
+                        reject(new Error('Sekwencja musi zawierać przynajmniej 3 znaki'))
+                    }
+
+                    if (!this.rnaSequence.match(/^[AUGCT]+$/i)) {
+                        reject(new Error('Sekwencja może zawierać tylko znaki A, U, G, C, T'))
+                    }
+                }
+
+                resolve()
+            })
         }
+
     }
 }
 </script>
 
 <style scoped lang="scss">
 form div {
-    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--accent-color-dark);
     height: 200px;
 }
 
@@ -146,6 +176,20 @@ form div {
 
 .messages {
     flex: 3;
+    color: rgb(255, 0, 0);
+
+}
+
+.messages p {
+    width: fit-content;
+    position: relative;
+}
+
+.messages img {
+    bottom: 0;
+    right: -2rem;
+    position: absolute;
+    filter: brightness(0) saturate(100%) invert(16%) sepia(75%) saturate(6903%) hue-rotate(357deg) brightness(107%) contrast(115%);
 }
 
 .rna-input__form__data-type select {
@@ -188,7 +232,7 @@ select option:hover {
 }
 
 .rna-input {
-    border: 1.5px solid var(--accent-color-dark);
+    border: 1px solid var(--accent-color-dark);
     width: 70%;
 }
 
