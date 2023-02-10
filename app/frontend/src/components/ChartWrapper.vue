@@ -1,27 +1,36 @@
 <template>
     <div class="chart-wrapper" v-observe-visibility="visibilityChanged">
-        <div @click="saveChart">wyeksportuj</div>
-        <Chart v-if="isVisible" :data="data" :labels="labels" :element="element" :wholeNumbers="wholeNumbers"
-            :xUnit="xUnit" :yTitle="yTitle" ref="chart" :yUnit="yUnit" />
-        <div id="chart">
-
+        <div class="buttons">
+            <ExportChart v-if="mounted" :data="data" :labels="labels" :wholeNumbers="wholeNumbers" :xUnit="xUnit"
+                ref="chart" :yUnit="yUnit" />
         </div>
+        <div class="charts">
+
+            <div id="chart">
+                <Chart v-if="isVisible" :data="data" :labels="labels" :element="element" :wholeNumbers="wholeNumbers"
+                    :xUnit="xUnit" ref="chart" :yUnit="yUnit" />
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
-import domtoimage from "dom-to-image-more";
+import ExportChart from "@/components/ExportChart.vue";
 import Chart from '@/components/Chart.vue'
 
 export default {
     name: "ChartWrapper",
     components: {
-        Chart
+        Chart,
+        ExportChart
     },
+
     data() {
         return {
             isVisible: false,
             element: null,
+            mounted: false,
         }
     },
     props: {
@@ -34,29 +43,6 @@ export default {
             type: Array,
             required: true,
             default: [],
-        },
-        axisOptions: {
-            type: Object,
-            required: false,
-            default: {}
-        },
-        lineOptions: {
-            type: Object,
-            required: false,
-            default: {
-                hideDots: 1,
-                regionFill: 1,
-            },
-        },
-        xTitle: {
-            type: String,
-            required: false,
-            default: "",
-        },
-        yTitle: {
-            type: String,
-            required: false,
-            default: "",
         },
         xUnit: {
             type: String,
@@ -87,23 +73,10 @@ export default {
         reInit() {
             this.$refs.chart.reInit()
         },
-        saveChart() {
-            const canvas = document.getElementsByClassName('u-wrap')[0];
-            const copy = canvas.cloneNode(true);
-            domtoimage.toPng(
-                canvas, { bgcolor: getComputedStyle(document.body).getPropertyValue('--background-color') }
-            ).then(
-                function (dataUrl) {
-                    var link = document.createElement("a");
-                    link.download = "chart";
-                    link.href = dataUrl;
-                    link.click();
-                }
-            )
 
-        }
     },
     mounted() {
+        this.mounted = true
         this.element = this.$el.querySelector("#chart")
     },
 
@@ -111,7 +84,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped lang="scss">
 .chart-wrapper {
     width: 100%;
     height: 250px;
@@ -123,5 +96,14 @@ export default {
     width: calc(100vw - 216px - 3rem);
     height: 250px;
     margin-bottom: 2rem;
+}
+
+
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.25rem;
+    margin-right: 1rem;
 }
 </style>

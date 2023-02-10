@@ -1,4 +1,6 @@
+<template>
 
+</template>
 <script>
 import uPlot from 'uplot';
 
@@ -10,36 +12,14 @@ export default {
     props: {
         data: {
             type: Array,
-            required: true,
+            required: false,
             default: [],
         },
         labels: {
             type: Array,
-            required: true,
+            required: false,
             default: [],
-        },
-        axisOptions: {
-            type: Object,
-            required: false,
-            default: {}
-        },
-        lineOptions: {
-            type: Object,
-            required: false,
-            default: {
-                hideDots: 1,
-                regionFill: 1,
-            },
-        },
-        xTitle: {
-            type: String,
-            required: false,
-            default: "",
-        },
-        yTitle: {
-            type: String,
-            required: false,
-            default: "",
+
         },
         xUnit: {
             type: String,
@@ -53,7 +33,7 @@ export default {
         },
         element: {
             type: Object,
-            required: true,
+            required: false,
             default: null,
         },
         wholeNumbers: {

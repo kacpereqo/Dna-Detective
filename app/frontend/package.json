@@ -8,6 +8,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@mahdikhashan/vue3-click-outside": "^0.1.2",
     "axios": "^1.2.3",
     "core-js": "^3.8.3",
     "dom-to-image-more": "^2.15.0",
