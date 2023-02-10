@@ -1,25 +1,27 @@
 <template>
-    <div class="hydro-wrapper">
-        <h1>Hydrofobowość</h1>
+    <div class="property-wrapper">
+        <h2>Hydrofobowość</h2>
         <li> Średnia hydrofobowość {{ gravy }}</li>
-        <v-frappe-chart type="line" :labels="labels" :data="[{ values: hydrophobicity }]" :colors="['red']" />
+        <ChartWrapper v-if="loaded" :data="hydrophobicity" :labels="labels" :wholeNumbers="true" :xUnit="'Aminokwas'"
+            :yUnit="'Hydrofobowość'" />
     </div>
 </template>
 
 <script>
-import { VFrappeChart } from "vue-frappe-chart"
+import ChartWrapper from '../ChartWrapper.vue';
 import axios from 'axios'
 
 export default {
     name: 'Hydro',
     components: {
-        VFrappeChart,
+        ChartWrapper
     },
     data() {
         return {
             gravy: '',
-            hydrophobicity: '',
+            hydrophobicity: [],
             labels: [],
+            loaded: false,
         }
     },
     created() {
@@ -32,14 +34,14 @@ export default {
         getHydrophobicity() {
             axios.get(`http://127.0.0.1:8000/api/hydrophobicity/${this.id}?scale=Kyte-Doolittle`)
                 .then(response => {
-                    this.hydrophobicity = response.data.hydrophobicity;
-                    for (let i = 2; i < this.hydrophobicity.length + 2; i++) {
-                        this.labels.push(i.toString());
-                    }
 
-                })
-                .catch(error => {
-                    console.log(error);
+
+                    this.hydrophobicity = response.data.hydrophobicity;
+
+                    for (let i = 0; i < this.hydrophobicity.length; i++) {
+                        this.labels.push(i + 1);
+                    }
+                    this.loaded = true;
                 })
         },
         getGRAVY() {
@@ -55,9 +57,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-.hydro-wrapper {
-    width: 70%;
-}
-</style>

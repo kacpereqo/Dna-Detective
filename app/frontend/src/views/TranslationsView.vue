@@ -1,23 +1,48 @@
 
 <template>
     <div class="wrapper">
-        <Translations />
+        <Suspense :display_facts="true">
+            <Translations />
+            <template #fallback>
+                <LoadingPrompt />
+            </template>
+        </Suspense>
     </div>
 </template>
 
+
 <script>
+import { useMeta } from 'vue-meta'
+
 import Translations from '@/components/analize/Translation.vue';
-import axios from 'axios';
+import LoadingPrompt from '@/components/analize/LoadingPrompt.vue';
 
 export default {
     name: 'AnalizeView',
     components: {
-        Translations
+        LoadingPrompt,
+        Translations,
     },
-
+    data() {
+        return {
+            loaded: false,
+        }
+    },
+    methods: {
+        destroy() {
+            this.$destroy();
+        }
+    },
+    setup() {
+        useMeta({
+            title: 'Translacja',
+        })
+    },
 }
 </script>
 
 <style scoped>
-
+.wrapper {
+    margin-top: -54px;
+}
 </style>

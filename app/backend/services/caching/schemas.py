@@ -9,8 +9,13 @@ class Rna_to_translate(BaseModel):
 
     @validator("sequence")
     def rna_is_valid(cls, v):
+        if len(v) < 3:
+            raise HTTPException(
+                status_code=422, detail="RNA must be at least 3 nucleotides long")
         if not v.isupper():
             v = v.upper()
+
+        v = v.replace(" ", "").replace("\n", "")
 
         if ("T" in v):
             v = v.replace("T", "U")

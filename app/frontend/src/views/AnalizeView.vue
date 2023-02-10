@@ -1,33 +1,46 @@
 <template>
     <div class="wrapper">
-        <Visualization />
-        <Propeties />
-        <Hydro />
-        <Charge />
+        <Sidebar @changeComponent="changeComponent" />
+        <SequenceData :component="component" />
     </div>
 </template>
 
 <script>
-import Visualization from '@/components/analize/Visualization.vue'
-import Propeties from '@/components/analize/Propeties.vue'
-import Hydro from '@/components/analize/Hydro.vue'
-import Charge from '@/components/analize/Charge.vue'
+import { useMeta } from 'vue-meta'
+
+import Sidebar from '@/components/Sidebar.vue'
+import SequenceData from '@/components/SequenceData.vue'
 
 
 export default {
     name: 'AnalizeView',
     components: {
-        Visualization,
-        Propeties,
-        Hydro,
-        Charge,
+        SequenceData,
+        Sidebar,
     },
-    created() {
-        this.id = this.$route.params.id;
+    data() {
+        return {
+            component: 'hydro',
+        }
+    },
+    setup() {
+        useMeta({
+            title: 'Analiza',
+        })
+    },
+    methods: {
+        changeComponent(value) {
+            this.component = value;
+        },
     },
 }
 </script>
 
 <style scoped>
-
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+}
 </style>

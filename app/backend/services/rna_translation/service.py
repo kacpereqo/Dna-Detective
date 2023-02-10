@@ -11,6 +11,8 @@ class Translator():
         self.rna = rna
         self.is_reversed = is_reversed
         self.is_forward = is_forward
+        self.ids = {}
+        self.db = DB()
 
     # |------------------------------------------------------------------------------|#
 
@@ -46,18 +48,20 @@ class Translator():
 
     def find_open_reading_frames(self, translated_sequence: str) -> List[str]:
         seq = ""
-
         index = 0
+
         for protein in translated_sequence.split("-"):
             if len(protein) > 0:
                 if protein[0] != "M":
-                    _id = DB().post_frame(protein[0])['id']
+                    if protein[0] not in self.ids:
+                        self.ids[protein[0]] = self.db.post_frame(protein)['id']
 
-                    protein = f"""<a href="#/analize/{_id}" class = "frame">{protein[0]}</a>""" + protein[1:]
+                    protein = f"""<a href="#/analize/{self.ids[protein[0]]}" class = "frame">{protein[0]}</a>""" + protein[1:]
                     seq += protein
                 else:
-                    seq += re.sub(r"M[A-Z]+",
-                                  lambda x: f"""<a href="#/analize/{DB().post_frame(x.group(0))['id']}" class="frame">{x.group(0)}</a>""", protein)
+
+                    seq += re.sub(
+                        r"M[A-Z]+", lambda x: f"""<a href="#/analize/{self.db.post_frame(x.group(0))['id'] if x.group(0) not in self.ids else self.ids[x.group(0)]}" class="frame">{x.group(0)}</a>""", protein)
 
             seq += "-"
             index += len(protein) + 1

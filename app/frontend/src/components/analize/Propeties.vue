@@ -1,33 +1,40 @@
 <template>
     <div class="propeties-wrapper">
-        <p>{{ weight }} kilodaltons</p>
-
+        <ChartWrapper v-if="loaded" :data="weight" :labels="labels" :xUnit="'Aminokwas'" :yUnit="'Masa [kDal]'" />
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import ChartWrapper from '../ChartWrapper.vue';
 
 export default {
-    name: 'Propeties',
+    name: "Propeties",
     data() {
         return {
-            weight: '',
-        }
+            weight: [],
+            labels: [],
+            window: 3,
+            loaded: false,
+        };
     },
     methods: {
         getWeight() {
-            axios.get(`http://127.0.0.1:8000/api/weight/${this.id}`)
+            axios.get(`http://127.0.0.1:8000/api/weight/${this.id}?window=${this.window}`)
                 .then(res => {
                     this.weight = res.data.weight;
-                })
+                    for (let i = this.window; i < this.window + this.weight.length; i++) {
+                        this.labels.push(i);
+                    }
+                    this.loaded = true;
+                });
         }
     },
     created() {
         this.id = this.$route.params.id;
         this.getWeight();
     },
-
+    components: { ChartWrapper }
 }
 
 </script>

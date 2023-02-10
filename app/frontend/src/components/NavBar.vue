@@ -7,22 +7,28 @@
             </div>
             <div class="nav-links">
                 <ul>
-                    <li><router-link to="/" class="nav-link">Strona główna</router-link></li>
+                    <li><router-link to="/#" class="nav-link">Strona główna</router-link></li>
                     <li><router-link to="/#" class="nav-link">Analiza</router-link></li>
                     <li>
-                        <DropDownMenu :hrefs="[{ name: 'Tabela 1', href: '/#' },
-                        { name: 'Tablea 2', href: '/#' },]" :name="'Tabele'" />
+                        <DropDownMenu :hrefs="[{ name: 'Tabela 1', path: '/' },
+                        { name: 'Tablea 2', path: '/' },]" :name="'Tabele'" />
                     </li>
                     <li class="drop-down">
-                        <DropDownMenu :hrefs="[{ name: 'Narzedzie 1', href: '/#' },
-                        { name: 'Narzedzie 2', href: '/#' },]" :name="'Narzędzia'" />
+                        <DropDownMenu :hrefs="[{ name: 'Narzedzie 1', path: '/' },
+                        { name: 'Narzedzie 2', path: '/' },]" :name="'Narzędzia'" />
                     </li>
                 </ul>
             </div>
             <div class="login">
-
-                <DropDownMenu :hrefs="[{ name: 'Zaloguj', href: '/#' },
-                { name: 'Zarejestruj', href: '/#' },]" :name="'Konto'" />
+                <ul>
+                    <li class="toogle-switch">
+                        <ThemeToogle />
+                    </li>
+                    <li>
+                        <DropDownMenu :hrefs="[{ name: 'Zaloguj', path: '/' },
+                        { name: 'Zarejestruj', path: '/' }, { name: 'Preferencje' }]" :name="'Konto'" />
+                    </li>
+                </ul>
             </div>
         </nav>
     </div>
@@ -30,28 +36,37 @@
 
 <script>
 import DropDownMenu from './DropDownMenu.vue';
+import ThemeToogle from './ThemeToogle.vue';
 
 export default {
     name: 'NavBar',
     components: {
-        DropDownMenu
-    }
+        DropDownMenu,
+        ThemeToogle
+    },
+
 };
 </script>
 <style scoped>
 nav {
-    z-index: 2;
+    z-index: 4;
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     line-height: 54px;
     padding: 0 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 4px var(--accent-color);
     height: 54px;
 }
 
 p {
     margin: 0;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
 }
 
 .logo a {
@@ -78,17 +93,7 @@ p {
     position: relative;
 }
 
-.logo a::after {
-    position: absolute;
-    content: '';
-    top: 3px;
-    left: 1rem;
-    width: 100%;
-    height: 48px;
-    border-right: rgba(0, 0, 0, 0.25) 1px solid;
-}
-
-.nav-links ul {
+ul {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,17 +103,17 @@ p {
     padding: 0;
 }
 
-.nav-links ul li {
+ul li {
     list-style: none;
 }
 
-.nav-links ul li .nav-link {
+ul li {
     padding: 0 0.75rem;
 }
 
 
 a {
-    color: #000;
+    padding: 0 0.4rem;
     text-decoration: none;
     display: block;
 }
@@ -118,20 +123,10 @@ a {
     justify-content: center;
     align-items: center;
     position: relative;
+    margin-right: 0.4rem;
 }
 
 a:hover {
-    background-color: rgba(0, 0, 0, 0.25);
-}
-
-
-.login::before {
-    position: absolute;
-    content: '';
-    left: 0.15rem;
-    top: 3px;
-    height: 48px;
-    border-left: rgba(0, 0, 0, 0.25) 1px solid;
-
+    background-color: var(--accent-color);
 }
 </style>

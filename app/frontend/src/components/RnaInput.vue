@@ -4,15 +4,16 @@
             <img src="@/assets/settings.svg" alt="settings" class="rna-input__settings-icon" role="button" />
             <div class="rna-input__header__text">
                 <span>
-                    <h2>Analiza RNA/DNA</h2>
-                    <h4>Narzędzie służące do dogłębnej analizy łańcuchów DNA/RNA </h4>
+                    <h1>Analiza RNA/DNA</h1>
+                    <h2>Narzędzie służące do dogłębnej analizy łańcuchów DNA/RNA </h2>
                 </span>
             </div>
-            <div class="rna-input__header__gradient"></div>
         </div>
         <div class="rna-input__form">
             <div class="rna-input__form__data-type">
-                <div class="messages">{{ message }}</div>
+                <div class="messages">
+                    <p v-if="errorMessage">{{ errorMessage }} <img src="@/assets/error.svg"></p>
+                </div>
                 <div class="data-type">
                     <p>Typ danych</p>
                     <select name="type" id="type" v-model="fileType">
@@ -23,7 +24,7 @@
             </div>
             <form action="#" method="POST">
                 <div v-if="fileType == 'text'">
-                    <textarea placeholder="Wpisz RNA lub DNA..." v-model="rnaSequence"></textarea>
+                    <textarea placeholder="Wpisz RNA lub DNA..." v-model="rnaSequence" spellcheck="false"></textarea>
                 </div>
                 <div v-if="fileType == 'file'">
                     <DropFile />
@@ -52,33 +53,61 @@ export default {
         return {
             rnaSequence: '',
             fileType: 'text',
-            message: '',
+            errorMessage: '',
         }
     },
     methods: {
         submit() {
-            axios.post('http://127.0.0.1:8000/api/sequence', {
-                sequence: this.rnaSequence
-            }).then(res => {
-                console.log(res.data)
-                this.$router.push({
-                    name: 'translations',
-                    params: {
-                        id: res.data.id
+            this.validate().then(() => {
+                axios.post('http://127.0.0.1:8000/api/sequence', {
+                    sequence: this.rnaSequence
+                }).then(res => {
+                    this.$router.push({
+                        name: 'translations',
+                        params: {
+                            id: res.data.id
+                        }
+                    })
+
+                }).catch(err => {
+                    if (err.response) {
+                        this.errorMessage = err.response.data.detail
                     }
                 })
+            }).catch(err => {
+                this.errorMessage = err.message
             })
         },
         clear() {
             this.rnaSequence = ''
+        },
+        validate() {
+            return new Promise((resolve, reject) => {
+                if (this.rnaSequence.length < 1) {
+                    reject(new Error('Pole nie może być puste'))
+                }
+
+                if (this.fileType == 'text') {
+                    if (this.rnaSequence.length < 3) {
+                        reject(new Error('Sekwencja musi zawierać przynajmniej 3 znaki'))
+                    }
+
+                    if (!this.rnaSequence.match(/^[AUGCT]+$/i)) {
+                        reject(new Error('Sekwencja może zawierać tylko znaki A, U, G, C, T'))
+                    }
+                }
+
+                resolve()
+            })
         }
+
     }
 }
 </script>
 
 <style scoped lang="scss">
 form div {
-    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--accent-color-dark);
     height: 200px;
 }
 
@@ -102,11 +131,12 @@ form div {
     width: 1.25rem;
     height: 1.25rem;
     background-image: url('@/assets/accept.svg');
+    filter: var(--icon-filter);
     background-size: contain;
 }
 
 .rna-input__button:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--accent-color-light);
     animation: pulse ease-in-out .7s infinite alternate;
 }
 
@@ -126,7 +156,7 @@ form div {
 
 .rna-input__button {
     position: relative;
-    border: 1.5px solid rgba(0, 0, 0, 0.5);
+    border: 1.5px solid var(--accent-color-dark);
     padding: 0.5rem 2.5rem 0.5rem 1.5rem;
     margin: 1rem;
     cursor: pointer;
@@ -146,15 +176,30 @@ form div {
 
 .messages {
     flex: 3;
+    color: rgb(255, 0, 0);
+
+}
+
+.messages p {
+    width: fit-content;
+    position: relative;
+}
+
+.messages img {
+    bottom: 0;
+    right: -2rem;
+    position: absolute;
+    filter: brightness(0) saturate(100%) invert(16%) sepia(75%) saturate(6903%) hue-rotate(357deg) brightness(107%) contrast(115%);
 }
 
 .rna-input__form__data-type select {
     margin-left: 0.5rem;
     height: fit-content;
-    background-color: #fff;
-    border: 1.5px solid rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+    border: 1.5px solid var(--accent-color-dark);
     appearance: none;
     background-image: url('@/assets/arrow.svg');
+    filter: var(--icon-filter);
     background-size: 0.5rem;
     background-repeat: no-repeat;
     background-position-x: 95%;
@@ -187,21 +232,23 @@ select option:hover {
 }
 
 .rna-input {
-    border: 1.5px solid rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--accent-color-dark);
     width: 70%;
 }
 
-h2,
-h4 {
+h1,
+h2 {
     margin: 0;
 }
 
-h2 {
+h1 {
+    font-size: 1.4rem;
     font-weight: 400;
 }
 
-h4 {
+h2 {
     font-weight: 200;
+    font-size: 1rem;
 }
 
 .rna-input__header {
@@ -212,14 +259,11 @@ h4 {
 
 .rna-input__header__text {
     padding: 0.5rem;
-    background-color: #5F5CFF;
+    background-color: var(--main-color);
+    width: 100%;
 }
 
-.rna-input__header__gradient {
-    background: rgb(95, 92, 255);
-    background: linear-gradient(90deg, rgba(95, 92, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    flex: 1;
-}
+
 
 textarea {
     border: 0;
@@ -229,6 +273,12 @@ textarea {
     padding: 0;
     height: 100%;
     margin: 0;
+    border: 1px solid var(--accent-color-dark);
+    background-color: transparent;
+}
+
+::placeholder {
+    color: var(--accent-color-dark);
 }
 
 .rna-input__form {

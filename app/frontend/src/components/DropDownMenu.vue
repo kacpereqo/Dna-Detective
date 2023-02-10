@@ -3,7 +3,7 @@
 
         <p>{{ name }}</p>
         <div class="drop-down-content">
-            <router-link v-for="href in hrefs" to="{{ href.href }}">{{ href.name }}</router-link>
+            <router-link v-for="element in hrefs" :to="`${element.path}`">{{ element.name }}</router-link>
         </div>
     </div>
 </template>
@@ -16,6 +16,11 @@ export default {
         name: String,
         hrefs: Array
 
+    },
+    data() {
+        return {
+            a: 'aaa'
+        }
     }
 }
 </script>
@@ -26,18 +31,20 @@ p {
 }
 
 a {
+    color: var(--text-color);
     text-decoration: none;
-    color: black;
 }
+
 
 .drop-down-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(0, 0, 0, 0.25);
+    z-index: 20;
+    background-color: var(--background-color);
+    border: 1px solid var(--accent-color);
     border-top: 0;
-    left: -0.5rem;
+    left: 50%;
+    transform: translateX(calc(-50% + 0.4rem));
     padding: 0 0.4rem;
     z-index: 10;
     white-space: nowrap;
@@ -51,11 +58,10 @@ a {
 }
 
 .drop-down-content a:hover {
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--accent-color);
 }
 
 .drop-down {
-    margin: 0 1rem;
     display: block;
     padding: 0 0.75rem;
     cursor: pointer;
@@ -73,6 +79,7 @@ a {
     content: '';
     position: absolute;
     background-image: url('@/assets/arrow.svg');
+    filter: var(--icon-filter);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
