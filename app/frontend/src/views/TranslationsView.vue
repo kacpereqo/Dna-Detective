@@ -42,7 +42,5 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-    margin-top: -54px;
-}
+
 </style>
