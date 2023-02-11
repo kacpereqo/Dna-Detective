@@ -7,7 +7,7 @@ from .models import SEQUENCE_TABLE, FRAME_TABLE
 
 class DB:
     def __init__(self):
-        self.con = sqlite3.connect("backend/database/database.sqlite")
+        self.con = sqlite3.connect("database/database.sqlite")
 
 # |-----------------------------------------------------------------------------|#
 

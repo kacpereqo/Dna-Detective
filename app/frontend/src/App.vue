@@ -35,6 +35,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,400;0,500;1,300&family=Roboto+Mono&family=Roboto:wght@100;300;400;500;700&display=swap');
 
 :root {
+  --visualization-filter: 0;
   --heading-color: #ffffff;
   --text-color: #000000;
   --accent-color-dark: #00000080;
@@ -47,6 +48,7 @@ export default {
 }
 
 :root.dark-theme {
+  --visualization-filter: invert(1) contrast(80%);
   --heading-color: #ffffff;
   --text-color: #ffffff;
   --accent-color-dark: #ffffff80;

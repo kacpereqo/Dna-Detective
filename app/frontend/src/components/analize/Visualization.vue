@@ -1,18 +1,33 @@
 <template>
     <div class="property-wrapper">
-        <h2>Wzór szkieletowy</h2>
+
+
         <div v-if="isLoading">
             Ładowanie...
         </div>
-        <img :src='visualizationSrc' alt="Wzór szkieletowy białka">
+
+
+        <Line :word="'Wzór szkieletowy'" :line="false" />
+
+        <div class="image-container">
+            <div class="fullscreen">
+                Pełny Ekran<img src="@/assets/fullscreen.svg">
+            </div>
+
+            <div class="image-viewer"><img :src='visualizationSrc' alt="Wzór szkieletowy białka"></div>
+        </div>
     </div>
 </template>
 
 <script>
+import Line from '../Line.vue';
 import axios from 'axios'
 
 export default {
     name: 'Visualization',
+    components: {
+        Line
+    },
     data() {
         return {
             visualizationSrc: '',
@@ -52,15 +67,54 @@ export default {
 </script>
 
 <style scoped>
-.visualization-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.image-viewer img {
+    filter: var(--visualization-filter);
+    height: 200px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
 }
 
-img {
-    width: 100%;
-    height: 100%;
+.image-viewer {
+    display: flex;
+    height: 200px;
+    overflow: scroll;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    position: relative;
+}
+
+.image-container {
+    margin-top: 2rem;
+    position: relative;
+}
+
+.fullscreen {
+    color: var(--text-color);
+    border: 1px solid var(--accent-color-dark);
+    width: fit-content;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    padding: 0.25rem 1.75rem 0.25rem 0.5rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    top: -1rem;
+    z-index: 10;
+}
+
+.fullscreen img {
+    filter: var(--icon-filter);
+    width: 1.5rem;
+    height: 1.5rem;
+    top: 50%;
+    position: absolute;
+    transform: translate(0, -50%);
+
+}
+
+.fullscreen:hover {
+    background-color: var(--accent-color-light);
+    transition: 0.2s;
 }
 </style>

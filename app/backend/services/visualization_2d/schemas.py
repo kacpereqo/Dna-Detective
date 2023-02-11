@@ -1,7 +1,8 @@
 from pydantic import BaseModel, validator
 from fastapi import HTTPException
 
-#|------------------------------------------------------------------------------|#
+# |------------------------------------------------------------------------------|#
+
 
 class Protein(BaseModel):
     sequence: str
@@ -12,5 +13,6 @@ class Protein(BaseModel):
         if v.islower():
             v = v.upper()
         if any(char not in 'ARNDCQEGHILKMFPSTWYV' for char in v):
-            raise HTTPException(status=422, detail='Sequence contains invalid characters that are not amino acids')
+            raise HTTPException(
+                status=422, detail='Sequence contains invalid characters that are not amino acids')
         return v

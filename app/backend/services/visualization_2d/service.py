@@ -1,9 +1,11 @@
 from .constants import AMINE_ACIDS_SMILES
+from fastapi import BackgroundTasks
 import asyncio
 import concurrent.futures
 from rdkit import Chem
 from rdkit.Chem import rdDepictor, Draw
 from threading import Thread
+import multiprocessing
 
 
 # |------------------------------------------------------------------------------|#
@@ -27,16 +29,12 @@ class Visualization2DService:
     def draw(self):
         mol = Chem.MolFromSmiles(self.smiles)
         rdDepictor.SetPreferCoordGen(True)
-        Draw.MolToFile(mol, "backend/visualizations/test.png",
-                       (50 * len(self.sequence), 200))
+        Draw.MolToFile(mol, "test.png",
+                       (300 , 200))
 
-    async def protein_to_svg(self):
-        """Returns visualization of protein in SVG format"""
-
-        loop = asyncio.get_running_loop()
-        with concurrent.futures.ProcessPoolExecutor() as pool:
-            await loop.run_in_executor(pool, self.draw)
-
-        return "backend/visualizations/test.png"
+    def protein_to_svg(self):
+        """Returns 2D visualization for a given sequence"""
+        self.draw()
+        return "test.png"
 
     # |------------------------------------------------------------------------------|#

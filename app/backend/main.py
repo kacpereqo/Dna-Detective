@@ -1,9 +1,12 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+import uvicorn
+from concurrent.futures.process import ProcessPoolExecutor
 
-from backend.config.include_routes import include_routes
-from backend.services.database.db import DB
+from config.include_routes import include_routes
+from services.database.db import DB
+import asyncio
 
 
 def get_application():
@@ -38,8 +41,14 @@ async def value_error_exception_handler(request: Request, exc: ValueError):
 @app.on_event("startup")
 async def database_connect():
     DB().migrate()
+    app.state.executor = ProcessPoolExecutor()
 
 
 @app.on_event("shutdown")
 async def database_disconnect():
     DB().migrate()
+    app.state.executor.shutdown()
+
+if __name__ == "__main__":
+
+    uvicorn.run('main:app', host="127.0.0.1", port=8000, reload=True, workers=3)

@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from .schemas import Protein
 from localcider.sequenceParameters import SequenceParameters
 from typing import Optional
-from backend.services.database.db import DB
+from services.database.db import DB
 from .service import SequncePropeties
 
 

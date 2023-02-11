@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from .schemas import Protein, PH_Range, PH, Pka_scale
 from typing import Optional
 from .service import ProteinCharge
-from backend.services.database.db import DB
+from services.database.db import DB
 
 
 # |------------------------------------------------------------------------------|#

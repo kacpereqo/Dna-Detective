@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from backend.services.database.db import DB
+from services.database.db import DB
 from .schemas import Rna_to_translate, Frame
 
 router = APIRouter(tags=["caching"])

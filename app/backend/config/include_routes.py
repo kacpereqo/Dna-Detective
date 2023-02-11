@@ -1,14 +1,14 @@
-from backend.services.rna_translation import routes as rna_translation
-from backend.services.visualization_2d import routes as visualization
-from backend.services.propeties import routes as propeties
-from backend.services.hydrophobicity import routes as hydrophobicity
-from backend.services.charge import routes as charge
-from backend.services.flexibility import routes as flexibility
-from backend.services.aromacity import routes as aromacity
-from backend.services.instability import routes as instability
-from backend.services.statistics import routes as statics
-from backend.services.caching import routers as caching
-from backend.services.facts import routers as facts
+from services.rna_translation import routes as rna_translation
+from services.visualization_2d import routes as visualization
+from services.propeties import routes as propeties
+from services.hydrophobicity import routes as hydrophobicity
+from services.charge import routes as charge
+from services.flexibility import routes as flexibility
+from services.aromacity import routes as aromacity
+from services.instability import routes as instability
+from services.statistics import routes as statics
+from services.caching import routers as caching
+from services.facts import routers as facts
 
 # |------------------------------------------------------------------------------|#
 

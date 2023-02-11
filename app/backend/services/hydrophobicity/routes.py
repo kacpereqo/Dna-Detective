@@ -3,7 +3,7 @@ from .schemas import Protein, HydrophobicityScale
 from localcider.sequenceParameters import SequenceParameters
 from peptides import Peptide
 from .service import ProteinHydrophobicity
-from backend.services.database.db import DB
+from services.database.db import DB
 
 
 # |------------------------------------------------------------------------------|#

@@ -2,9 +2,10 @@ from fastapi import APIRouter
 from .schemas import Protein
 from .service import Visualization2DService
 from fastapi.responses import FileResponse
-from backend.services.database.db import DB
+from services.database.db import DB
 from starlette.concurrency import run_in_threadpool
 import threading
+from fastapi import BackgroundTasks
 import asyncio
 
 # |------------------------------------------------------------------------------|#
@@ -22,16 +23,17 @@ def get_2d_visualization(protein: Protein):
 
 
 @router.post("/api/to2d", tags=["converting"], description="Returns 2D visualization for a given sequence")
-async def get_2d_visualization(protein: Protein):
+def get_2d_visualization(protein: Protein):
     visualizer = Visualization2DService(protein.sequence)
-    await visualizer.protein_to_svg()
-    return FileResponse("backend/visualizations/test.png")
+    visualizer.protein_to_svg()
+    return FileResponse("test.png")
 
 
 @router.get("/api/visualizaiton/{_id}", tags=["converting"], description="Returns 2D visualization for a given sequence", response_class=FileResponse)
-async def get_2d_visualization(_id: int):
+# def get_2d_visualization(_id: int, background_tasks: BackgroundTasks):
+def get_2d_visualization(_id: int):
     sequence = DB().get_frame(_id)
     visualizer = Visualization2DService(sequence)
-
-    await visualizer.protein_to_svg()
-    return FileResponse("backend/visualizations/test.png", media_type="image/png", headers={'Access-Control-Expose-Headers': 'Content-Disposition'}, filename="test.png")
+    visualizer.protein_to_svg()
+    # background_tasks.add_task(visualizer.protein_to_svg)
+    return FileResponse("test.png", media_type="image/png", headers={'Access-Control-Expose-Headers': 'Content-Disposition'}, filename="test.png")

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Body, Form
 
-from backend.services.database.db import DB
+from services.database.db import DB
 from .service import Translator
 from .schemas import Rna_to_translate, Rna_translated
 

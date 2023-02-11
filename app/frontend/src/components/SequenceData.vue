@@ -1,10 +1,10 @@
 <template>
     <div class="sequence-data">
 
+        <Visualization v-show="component == 'visualization'" />
         <Propeties v-show="component == 'propeties'" />
         <Charge v-show="component == 'charge'" />
         <Hydro v-show="component == 'hydro'" />
-        <Visualization v-show="component == 'visualization'" />
     </div>
 </template>
 

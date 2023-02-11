@@ -1,7 +1,7 @@
 from .constants import RNA_CODON_TABLE, COMPLEMENTARY_TABLE
 from typing import List
 import re
-from backend.services.database.db import DB
+from services.database.db import DB
 
 # |------------------------------------------------------------------------------|#
 
