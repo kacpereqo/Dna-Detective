@@ -1,5 +1,7 @@
 <template>
-    <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper" :style="{ 'left': showMenu ? '0' : '-217px' }">
+        <div class="show-menu" @click="showMenu = !showMenu"><span
+                :style="{ '--display': showMenu ? 'none' : 'block' }"></span></div>
         <div class="items" :style="{ 'position': position, 'top': 0 }">
             <SequenceName />
             <input type="text" placeholder="Szukaj" id="search" v-model="search" />
@@ -32,6 +34,7 @@ export default {
 
     data() {
         return {
+            showMenu: false,
             position: 'inherit',
 
             list: [
@@ -103,9 +106,11 @@ export default {
 }
 
 .sidebar-wrapper {
+    background-color: var(--background-color);
     margin-top: 2px;
     flex-shrink: 0;
     width: 216px;
+    min-height: calc(100vh - 64px);
     border-right: var(--accent-color) 1px solid;
 }
 
@@ -198,5 +203,45 @@ li {
 .parent-li {
     position: relative;
     margin-bottom: 0.5rem;
+}
+
+@media (max-width: 960px) {
+    .sidebar-wrapper {
+        position: absolute;
+        z-index: 1;
+        left: -217px;
+    }
+
+    .show-menu {
+        display: block !important;
+    }
+}
+
+.show-menu {
+    display: none;
+    position: absolute;
+    ;
+    right: calc(-2.5rem - 2px);
+    top: 0.25rem;
+    background-color: var(--background-color);
+    border: 1px solid var(--accent-color);
+    border-left: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.show-menu span {
+    display: var(--display);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-top: 2px solid var(--background-color);
+    width: 2rem;
+}
+
+.show-menu:hover {
+    cursor: pointer;
 }
 </style>

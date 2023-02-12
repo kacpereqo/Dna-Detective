@@ -69,7 +69,7 @@ export default {
     name: 'NavBar',
     data() {
         return {
-            showMenu: true
+            showMenu: false
         }
     },
     components: {
@@ -280,7 +280,6 @@ a:hover {
 
 
 .menu ul {
-    /* background-color: var(--bakground-color); */
     width: 100%;
     height: 100%;
     margin: 0;

@@ -98,6 +98,12 @@ export default {
     margin-bottom: 2rem;
 }
 
+@media screen and (max-width: 960px) {
+    #chart {
+        width: calc(100vw - 3rem);
+    }
+}
+
 
 
 .buttons {
