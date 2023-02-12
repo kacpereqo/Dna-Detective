@@ -6,7 +6,7 @@
 
 <script>
 import { useMeta } from 'vue-meta'
-import RnaInput from '@/components/RnaInput.vue';
+import RnaInput from '@/components/rnainput/RnaInput.vue';
 
 export default {
   name: 'HomeView',

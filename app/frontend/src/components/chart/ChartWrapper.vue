@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import ExportChart from "@/components/ExportChart.vue";
-import Chart from '@/components/Chart.vue'
+import ExportChart from "@/components/chart/ExportChart.vue";
+import Chart from '@/components/chart/Chart.vue'
 
 export default {
     name: "ChartWrapper",

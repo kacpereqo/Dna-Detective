@@ -75,7 +75,7 @@
 <script>
 import clickOutSide from "@mahdikhashan/vue3-click-outside";
 import domtoimage from "dom-to-image-more";
-import Chart from "@/components/Chart.vue";
+import Chart from "@/components/chart/Chart.vue";
 
 export default {
     name: 'ExportChart',

@@ -8,11 +8,9 @@
 </template>
 
 <script>
-import ChartWrapper from './ChartWrapper.vue';
 
 export default {
     name: 'ThemeToogle',
-    components: { ChartWrapper },
     methods: {
         toogleTheme() {
             const theme = localStorage.getItem('theme');
@@ -83,7 +81,7 @@ input[type="checkbox"] {
 
     &:before {
         content: "";
-        background-image: url('../assets/sun.svg');
+        background-image: url('../../assets/sun.svg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
@@ -101,7 +99,7 @@ input[type="checkbox"]:checked+.check-trail {
 
         &::before {
             content: "";
-            background-image: url('../assets/moon.svg');
+            background-image: url('../../assets/moon.svg');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;

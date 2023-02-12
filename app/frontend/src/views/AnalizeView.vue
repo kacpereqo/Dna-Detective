@@ -8,8 +8,8 @@
 <script>
 import { useMeta } from 'vue-meta'
 
-import Sidebar from '@/components/Sidebar.vue'
-import SequenceData from '@/components/SequenceData.vue'
+import Sidebar from '@/components/navigation/Sidebar.vue'
+import SequenceData from '@/components/analize/SequenceData.vue'
 
 
 export default {

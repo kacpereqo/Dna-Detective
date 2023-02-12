@@ -2,7 +2,7 @@
     <div class="sequence-name">
         <div class="input-wrapper" @dblclick="editName">
             <input v-model="name" ref="name">
-            <img src="@/assets/edit.svg" @click="focusInput">
+            <img src="../../assets/edit.svg" @click="focusInput">
         </div>
     </div>
 </template>
@@ -24,7 +24,7 @@ export default {
 }
 
 </script>
-
+aa
 <style scoped>
 input {
     background-color: transparent;

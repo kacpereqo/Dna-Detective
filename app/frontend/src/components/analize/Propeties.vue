@@ -6,7 +6,7 @@
 
 <script>
 import axios from 'axios'
-import ChartWrapper from '../ChartWrapper.vue';
+import ChartWrapper from '../chart/ChartWrapper.vue';
 
 export default {
     name: "Propeties",

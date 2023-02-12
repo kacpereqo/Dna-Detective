@@ -14,8 +14,8 @@
 <script>
 import { useMeta } from 'vue-meta'
 
-import Translations from '@/components/analize/Translation.vue';
-import LoadingPrompt from '@/components/analize/LoadingPrompt.vue';
+import Translations from '@/components/other/Translation.vue';
+import LoadingPrompt from '@/components/other/LoadingPrompt.vue';
 
 export default {
     name: 'AnalizeView',

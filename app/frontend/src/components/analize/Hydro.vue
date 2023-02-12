@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ChartWrapper from '../ChartWrapper.vue';
+import ChartWrapper from '../chart/ChartWrapper.vue';
 import axios from 'axios'
 
 export default {

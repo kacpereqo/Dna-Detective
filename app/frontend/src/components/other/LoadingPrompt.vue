@@ -11,7 +11,7 @@
 
 <script>
 import axios from 'axios';
-import LoadingIcon from '../LoadingIcon.vue';
+import LoadingIcon from './LoadingIcon.vue';
 
 export default {
     name: 'LoadingPrompt',

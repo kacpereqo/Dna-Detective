@@ -8,7 +8,7 @@
 
 <script>
 import { useMeta } from 'vue-meta'
-import NavBar from '@/components/NavBar.vue'
+import NavBar from '@/components/navigation/NavBar.vue'
 
 export default {
   name: 'App',

@@ -78,7 +78,7 @@ a {
 .drop-down::after {
     content: '';
     position: absolute;
-    background-image: url('@/assets/arrow.svg');
+    background-image: url('../../assets/arrow.svg');
     filter: var(--icon-filter);
     background-size: contain;
     background-repeat: no-repeat;

@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import DropFile from './DropFile.vue';
+import DropFile from '@/components/rnainput/DropFile.vue';
 import axios from 'axios'
 
 export default {

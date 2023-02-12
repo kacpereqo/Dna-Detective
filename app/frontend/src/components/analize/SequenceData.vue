@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import SequenceName from '@/components/SequenceName.vue'
+import SequenceName from '@/components/navigation/SequenceName.vue'
 import Visualization from '@/components/analize/Visualization.vue'
 import Propeties from '@/components/analize/Propeties.vue'
 import Hydro from '@/components/analize/Hydro.vue'
-import Charge from '@/components/Charge.vue'
+import Charge from '@/components/analize/Charge.vue'
 
 export default {
     name: 'SequenceData',

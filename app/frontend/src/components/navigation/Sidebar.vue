@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import SequenceName from '@/components/SequenceName.vue';
+import SequenceName from '@/components/navigation/SequenceName.vue';
 
 export default {
     name: 'Sidebar',

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Line from '../Line.vue';
+import Line from '../other/Line.vue';
 import axios from 'axios'
 
 export default {

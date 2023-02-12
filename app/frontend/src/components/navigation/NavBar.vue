@@ -102,7 +102,7 @@ a {
 .logo a {
     display: block;
     height: 48px;
-    background-image: url('../assets/logo.png');
+    background-image: url('../../assets/logo.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
