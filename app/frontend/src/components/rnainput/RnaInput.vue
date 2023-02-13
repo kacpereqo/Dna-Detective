@@ -22,12 +22,13 @@
                     </select>
                 </div>
             </div>
+
             <form action="#" method="POST">
                 <div v-if="fileType == 'text'">
                     <textarea placeholder="Wpisz RNA lub DNA..." v-model="rnaSequence" spellcheck="false"></textarea>
                 </div>
                 <div v-if="fileType == 'file'">
-                    <DropFile />
+                    <DropFile @update:file-content="" />
                 </div>
             </form>
             <div class="rna-input__buttons">
@@ -59,7 +60,7 @@ export default {
     methods: {
         submit() {
             this.validate().then(() => {
-                axios.post('http://127.0.0.1:8000/api/sequence', {
+                axios.post(`http://127.0.0.1:8000/api/sequence?type=${fileType}`, {
                     sequence: this.rnaSequence
                 }).then(res => {
                     this.$router.push({
