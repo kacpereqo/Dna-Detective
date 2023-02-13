@@ -30,7 +30,7 @@ class Visualization2DService:
         mol = Chem.MolFromSmiles(self.smiles)
         rdDepictor.SetPreferCoordGen(True)
         Draw.MolToFile(mol, "test.png",
-                       (300 , 200))
+                       (50 * len(self.sequence) , 200))
 
     def protein_to_svg(self):
         """Returns 2D visualization for a given sequence"""
