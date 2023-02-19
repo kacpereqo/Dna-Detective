@@ -36,26 +36,25 @@ export default {
         return {
             isDragging: false,
             files: [],
-            fileContent: '',
+            file: {},
         };
     },
     emits: ['update:fileContent'],
     methods: {
         remove(i) {
             this.files.splice(i, 1);
-            this.fileContent = '';
-            this.fileContent.extension = '';
+            this.file = {};
         },
         onChange() {
             this.files = [...this.$refs.file.files];
             const read = new FileReader();
             read.readAsText(this.files[0]);
             read.onload = () => {
-                this.fileContent = read.result;
+                this.file.extension = this.files[0].name.split('.').pop();
+                this.file.content = read.result;
             };
-            this.fileContent.extension = this.files[0].name.split('.').pop();
 
-            this.$emit('update:fileContent', this.fileContent);
+            this.$emit('update:fileContent', this.file);
 
         },
         dragover(e) {

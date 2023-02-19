@@ -28,7 +28,7 @@
                     <textarea placeholder="Wpisz RNA lub DNA..." v-model="rnaSequence" spellcheck="false"></textarea>
                 </div>
                 <div v-if="fileType == 'file'">
-                    <DropFile @update:file-content="" />
+                    <DropFile @update:file-content="fileHandler" />
                 </div>
             </form>
             <div class="rna-input__buttons">
@@ -53,15 +53,21 @@ export default {
     data() {
         return {
             rnaSequence: '',
+            data: {},
             fileType: 'text',
             errorMessage: '',
         }
     },
     methods: {
         submit() {
+            if (this.fileType == 'text') {
+                this.data.content = this.rnaSequence
+                this.data.extension = 'plaintext'
+            }
+
             this.validate().then(() => {
-                axios.post(`http://127.0.0.1:8000/api/sequence?type=${fileType}`, {
-                    sequence: this.rnaSequence
+                axios.post(`http://127.0.0.1:8000/api/sequence`, {
+                    data: this.data,
                 }).then(res => {
                     this.$router.push({
                         name: 'translations',
@@ -80,15 +86,18 @@ export default {
             })
         },
         clear() {
-            this.rnaSequence = ''
+            this.data = {};
+        },
+        fileHandler(file) {
+            this.data = file
         },
         validate() {
             return new Promise((resolve, reject) => {
-                if (this.rnaSequence.length < 1) {
-                    reject(new Error('Pole nie może być puste'))
-                }
 
                 if (this.fileType == 'text') {
+                    if (this.rnaSequence.length < 1) {
+                        reject(new Error('Pole nie może być puste'))
+                    }
                     if (this.rnaSequence.length < 3) {
                         reject(new Error('Sekwencja musi zawierać przynajmniej 3 znaki'))
                     }

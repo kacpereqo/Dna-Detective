@@ -48,7 +48,6 @@ export default {
 
 $transition: all .5s ease;
 
-/* Hide the input */
 input[type="checkbox"] {
     position: absolute;
     opacity: 0;

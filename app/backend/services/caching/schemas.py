@@ -1,10 +1,11 @@
 from pydantic import BaseModel, validator
 from fastapi import HTTPException
+from typing import Dict
 
 # |------------------------------------------------------------------------------|#W
 
 
-class Rna_to_translate(BaseModel):
+class Sequence(BaseModel):
     sequence: str
 
     @validator("sequence")
@@ -15,7 +16,7 @@ class Rna_to_translate(BaseModel):
         if not v.isupper():
             v = v.upper()
 
-        v = v.replace(" ", "").replace("\n", "")
+        v = v.strip()
 
         if ("T" in v):
             v = v.replace("T", "U")
@@ -28,3 +29,7 @@ class Rna_to_translate(BaseModel):
 
 class Frame(BaseModel):
     frame: str
+
+
+class Data(BaseModel):
+    data: Dict[str, str]
