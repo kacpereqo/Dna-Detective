@@ -1,29 +1,40 @@
-
 <template>
-    <div class="export-button">
-        <div class="export-button-primary" @click="() => { showPopup = true; getSrc() }"> Wyeksportuj</div>
-        <div class="export-button-dropdown" v-click-out-side="() => { showOptions = false }"
-            :style="{ 'border-radius': showOptions ? '0 0.3rem 0 0' : '0 0.3rem 0.3rem 0' }"
-            @click="showOptions = !showOptions">
-            <div class="arrow-container">
-                <div class="arrow" :class="{ 'animate': showOptions, 'reverse-animate': !showOptions }"> </div>
+    <div class="buttons">
+        <div class="info-button button" @click="showInfo = !showInfo" v-click-out-side="() => { showInfo = false }">
+            <div> Informacje </div>
+            <img src="@/assets/error.svg">
+            <div class="info" v-if="showInfo">
+                <p>{{ info }}</p>
             </div>
-            <div class="drop-content" v-show="showOptions">
-                <ul>
-                    <li @click="() => { showPopup = true; getSrc() }">
-                        Png
-                    </li>
-                    <li @click="saveCsv">
-                        Csv
-                    </li>
-                    <li @click="saveJson">
-                        Json
-                    </li>
-                </ul>
+
+        </div>
+
+        <!-- Export buttons -->
+
+        <div class="export-button ">
+            <div class="export-button-primary button" @click="() => { showPopup = true; getSrc() }"> Wyeksportuj</div>
+            <div class="export-button-dropdown" v-click-out-side="() => { showOptions = false }"
+                :style="{ 'border-radius': showOptions ? '0 0.3rem 0 0' : '0 0.3rem 0.3rem 0' }"
+                @click="showOptions = !showOptions">
+                <div class="arrow-container">
+                    <div class="arrow" :class="{ 'animate': showOptions, 'reverse-animate': !showOptions }"> </div>
+                </div>
+                <div class="drop-content" v-show="showOptions">
+                    <ul>
+                        <li @click="() => { showPopup = true; getSrc() }">
+                            Png
+                        </li>
+                        <li @click="saveCsv">
+                            Csv
+                        </li>
+                        <li @click="saveJson">
+                            Json
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-
     <!-- Popup Background  -->
     <div v-if="showPopup" @click="() => { showPopup = false; width = 800; height = 400; resizeChart() }"
         class="export-popup-background">
@@ -94,6 +105,7 @@ export default {
             height: 400,
             mounted: false,
             showPopup: false,
+            showInfo: true,
             showOptions: false,
             src: null,
         }
@@ -137,7 +149,11 @@ export default {
             required: false,
             default: false,
         },
-
+        info: {
+            type: String,
+            required: false,
+            default: "",
+        },
     },
     methods: {
         getSrc() {
@@ -207,10 +223,83 @@ export default {
     display: flex;
 }
 
-.export-button-dropdown,
-.export-button-primary {
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    /* border: 1px solid var(--accent-color); */
+    background: var(--background-color);
+    bottom: calc(100% + 0.75rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+
+.info p {
+    max-width: 100vw;
+    width: fit-content;
+    overflow: hidden;
+    max-height: 9rem;
+    margin: 0;
+    padding: 0.25rem;
+    border: 1px solid var(--accent-color);
+    text-align: justify;
+    font-size: 0.9rem;
+    border-radius: 0.25rem;
+}
+
+.info::after {
+    content: "";
+    position: absolute;
+    top: calc(100%);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 0.5rem solid transparent;
+    border-top-color: var(--accent-color);
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.info-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     cursor: pointer;
-    margin-left: 0.1rem;
+    margin: 0 0.1rem;
+    border: 1px solid var(--accent-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.3rem;
+}
+
+.info-button img {
+    margin-left: 0.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    filter: var(--icon-filter);
+}
+
+.button {
+    margin-left: 0.5rem;
+}
+
+.info-button:hover {
+    transition: 0.2s;
+    background-color: var(--accent-color-light);
+}
+
+.export-button-dropdown,
+.button {
+    height: 1.5rem;
+    cursor: pointer;
+
     border: 1px solid var(--accent-color);
 }
 
@@ -220,6 +309,7 @@ export default {
 }
 
 .export-button-primary {
+    margin-right: 0.25rem;
     padding: 0.25rem 0.5rem;
     border-radius: 0.3rem 0 0 0.3rem;
 }
@@ -227,6 +317,7 @@ export default {
 .export-button-dropdown {
     position: relative;
     width: 1.5rem;
+    height: 2rem;
     border-radius: 0 0.3rem 0.3rem 0;
 }
 
@@ -366,15 +457,6 @@ export default {
     width: 100%;
     height: 100%;
     display: flex;
-}
-
-img {
-    max-width: 100%;
-    max-height: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .sidebar {

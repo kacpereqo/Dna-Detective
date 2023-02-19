@@ -1,0 +1,32 @@
+{
+    "test": "test en",
+    "navbar": {
+        "home": "Home",
+        "analise": "Analise",
+        "tables": "Tables",
+        "tools": "Tools",
+        "account": {
+            "account": "Account",
+            "login": "Login",
+            "register": "Register",
+            "logout": "Logout",
+            "prefereneces": "Preferences"
+        }
+    },
+    "analizeInput": {
+        "title": "Analise RNA/DNA",
+        "subtitle": "Tool for in-depth analysis of DNA/RNA chains",
+        "dataType": "Data type",
+        "textareaPlaceholder": "Input RNA or DNA...",
+        "submitButton": "Analize",
+        "clearButton": "Clear",
+        "dataTypes": {
+            "file": "File",
+            "text": "Text"
+        }
+    },
+    "dropFile": {
+        "placeholder": "Drop file here or click to upload",
+        "dragging": "Drop file here to upload"
+    }
+}

@@ -2,7 +2,7 @@
     <div class="chart-wrapper" v-observe-visibility="visibilityChanged">
         <div class="buttons">
             <ExportChart v-if="mounted" :data="data" :labels="labels" :wholeNumbers="wholeNumbers" :xUnit="xUnit"
-                ref="chart" :yUnit="yUnit" />
+                ref="chart" :yUnit="yUnit" :info="' 123'" />
         </div>
         <div class="charts">
 

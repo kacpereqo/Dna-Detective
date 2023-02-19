@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import { createMetaManager } from 'vue-meta'
 import { ObserveVisibility } from 'vue-observe-visibility'
+import i18n from './i18n'
+
 
 const app = createApp(App);
 
@@ -30,6 +32,7 @@ app.directive('click-outside', {
     }
 });
 
+app.use(i18n);
 app.use(createMetaManager())
 app.use(store);
 app.use(router);

@@ -2,8 +2,7 @@
     <div class="nav-wrapper">
         <nav>
             <div class="logo">
-                <router-link to="/">
-                </router-link>
+                <router-link to="/"></router-link>
             </div>
             <div class="nav-links">
                 <div class='desktop'>
@@ -11,15 +10,15 @@
                         <li style="flex:1;">
                             <div class="main-links">
                                 <ul>
-                                    <li><router-link to="/#" class="nav-link">Strona główna</router-link></li>
-                                    <li><router-link to="/#" class="nav-link">Analiza</router-link></li>
+                                    <li><router-link to="/#" class="nav-link">{{ $t('navbar.home') }}</router-link></li>
+                                    <li><router-link to="/#" class="nav-link">{{ $t('navbar.analise') }}</router-link></li>
                                     <li>
                                         <DropDownMenu :hrefs="[{ name: 'Tabela 1', path: '/' },
-                                        { name: 'Tablea 2', path: '/' },]" :name="'Tabele'" />
+                                        { name: 'Tablea 2', path: '/' },]" :name="$t('navbar.tables')" />
                                     </li>
                                     <li class="drop-down">
                                         <DropDownMenu :hrefs="[{ name: 'Narzedzie 1', path: '/' },
-                                        { name: 'Narzedzie 2', path: '/' },]" :name="'Narzędzia'" />
+                                        { name: 'Narzedzie 2', path: '/' },]" :name="$t('navbar.tools')" />
                                     </li>
                                 </ul>
                             </div>
@@ -27,13 +26,17 @@
                         <li>
                             <div class="left">
                                 <ul>
+                                    <li>
+                                        <LocaleSwitcher />
+                                    </li>
                                     <li class="toogle-switch">
                                         <ThemeToogle />
                                     </li>
                                     <li>
-                                        <DropDownMenu :hrefs="[{ name: 'Zaloguj', path: '/' },
-                                        { name: 'Zarejestruj', path: '/' }, { name: 'Preferencje' }]"
-                                            :name="'Konto'" />
+                                        <DropDownMenu
+                                            :hrefs="[{ name: $t('navbar.account.login'), path: '/' },
+                                            { name: $t('navbar.account.register'), path: '/' }, { name: $t('navbar.account.prefereneces') }]"
+                                            :name="$t('navbar.account.account')" />
                                     </li>
                                 </ul>
                             </div>
@@ -49,7 +52,7 @@
                     <div class="menu" v-if="showMenu">
                         <ul>
                             <li>
-                                <router-link to="/#"> Strona główna</router-link>
+                                <router-link to="/#"> {{ $t('navbar.home') }}</router-link>
                             </li>
 
                         </ul>
@@ -64,6 +67,7 @@
 <script>
 import DropDownMenu from './DropDownMenu.vue';
 import ThemeToogle from './ThemeToogle.vue';
+import LocaleSwitcher from './LocaleSwitcher.vue';
 
 export default {
     name: 'NavBar',
@@ -73,6 +77,7 @@ export default {
         }
     },
     components: {
+        LocaleSwitcher,
         DropDownMenu,
         ThemeToogle
     },
@@ -101,7 +106,7 @@ a {
 
 .logo a {
     display: block;
-    height: 48px;
+    height: 54px;
     background-image: url('../../assets/logo.png');
     background-size: contain;
     background-repeat: no-repeat;

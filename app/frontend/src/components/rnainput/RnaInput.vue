@@ -4,8 +4,8 @@
             <img src="@/assets/settings.svg" alt="settings" class="rna-input__settings-icon" role="button" />
             <div class="rna-input__header__text">
                 <span>
-                    <h1>Analiza RNA/DNA</h1>
-                    <h2>Narzędzie służące do dogłębnej analizy łańcuchów DNA/RNA </h2>
+                    <h1>{{ $t('analizeInput.title') }}</h1>
+                    <h2>{{ $t('analizeInput.subtitle') }}</h2>
                 </span>
             </div>
         </div>
@@ -15,17 +15,18 @@
                     <p v-if="errorMessage">{{ errorMessage }} <img src="@/assets/error.svg"></p>
                 </div>
                 <div class="data-type">
-                    <p>Typ danych</p>
+                    <p>{{ $t('analizeInput.dataType') }}</p>
                     <select name="type" id="type" v-model="fileType">
-                        <option value="text">Tekst</option>
-                        <option value="file">Plik</option>
+                        <option value="text">{{ $t('analizeInput.dataTypes.text') }}</option>
+                        <option value="file">{{ $t('analizeInput.dataTypes.file') }}</option>
                     </select>
                 </div>
             </div>
 
             <form action="#" method="POST">
                 <div v-if="fileType == 'text'">
-                    <textarea placeholder="Wpisz RNA lub DNA..." v-model="rnaSequence" spellcheck="false"></textarea>
+                    <textarea :placeholder="$t('analizeInput.textareaPlaceholder')" v-model="rnaSequence"
+                        spellcheck="false"></textarea>
                 </div>
                 <div v-if="fileType == 'file'">
                     <DropFile @update:file-content="fileHandler" />
@@ -33,9 +34,11 @@
             </form>
             <div class="rna-input__buttons">
                 <div class="rna-input__button" role="button" @click="submit"
-                    style="--first-color:rgba(0,255,0,0.25); --second-color:rgba(0,255,0,0.4);">Analizuj</div>
+                    style="--first-color:rgba(0,255,0,0.25); --second-color:rgba(0,255,0,0.4);">{{
+                        $t('analizeInput.submitButton') }}</div>
                 <div class="rna-input__button" role="button" @click="clear"
-                    style="--first-color:rgba(255,0,0,0.25); --second-color:rgba(255,0,0,0.4);">Wyczyść</div>
+                    style="--first-color:rgba(255,0,0,0.25); --second-color:rgba(255,0,0,0.4);">{{
+                        $t('analizeInput.clearButton') }}</div>
             </div>
         </div>
     </div>

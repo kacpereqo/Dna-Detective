@@ -1,6 +1,6 @@
 <template>
   <metainfo>
-    <template v-slot:title="{ content }">{{ content? `${content} - DNA detective` : `SITE_NAME` }}</template>
+    <template v-slot:title="{ content }">{{ content ? `${content} - DNA detective` : `SITE_NAME` }}</template>
   </metainfo>
   <NavBar />
   <router-view />
@@ -24,6 +24,11 @@ export default {
   },
 
   mounted() {
+    const locale = localStorage.getItem('locale')
+    if (locale) {
+      this.$i18n.locale = locale
+    }
+
     const theme = localStorage.getItem('theme')
     document.documentElement.className = theme
   }

@@ -1,0 +1,33 @@
+{
+    "test": "test pl",
+    "navbar": {
+        "home": "Strona główna",
+        "analise": "Analiza",
+        "tables": "tabele",
+        "tools": "Narzędzia",
+        "account": {
+            "account": "Konto",
+            "login": "Zaloguj",
+            "register": "Zarejestruj",
+            "logout": "Wyloguj",
+            "prefereneces": "Preferencje"
+        }
+    },
+    "analizeInput": {
+        "title": "Analiza RNA/DNA",
+        "subtitle": "Narzędzie służące do dogłębnej analizy łańcuchów DNA/RNA ",
+        "dataType": "Typ danych",
+        "textareaPlaceholder": "Wpisz RNA lub DNA...",
+        "submitButton": "Analizuj",
+        "clearButton": "Wyczyść",
+        "dropFilePlaceholder": "Upuść plik tutaj lub kliknij, aby wybrać plik",
+        "dataTypes": {
+            "file": "Plik",
+            "text": "Tekst"
+        }
+    },
+    "dropFile": {
+        "placeholder": "Upuść plik tutaj lub kliknij, aby wybrać plik",
+        "dragging": "Upuść tutaj plik aby go załadować"
+    }
+}

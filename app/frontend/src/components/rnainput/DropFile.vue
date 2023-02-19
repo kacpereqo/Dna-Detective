@@ -6,8 +6,8 @@
 
 
             <label for="fileInput" class="file-label" v-if="files.length == 0">
-                <div v-if="isDragging">Upuść tutaj żeby załadować.</div>
-                <div v-else>Upuść Plik lub <u>Wybierz</u> żeby załadować</div>
+                <div v-if="isDragging">{{ $t('dropFile.dragging') }}</div>
+                <div v-else>{{ $t('dropFile.placeholder') }}</div>
                 <img src="@/assets/upload.svg">
             </label>
             <div class="preview-container mt-4" v-if="files.length">
