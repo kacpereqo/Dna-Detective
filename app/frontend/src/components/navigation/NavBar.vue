@@ -2,7 +2,9 @@
     <div class="nav-wrapper">
         <nav>
             <div class="logo">
-                <router-link to="/"></router-link>
+                <router-link to="/">
+                    <div class="logo-img"></div>
+                </router-link>
             </div>
             <div class="nav-links">
                 <div class='desktop'>
@@ -11,7 +13,8 @@
                             <div class="main-links">
                                 <ul>
                                     <li><router-link to="/#" class="nav-link">{{ $t('navbar.home') }}</router-link></li>
-                                    <li><router-link to="/#" class="nav-link">{{ $t('navbar.analise') }}</router-link></li>
+                                    <li><router-link to="/#" class="nav-link">{{ $t('navbar.analise') }}</router-link>
+                                    </li>
                                     <li>
                                         <DropDownMenu :hrefs="[{ name: 'Tabela 1', path: '/' },
                                         { name: 'Tablea 2', path: '/' },]" :name="$t('navbar.tables')" />
@@ -105,13 +108,17 @@ a {
 }
 
 .logo a {
-    display: block;
     height: 54px;
+    aspect-ratio: 4/1;
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
     background-image: url('../../assets/logo.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    aspect-ratio: 4/1;
 }
 
 
@@ -131,19 +138,21 @@ a {
 
 @media only screen and (max-width: 1264px) {
 
-    .logo a {
+    .logo-img {
         background-image: url('@/assets/small-logo.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
+    }
+
+    .logo a {
         aspect-ratio: 1/1;
     }
 
 }
 
 .logo {
+    padding: 0 0.75rem;
     position: relative;
 }
+
 
 ul {
     display: flex;
