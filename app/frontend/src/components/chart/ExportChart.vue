@@ -1,6 +1,5 @@
-<template>
 
-    <!-- Buttons -->
+<template>
     <div class="export-button">
         <div class="export-button-primary" @click="() => { showPopup = true; getSrc() }"> Wyeksportuj</div>
         <div class="export-button-dropdown" v-click-out-side="() => { showOptions = false }"
@@ -12,10 +11,13 @@
             <div class="drop-content" v-show="showOptions">
                 <ul>
                     <li @click="() => { showPopup = true; getSrc() }">
-                        PNG
+                        Png
                     </li>
-                    <li>
-                        CSV
+                    <li @click="saveCsv">
+                        Csv
+                    </li>
+                    <li @click="saveJson">
+                        Json
                     </li>
                 </ul>
             </div>
@@ -167,6 +169,29 @@ export default {
             this.element.style.width = this.width + "px";
             this.element.style.height = this.height + "px";
             this.$refs.chart.resizeChart();
+        },
+        saveCsv() {
+        },
+        saveCsv() {
+
+            let csv = 'label,data\n';
+            this.data.forEach((row, i) => {
+                csv += this.labels[i] + ',' + row + '\n';
+            });
+            const link = document.createElement("a");
+            link.download = "data.csv";
+            link.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+            link.click();
+        },
+        saveJson() {
+            // write json with data and labels
+            const link = document.createElement("a");
+            link.download = "data.json";
+            link.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
+                data: this.data,
+                labels: this.labels,
+            }));
+            link.click();
         },
     },
     mounted() {
