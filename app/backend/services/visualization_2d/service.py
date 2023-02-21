@@ -34,7 +34,10 @@ class Visualization2DService:
 
     def protein_to_svg(self):
         """Returns 2D visualization for a given sequence"""
-        self.draw()
+
+        loop = asyncio.get_event_loop()
+        loop.run_in_executor(None, self.draw)
+
         return "test.png"
 
     # |------------------------------------------------------------------------------|#

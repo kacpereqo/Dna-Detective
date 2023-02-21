@@ -96,6 +96,7 @@ export default {
     width: calc(100vw - 216px - 3rem);
     height: 250px;
     margin-bottom: 2rem;
+    position: relative;
 }
 
 @media screen and (max-width: 960px) {

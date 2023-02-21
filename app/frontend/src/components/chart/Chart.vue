@@ -1,6 +1,4 @@
-<template>
-
-</template>
+<template></template>
 <script>
 import uPlot from 'uplot';
 
@@ -44,6 +42,62 @@ export default {
 
     },
     methods: {
+        tooltipPlugin(opts) {
+            let over, bound, bLeft, bTop;
+
+            function syncBounds(element) {
+                let bbox = element.getBoundingClientRect();
+                bLeft = bbox.left;
+                bTop = bbox.top;
+            }
+
+            const overlay = document.createElement("div");
+            overlay.id = "overlay";
+            overlay.style.display = "none";
+            overlay.style.position = "absolute";
+            document.body.appendChild(overlay);
+
+            overlay.style.background = "var(--background-color)";
+            overlay.style.color = "(--text-color)";
+            overlay.style.padding = "0.5rem";
+            overlay.style.borderRadius = "0.2rem";
+            overlay.style.border = "1px solid var(--accent-color-dark)";
+            overlay.style.zIndex = "1000";
+            overlay.style.whiteSpace = "break";
+
+
+            return {
+                hooks: {
+                    init: u => {
+                        over = u.over;
+
+                        bound = over;
+
+                        over.onmouseenter = () => {
+                            overlay.style.display = "block";
+                        };
+
+                        over.onmouseleave = () => {
+                            overlay.style.display = "none";
+                            overlay.style.left = "-100vw";
+                        };
+                    },
+                    setSize: u => {
+                        syncBounds(this.element);
+                    },
+                    setCursor: u => {
+                        const { left, top, idx } = u.cursor;
+                        const x = u.data[0][idx];
+                        const y = u.data[1][idx];
+                        overlay.innerHTML = `<div> ${x}</div><div>${y}</div>`;
+
+                        overlay.style.left = left + bLeft + 70 - overlay.clientWidth + "px";
+                        overlay.style.top = top + bTop - overlay.clientHeight / 2 - 8 + "px";
+
+                    }
+                }
+            };
+        },
         resizeChart() {
             this.chart.setSize({
                 width: this.element.clientWidth,
@@ -76,6 +130,9 @@ export default {
 
                         },
                     },
+                    plugins: [
+                        this.tooltipPlugin(this.element),
+                    ],
                     title: "",
                     id: "chart1",
                     class: "my-chart",
