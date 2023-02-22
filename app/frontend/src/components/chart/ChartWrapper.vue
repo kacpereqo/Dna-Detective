@@ -78,6 +78,11 @@ export default {
         this.parent = this.$el.querySelector("#chart")
         this.title = this.$t(this.labels + '.title')
     },
+    watch: {
+        '$i18n.locale': function (newVal, oldVal) {
+            this.title = this.$t(this.labels + '.title')
+        }
+    }
 
 }
 

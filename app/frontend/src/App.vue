@@ -30,6 +30,7 @@ export default {
     }
 
     const theme = localStorage.getItem('theme')
+    console.log(theme)
     document.documentElement.className = theme
   }
 }
@@ -65,6 +66,21 @@ export default {
   --background-color: #191919;
   --icon-filter: invert(1);
   --chart-color: #6183ff33;
+}
+
+:root.high-contrast-theme {
+  --visualization-filter: 0;
+  --heading-color: #ffffff;
+  --text-color: #000000;
+  --accent-color-dark: #00000080;
+  --accent-color: #00000040;
+  --accent-color-light: #0000001a;
+  --main-color: #5f5cff;
+  --background-color: #ffffff;
+  --chart-color: #0000ff4d;
+  --main-color-opacity: #0400f5;
+  --icon-filter: invert(0);
+  --contrast: invert(1);
 }
 
 .wrapper {
@@ -113,6 +129,8 @@ textarea {
 }
 
 html {
+  filter: invert(1);
+  filter: var(--contrast);
   font-size: 16px;
 }
 </style>

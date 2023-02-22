@@ -121,6 +121,7 @@ export default {
                     plugins: [
                         this.tooltipPlugin(),
                     ],
+
                     width: this.parent.offsetWidth,
                     height: this.parent.offsetHeight,
                     axes: [
@@ -200,6 +201,12 @@ export default {
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeChart);
     },
+    watch: {
+        '$i18n.locale': function (newVal, oldVal) {
+            console.log("locale changed");
+            this.reInit();
+        }
+    }
 }
 </script>
 
