@@ -4,7 +4,7 @@
             <div> Informacje </div>
             <img src="@/assets/error.svg">
             <div class="info" v-if="showInfo">
-                <p>{{ info }}</p>
+                <p>info</p>
             </div>
 
         </div>
@@ -79,8 +79,7 @@
     <!-- Export Chart -->
     <div>
         <div id="export-chart" ref="chartContainer">
-            <Chart v-if="mounted" :data="data" :labels="labels" :element="element" :wholeNumbers="wholeNumbers"
-                :xUnit="xUnit" :yUnit="yUnit" ref="chart" />
+            <Chart v-if="mounted" :xData="xData" :yData="yData" :parent="parent" :labels="labels" ref="chart" />
         </div>
     </div>
 </template>
@@ -97,7 +96,6 @@ export default {
     },
     directives: {
         clickOutSide,
-        element: null,
     },
     data() {
         return {
@@ -105,51 +103,24 @@ export default {
             height: 400,
             mounted: false,
             showPopup: false,
-            showInfo: true,
+            showInfo: false,
             showOptions: false,
+            parent: this,
             src: null,
         }
     },
     props: {
-        data: {
+        yData: {
+            type: Array,
+            required: true,
+            default: [],
+        },
+        xData: {
             type: Array,
             required: true,
             default: [],
         },
         labels: {
-            type: Array,
-            required: true,
-            default: [],
-        },
-        axisOptions: {
-            type: Object,
-            required: false,
-            default: {}
-        },
-        lineOptions: {
-            type: Object,
-            required: false,
-            default: {
-                hideDots: 1,
-                regionFill: 1,
-            },
-        },
-        xUnit: {
-            type: String,
-            required: false,
-            default: "",
-        },
-        yUnit: {
-            type: String,
-            required: false,
-            default: "",
-        },
-        wholeNumbers: {
-            type: Boolean,
-            required: false,
-            default: false,
-        },
-        info: {
             type: String,
             required: false,
             default: "",
@@ -211,7 +182,7 @@ export default {
         },
     },
     mounted() {
-        this.element = this.$refs.chartContainer;
+        this.parent = this.$refs.chartContainer;
         this.mounted = true;
     }
 
@@ -228,7 +199,6 @@ export default {
     align-items: center;
     justify-content: center;
     position: absolute;
-    /* border: 1px solid var(--accent-color); */
     background: var(--background-color);
     bottom: calc(100% + 0.75rem);
     left: 50%;
@@ -238,8 +208,8 @@ export default {
 
 
 .info p {
-    max-width: 100vw;
-    width: fit-content;
+    width: max-content;
+    max-width: 24rem;
     overflow: hidden;
     max-height: 9rem;
     margin: 0;

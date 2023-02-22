@@ -2,7 +2,7 @@
     <div class="property-wrapper">
         <h2>Ładunek</h2>
         <li> Punkt izoelektryczny {{ isoelectricpoint }}</li>
-        <ChartWrapper v-if="loaded" :data="charge" :labels="labels" :xUnit="'pH'" :yUnit="'Ładunek'" />
+        <ChartWrapper v-if="loaded" :yData="yData" :xData="xData" :labels="labels" />
     </div>
 </template>
 
@@ -19,8 +19,9 @@ export default {
     data() {
         return {
             isoelectricpoint: '',
-            charge: [],
-            labels: [],
+            xData: [],
+            yData: [],
+            labels: {},
             loaded: false,
         }
     },
@@ -35,8 +36,8 @@ export default {
             axios.get(`http://127.0.0.1:8000/api/netcharge/${this.id}?start=0&end=14&step=0.1`)
                 .then(response => {
                     for (let x in response.data.netcharge) {
-                        this.charge.push(response.data.netcharge[x]);
-                        this.labels.push(parseFloat(x));
+                        this.yData.push(response.data.netcharge[x]);
+                        this.xData.push(parseFloat(x));
                         this.loaded = true;
                     }
 
@@ -60,6 +61,4 @@ export default {
 </script>
 
 
-<style >
-
-</style>
+<style ></style>

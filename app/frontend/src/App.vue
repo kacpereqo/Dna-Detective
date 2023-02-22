@@ -49,6 +49,7 @@ export default {
   --main-color: #5f5cff;
   --background-color: #ffffff;
   --chart-color: #0000ff4d;
+  --main-color-opacity: #0400f5;
   --icon-filter: invert(0);
 }
 
@@ -59,7 +60,8 @@ export default {
   --accent-color-dark: #ffffff80;
   --accent-color: #ffffff40;
   --accent-color-light: #ffffff1a;
-  --main-color: #5f5cffb3;
+  --main-color: #7370f5b3;
+  --main-color-opacity: #1511d4;
   --background-color: #191919;
   --icon-filter: invert(1);
   --chart-color: #6183ff33;
@@ -108,5 +110,9 @@ textarea {
 
 * {
   transition: var(--transition);
+}
+
+html {
+  font-size: 16px;
 }
 </style>

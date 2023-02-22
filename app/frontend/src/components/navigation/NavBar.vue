@@ -108,6 +108,7 @@ a {
 }
 
 .logo a {
+    padding: 0 1rem;
     height: 54px;
     aspect-ratio: 4/1;
 }
@@ -115,6 +116,7 @@ a {
 .logo-img {
     width: 100%;
     height: 100%;
+    /* position: absolute; */
     background-image: url('../../assets/logo.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -140,6 +142,8 @@ a {
 
     .logo-img {
         background-image: url('@/assets/small-logo.svg');
+        width: 54px;
+        height: 54px;
     }
 
     .logo a {
@@ -149,7 +153,6 @@ a {
 }
 
 .logo {
-    padding: 0 0.75rem;
     position: relative;
 }
 

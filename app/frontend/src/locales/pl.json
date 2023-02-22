@@ -29,5 +29,40 @@
     "dropFile": {
         "placeholder": "Upuść plik tutaj lub kliknij, aby wybrać plik",
         "dragging": "Upuść tutaj plik aby go załadować"
+    },
+    "charts": {
+        "hydro": {
+            "title": "Hydrofofobowość",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Hydrofofobowość",
+            "yUnit": "bp",
+            "xUnit": "aa",
+            "scales": {
+                "len": "1",
+                "scales": [
+                    "Kyte-Dollitle"
+                ]
+            }
+        },
+        "chargeAtPH": {
+            "title": "Ładunek",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Hydrofofobowość",
+            "xUnit": "bp",
+            "yUnit": "pozycja",
+            "scales": [
+                "Rodwell"
+            ]
+        },
+        "mass": {
+            "title": "Ładunek",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Masa",
+            "xUnit": "[Kdal]",
+            "yUnit": "pozycja"
+        }
     }
 }

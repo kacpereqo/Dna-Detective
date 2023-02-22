@@ -2,7 +2,7 @@
     <div class="sidebar-wrapper" :style="{ 'left': showMenu ? '0' : '-217px' }">
         <div class="show-menu" @click="showMenu = !showMenu"><span
                 :style="{ '--display': showMenu ? 'none' : 'block' }"></span></div>
-        <div class="items" :style="{ 'position': position, 'top': 0 }">
+        <div class="items" :style="{ 'position': position }">
             <SequenceName />
             <input type="text" placeholder="Szukaj" id="search" v-model="search" />
             <ul>
@@ -14,6 +14,7 @@
                         <li class="sub-li" v-for="item, index in item.nested">
                             <p @click="scrollToContent(item.value)" :style="{ '--i': index }">{{ item.text }}</p>
                         </li>
+
                     </ul>
                 </li>
             </ul>
@@ -106,22 +107,32 @@ export default {
 }
 
 .sidebar-wrapper {
+    overflow: hidden;
     background-color: var(--background-color);
     margin-top: 2px;
     flex-shrink: 0;
-    width: 216px;
+    width: 13.5rem;
     min-height: calc(100vh - 64px);
     border-right: var(--accent-color) 1px solid;
 }
 
 .items {
+    left: 0;
+    top: 0;
+    width: 12rem;
+    /* width: inherit; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
     justify-content: flex-start;
-    height: 100%;
+    height: calc(100vh - 56px);
     padding: 0.75rem;
 }
+
+
 
 .sticky {
     width: inherit;

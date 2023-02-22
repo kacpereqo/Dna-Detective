@@ -2,8 +2,7 @@
     <div class="property-wrapper">
         <h2>Hydrofobowość</h2>
         <li> Średnia hydrofobowość {{ gravy }}</li>
-        <ChartWrapper v-if="loaded" :data="hydrophobicity" :labels="labels" :wholeNumbers="true" :xUnit="'Aminokwas'"
-            :yUnit="'Hydrofobowość'" />
+        <ChartWrapper v-if="loaded" :yData="yData" :xData="xData" :wholeNumbers="true" :labels="labels" />
     </div>
 </template>
 
@@ -19,8 +18,9 @@ export default {
     data() {
         return {
             gravy: '',
-            hydrophobicity: [],
-            labels: [],
+            yData: [],
+            xData: [],
+            labels: '',
             loaded: false,
         }
     },
@@ -29,6 +29,9 @@ export default {
         this.getHydrophobicity();
         this.getGRAVY();
     },
+    mounted() {
+        this.labels = this.$t('charts.hydro');
+    },
 
     methods: {
         getHydrophobicity() {
@@ -36,10 +39,10 @@ export default {
                 .then(response => {
 
 
-                    this.hydrophobicity = response.data.hydrophobicity;
+                    this.yData = response.data.hydrophobicity;
 
-                    for (let i = 0; i < this.hydrophobicity.length; i++) {
-                        this.labels.push(i + 1);
+                    for (let i = 0; i < this.yData.length; i++) {
+                        this.xData.push(i + 1);
                     }
                     this.loaded = true;
                 })

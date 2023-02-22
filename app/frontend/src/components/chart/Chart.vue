@@ -8,91 +8,71 @@ export default {
         return this.initState();
     },
     props: {
-        data: {
+        xData: {
             type: Array,
             required: false,
             default: [],
         },
-        labels: {
+        yData: {
             type: Array,
             required: false,
             default: [],
 
         },
-        xUnit: {
+        labels: {
             type: String,
             required: false,
             default: "",
         },
-        yUnit: {
-            type: String,
-            required: false,
-            default: "",
-        },
-        element: {
+        parent: {
             type: Object,
             required: false,
             default: null,
-        },
-        wholeNumbers: {
-            type: Boolean,
-            required: false,
-            default: false,
-        },
 
+        }
     },
     methods: {
         tooltipPlugin(opts) {
             let over, bound, bLeft, bTop;
-
             function syncBounds(element) {
                 let bbox = element.getBoundingClientRect();
                 bLeft = bbox.left;
                 bTop = bbox.top;
             }
-
             const overlay = document.createElement("div");
             overlay.id = "overlay";
             overlay.style.display = "none";
             overlay.style.position = "absolute";
             document.body.appendChild(overlay);
-
-            overlay.style.background = "var(--background-color)";
-            overlay.style.color = "(--text-color)";
-            overlay.style.padding = "0.5rem";
-            overlay.style.borderRadius = "0.2rem";
-            overlay.style.border = "1px solid var(--accent-color-dark)";
-            overlay.style.zIndex = "1000";
-            overlay.style.whiteSpace = "break";
-
-
             return {
                 hooks: {
                     init: u => {
                         over = u.over;
-
                         bound = over;
-
                         over.onmouseenter = () => {
                             overlay.style.display = "block";
                         };
-
                         over.onmouseleave = () => {
                             overlay.style.display = "none";
                             overlay.style.left = "-100vw";
                         };
                     },
                     setSize: u => {
-                        syncBounds(this.element);
+                        syncBounds(this.parent);
                     },
                     setCursor: u => {
                         const { left, top, idx } = u.cursor;
                         const x = u.data[0][idx];
-                        const y = u.data[1][idx];
-                        overlay.innerHTML = `<div> ${x}</div><div>${y}</div>`;
+                        overlay.style.left = left + bLeft - overlay.clientWidth + 40 + "px";
+                        overlay.style.top = top + bTop - overlay.clientHeight + 10 + "px";
 
-                        overlay.style.left = left + bLeft + 70 - overlay.clientWidth + "px";
-                        overlay.style.top = top + bTop - overlay.clientHeight / 2 - 8 + "px";
+                        const y = u.data[1][idx];
+
+                        overlay.innerHTML = `
+                        <ul>
+                        <li class="x"> <b> ${x} ${this.$t(this.labels + '.xUnit')} </b> </li>
+                        <li> <div style="--color:${u.series[1]._stroke}" class="square" ></div>${y} ${this.$t(this.labels + '.yUnit')}</li>
+                    </ul>`;
 
                     }
                 }
@@ -100,18 +80,18 @@ export default {
         },
         resizeChart() {
             this.chart.setSize({
-                width: this.element.clientWidth,
-                height: this.element.clientHeight,
+                width: this.parent.clientWidth,
+                height: this.parent.clientHeight,
             });
         },
         reInit() {
             const data = [
-                this.$props.labels,
-                this.$props.data,
+                this.xData,
+                this.yData,
             ]
             Object.assign(this.$data, this.initState());
-            this.element.innerHTML = "";
-            this.chart = new uPlot(this.opts, data, this.element);
+            this.parent.innerHTML = "";
+            this.chart = new uPlot(this.opts, data, this.parent);
         },
         initState() {
             const root = getComputedStyle(document.body);
@@ -131,16 +111,16 @@ export default {
                         },
                     },
                     plugins: [
-                        this.tooltipPlugin(this.element),
+                        this.tooltipPlugin(),
                     ],
                     title: "",
                     id: "chart1",
                     class: "my-chart",
-                    width: this.element.offsetWidth,
-                    height: this.element.offsetHeight,
+                    width: this.parent.offsetWidth,
+                    height: this.parent.offsetHeight,
                     axes: [
                         {
-                            label: this.xUnit,
+                            // label: this.xUnit,
                             labelFont: "16px Arial ",
                             stroke: root.getPropertyValue('--text-color'), grid: {
                                 show: true,
@@ -159,8 +139,8 @@ export default {
                         {
                             labelFont: "16px Arial ",
                             show: true,
-                            label: this.yUnit,
-                            labelSize: 30,
+                            // label: this.yUnit,
+                            yDataize: 30,
                             gap: 5,
                             size: 50,
                             stroke: root.getPropertyValue('--text-color'),
@@ -181,13 +161,13 @@ export default {
                     ],
                     series: [
                         {
-                            label: this.xUnit,
+                            // label: this.xUnit,
 
 
                         },
 
                         {
-                            label: this.yUnit,
+                            // label: this.yUnit,
                             stroke: "blue",
                             width: 2,
                             fill: root.getPropertyValue('--chart-color'),
@@ -200,16 +180,15 @@ export default {
     },
     mounted() {
         const data = [
-            this.$props.labels,
-            this.$props.data,
+            this.xData,
+            this.yData,
         ]
-
-        this.chart = new uPlot(this.opts, data, this.element);
+        this.chart = new uPlot(this.opts, data, this.parent);
     },
     created() {
         this.unwatch = this.$store.watch(
             (state) => state.theme,
-            (theme) => {
+            () => {
                 this.reInit();
             }
         );
@@ -221,6 +200,53 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
 @import 'https://unpkg.com/uplot@1.6.24/dist/uPlot.min.css';
+
+#overlay {
+    position: absolute;
+    background: var(--background-color);
+    color: var(--text-color);
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    border: 1px solid var(--accent-color-dark);
+    z-index: 1000;
+    min-width: 3rem;
+}
+
+#overlay::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--text-color);
+}
+
+#overlay ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#overlay li {
+    display: flex;
+    align-items: center;
+    margin: 0.2rem 0;
+}
+
+.square {
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 2px solid var(--accent-color);
+    border-radius: 0.1rem;
+    margin-right: 0.5rem;
+    background-color: var(--color);
+}
+
+.x {
+    font-weight: bold;
+    border-bottom: 2px solid var(--accent-color-dark);
+}
 </style>

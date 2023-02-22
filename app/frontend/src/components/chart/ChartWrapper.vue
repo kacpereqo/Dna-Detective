@@ -1,14 +1,12 @@
 <template>
     <div class="chart-wrapper" v-observe-visibility="visibilityChanged">
         <div class="buttons">
-            <ExportChart v-if="mounted" :data="data" :labels="labels" :wholeNumbers="wholeNumbers" :xUnit="xUnit"
-                ref="chart" :yUnit="yUnit" :info="' 123'" />
+            <ExportChart v-if="mounted" :yData="yData" :xData="xData" :labels="labels" ref="chart" />
         </div>
         <div class="charts">
 
             <div id="chart">
-                <Chart v-if="isVisible" :data="data" :labels="labels" :element="element" :wholeNumbers="wholeNumbers"
-                    :xUnit="xUnit" ref="chart" :yUnit="yUnit" />
+                <Chart v-if="isVisible" :yData="yData" :xData="xData" :labels="labels" :parent="parent" ref="chart" />
             </div>
         </div>
 
@@ -29,35 +27,25 @@ export default {
     data() {
         return {
             isVisible: false,
-            element: null,
+            parent: null,
             mounted: false,
         }
     },
     props: {
-        data: {
+        xData: {
+            type: Array,
+            required: true,
+            default: [],
+        },
+        yData: {
             type: Array,
             required: true,
             default: [],
         },
         labels: {
-            type: Array,
-            required: true,
-            default: [],
-        },
-        xUnit: {
-            type: String,
+            type: Object,
             required: false,
-            default: "",
-        },
-        yUnit: {
-            type: String,
-            required: false,
-            default: "",
-        },
-        wholeNumbers: {
-            type: Boolean,
-            required: false,
-            default: false,
+            default: {},
         },
     },
     methods: {
@@ -77,7 +65,7 @@ export default {
     },
     mounted() {
         this.mounted = true
-        this.element = this.$el.querySelector("#chart")
+        this.parent = this.$el.querySelector("#chart")
     },
 
 }
@@ -93,7 +81,7 @@ export default {
 
 
 #chart {
-    width: calc(100vw - 216px - 3rem);
+    width: calc(100vw - 16.5rem);
     height: 250px;
     margin-bottom: 2rem;
     position: relative;

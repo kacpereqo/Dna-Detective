@@ -60,7 +60,6 @@ export default {
     },
     mounted() {
         this.dotsInterval = setInterval(this.addDots, 500);
-        console.log(this.display_facts)
         if (this.display_facts) {
             this.factInterval = setInterval(this.getFact, 1000);
         }
