@@ -48,21 +48,21 @@
         "chargeAtPH": {
             "title": "Ładunek",
             "info": "",
-            "xAxis": "Pozycja",
-            "yAxis": "Hydrofofobowość",
-            "xUnit": "bp",
-            "yUnit": "pozycja",
+            "xAxis": "pH",
+            "yAxis": "Ładunek",
+            "xUnit": "pH",
+            "yUnit": "Ładunek",
             "scales": [
                 "Rodwell"
             ]
         },
         "mass": {
-            "title": "Ładunek",
+            "title": "Masa",
             "info": "",
             "xAxis": "Pozycja",
             "yAxis": "Masa",
-            "xUnit": "[Kdal]",
-            "yUnit": "pozycja"
+            "xUnit": "aa",
+            "yUnit": "Kdal"
         }
     }
 }

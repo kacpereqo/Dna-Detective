@@ -61,14 +61,7 @@
                     <p>Wysokość:</p> <input type="text" min="1" v-model="height"
                         v-on:change="() => { resizeChart(); getSrc() }">
                 </div>
-                <div>
-                    <p>Format:</p>
-                    <select>
-                        <option value="png">PNG</option>
-                        <option value="jpg">JPG</option>
-                        <option value="svg">SVG</option>
-                    </select>
-                </div>
+
                 <div class="export" @click="saveChart()">
                     <p>Eksportuj</p>
                 </div>
@@ -129,7 +122,7 @@ export default {
     methods: {
         getSrc() {
             this.resizeChart();
-            const chart = this.element.getElementsByClassName("u-wrap")[0];
+            const chart = this.parent.getElementsByClassName("u-wrap")[0];
             domtoimage.toPng(
                 chart, { bgcolor: getComputedStyle(document.body).getPropertyValue('--background-color') }
             ).then(
@@ -140,7 +133,7 @@ export default {
         },
 
         saveChart() {
-            const chart = this.element.getElementsByClassName("u-wrap")[0];
+            const chart = this.parent.getElementsByClassName("u-wrap")[0];
             domtoimage.toPng(
                 chart, { bgcolor: getComputedStyle(document.body).getPropertyValue('--background-color') }
             ).then(
@@ -153,8 +146,8 @@ export default {
             )
         },
         resizeChart() {
-            this.element.style.width = this.width + "px";
-            this.element.style.height = this.height + "px";
+            this.parent.style.width = this.width + "px";
+            this.parent.style.height = this.height + "px";
             this.$refs.chart.resizeChart();
         },
         saveCsv() {
@@ -466,6 +459,9 @@ export default {
 }
 
 .preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 100%;
     height: 100%;
@@ -483,6 +479,12 @@ export default {
 
 .preview-container p {
     font-size: 1.25rem;
+}
+
+.preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .export {

@@ -1,6 +1,6 @@
 <template>
     <div class="propeties-wrapper">
-        <ChartWrapper v-if="loaded" :xData="weight" :yData="labels" />
+        <ChartWrapper v-if="loaded" :xData="xData" :yData="yData" :labels="labels" :wholeNumbers="true" />
     </div>
 </template>
 
@@ -12,8 +12,8 @@ export default {
     name: "Propeties",
     data() {
         return {
-            weight: [],
-            labels: [],
+            yData: [],
+            xData: [],
             window: 3,
             loaded: false,
         };
@@ -22,9 +22,9 @@ export default {
         getWeight() {
             axios.get(`http://127.0.0.1:8000/api/weight/${this.id}?window=${this.window}`)
                 .then(res => {
-                    this.weight = res.data.weight;
-                    for (let i = this.window; i < this.window + this.weight.length; i++) {
-                        this.labels.push(i);
+                    this.yData = res.data.weight;
+                    for (let i = this.window; i < this.window + this.yData.length; i++) {
+                        this.xData.push(i);
                     }
                     this.loaded = true;
                 });
@@ -33,6 +33,9 @@ export default {
     created() {
         this.id = this.$route.params.id;
         this.getWeight();
+    },
+    mounted() {
+        this.labels = this.$t('charts.mass');
     },
     components: { ChartWrapper }
 }

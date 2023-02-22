@@ -38,6 +38,6 @@ def cache_sequence(data : Data):
         return DB().post_sequence(sequence.sequence)
 
 
-@router.post("/api/frame")
+@router.post("/api/frameid")
 def cache_sequence(frame: Frame):
     return DB().post_frame(frame.frame)

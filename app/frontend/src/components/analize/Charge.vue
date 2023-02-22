@@ -21,7 +21,7 @@ export default {
             isoelectricpoint: '',
             xData: [],
             yData: [],
-            labels: {},
+            labels: '',
             loaded: false,
         }
     },
@@ -29,6 +29,9 @@ export default {
         this.id = this.$route.params.id;
         this.getCharge();
         this.getIsoelectricPoint();
+    },
+    mounted() {
+        this.labels = this.$t('charts.chargeAtPH');
     },
 
     methods: {

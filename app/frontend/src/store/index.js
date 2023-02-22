@@ -3,11 +3,11 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     theme: localStorage.getItem('theme'),
-    sequence: "",
+    frame: localStorage.getItem('frame') || '',
   },
   getters: {
     theme: state => state.theme,
-    sequence: state => state.sequence,
+    frame: state => state.frame,
   },
   mutations: {
     toogleTheme(state) {
@@ -18,8 +18,9 @@ export default createStore({
         state.theme = 'light-theme'
       }
     },
-    setSequence(state, sequence) {
-      state.sequence = sequence;
+    setFrame(state, frame) {
+      state.frame = frame;
+      localStorage.setItem('frame', frame);
     }
   },
   actions: {

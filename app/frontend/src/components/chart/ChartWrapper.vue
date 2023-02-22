@@ -1,12 +1,14 @@
 <template>
     <div class="chart-wrapper" v-observe-visibility="visibilityChanged">
+        <Line :word="title" />
         <div class="buttons">
-            <ExportChart v-if="mounted" :yData="yData" :xData="xData" :labels="labels" ref="chart" />
+            <ExportChart v-if="mounted" :yData="yData" :xData="xData" :labels="labels" :wholeNumbers="wholeNumbers"
+                ref="chart" />
         </div>
         <div class="charts">
-
             <div id="chart">
-                <Chart v-if="isVisible" :yData="yData" :xData="xData" :labels="labels" :parent="parent" ref="chart" />
+                <Chart v-if="isVisible" :yData="yData" :xData="xData" :labels="labels" :parent="parent"
+                    :wholeNumbers="wholeNumbers" ref="chart" />
             </div>
         </div>
 
@@ -16,12 +18,14 @@
 <script>
 import ExportChart from "@/components/chart/ExportChart.vue";
 import Chart from '@/components/chart/Chart.vue'
+import Line from '@/components/other/Line.vue'
 
 export default {
     name: "ChartWrapper",
     components: {
         Chart,
-        ExportChart
+        ExportChart,
+        Line
     },
 
     data() {
@@ -29,6 +33,7 @@ export default {
             isVisible: false,
             parent: null,
             mounted: false,
+            title: '',
         }
     },
     props: {
@@ -47,6 +52,11 @@ export default {
             required: false,
             default: {},
         },
+        wholeNumbers: {
+            type: Boolean,
+            required: false,
+            default: false,
+        }
     },
     methods: {
         visibilityChanged(isVisible, entry) {
@@ -66,6 +76,7 @@ export default {
     mounted() {
         this.mounted = true
         this.parent = this.$el.querySelector("#chart")
+        this.title = this.$t(this.labels + '.title')
     },
 
 }
@@ -76,7 +87,7 @@ export default {
 .chart-wrapper {
     width: 100%;
     height: 250px;
-    margin: 3rem 0;
+    margin: 2rem 0 6rem 0;
 }
 
 

@@ -1,8 +1,7 @@
 <template>
     <div class="property-wrapper">
-        <h2>Hydrofobowość</h2>
-        <li> Średnia hydrofobowość {{ gravy }}</li>
         <ChartWrapper v-if="loaded" :yData="yData" :xData="xData" :wholeNumbers="true" :labels="labels" />
+        <li> Średnia hydrofobowość {{ gravy }}</li>
     </div>
 </template>
 
@@ -37,7 +36,6 @@ export default {
         getHydrophobicity() {
             axios.get(`http://127.0.0.1:8000/api/hydrophobicity/${this.id}?scale=Kyte-Doolittle`)
                 .then(response => {
-
 
                     this.yData = response.data.hydrophobicity;
 

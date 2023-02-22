@@ -12,11 +12,10 @@
                         Ramka {{ (y % 3 +
                             1) }} </h2>
                     <div class="frames">
-
                         <span class="frame" v-for="(frame, i) in translation.translatedFrames" :key="i">
-                            <span class="frame1" v-for="(f, j) in frame" :key="j">
-                                <span v-if="f.open" class="open-frame">
-                                    <router-link to="/#" class="head">{{ f.first }}</router-link>
+                            <span v-for="(f, j) in frame" :key="j">
+                                <span v-if="f.open" class="open-frame" @click="toAnalize(f)">
+                                    <span class="head">{{ f.first }}</span>
                                     <span class="tail" v-if="f.rest != ''">{{ f.rest }}</span>
                                 </span>
                                 <span v-else>{{ f.first }}{{ f.rest }}</span>
@@ -84,7 +83,6 @@ export default {
                 else {
                     temp = [{ first: temp[0], rest: temp.slice(1), 'open': true }]
                 }
-                console.log(temp)
                 translations[x].translatedFrames[y] = temp
 
             }
@@ -92,6 +90,27 @@ export default {
 
         return {
             translations,
+        }
+    },
+    methods: {
+        async toAnalize(frame) {
+            axios.post(`http://127.0.0.1:8000/api/frameid`, {
+                frame: frame.first + frame.rest
+
+            }).then(
+                res => {
+                    // add frame to vuex
+                    this.$store.commit('setFrame', frame.first + frame.rest)
+
+                    this.$router.push({
+                        name: 'analize',
+                        params: {
+                            id: res.data.id
+                        }
+                    })
+                }
+            );
+
         }
     },
 }
@@ -102,14 +121,6 @@ a {
     color: var(--text-color);
     text-decoration: none;
 }
-
-/* 
-.frame1 {
-    word-break: break-all;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-} */
 
 .frames,
 .frame {
@@ -123,6 +134,7 @@ a {
 }
 
 .head {
+    cursor: pointer;
     padding: 0.1rem 0.2rem;
     border-radius: 0.2rem 0 0 0.2rem;
     color: white;
@@ -130,6 +142,7 @@ a {
 }
 
 .tail {
+    cursor: pointer;
     word-break: break-all;
     margin-left: 0.1rem;
     padding: 0.1rem;

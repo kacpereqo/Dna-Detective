@@ -29,7 +29,12 @@ export default {
             required: false,
             default: null,
 
-        }
+        },
+        wholeNumbers: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     methods: {
         tooltipPlugin(opts) {
@@ -59,19 +64,22 @@ export default {
                     },
                     setSize: u => {
                         syncBounds(this.parent);
+                        overlay.display = "none";
                     },
                     setCursor: u => {
                         const { left, top, idx } = u.cursor;
                         const x = u.data[0][idx];
-                        overlay.style.left = left + bLeft - overlay.clientWidth + 40 + "px";
-                        overlay.style.top = top + bTop - overlay.clientHeight + 10 + "px";
+                        overlay.style.left = left + bLeft - overlay.clientWidth + 60 + "px";
+                        overlay.style.top = top + bTop - overlay.clientHeight + 20 + "px";
 
                         const y = u.data[1][idx];
+                        const aa = this.wholeNumbers ? `<b>(${this.$store.state.frame[idx]})<b>` : ""
+                        console.log(this.wholeNumbers);
 
                         overlay.innerHTML = `
                         <ul>
-                        <li class="x"> <b> ${x} ${this.$t(this.labels + '.xUnit')} </b> </li>
-                        <li> <div style="--color:${u.series[1]._stroke}" class="square" ></div>${y} ${this.$t(this.labels + '.yUnit')}</li>
+                        <li class="x"> <b> ${x} ${this.$t(this.labels + '.xUnit')} </b> ${aa} </li>
+                        <li class="y"> <div style="--color:${u.series[1]._stroke}" class="square" ></div>${y} ${this.$t(this.labels + '.yUnit')}</li>
                     </ul>`;
 
                     }
@@ -113,14 +121,11 @@ export default {
                     plugins: [
                         this.tooltipPlugin(),
                     ],
-                    title: "",
-                    id: "chart1",
-                    class: "my-chart",
                     width: this.parent.offsetWidth,
                     height: this.parent.offsetHeight,
                     axes: [
                         {
-                            // label: this.xUnit,
+                            label: this.$t(this.labels + '.xAxis'),
                             labelFont: "16px Arial ",
                             stroke: root.getPropertyValue('--text-color'), grid: {
                                 show: true,
@@ -139,7 +144,7 @@ export default {
                         {
                             labelFont: "16px Arial ",
                             show: true,
-                            // label: this.yUnit,
+                            label: this.$t(this.labels + '.yAxis'),
                             yDataize: 30,
                             gap: 5,
                             size: 50,
@@ -160,19 +165,17 @@ export default {
                         }
                     ],
                     series: [
+                        {},
                         {
-                            // label: this.xUnit,
-
-
-                        },
-
-                        {
-                            // label: this.yUnit,
                             stroke: "blue",
                             width: 2,
                             fill: root.getPropertyValue('--chart-color'),
                         }
+
                     ],
+                    legend: {
+                        show: false,
+                    }
                 },
 
             }
@@ -247,6 +250,12 @@ export default {
 
 .x {
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
     border-bottom: 2px solid var(--accent-color-dark);
+}
+
+.y {
+    font-weight: normal;
 }
 </style>
