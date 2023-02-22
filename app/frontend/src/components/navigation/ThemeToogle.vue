@@ -1,10 +1,6 @@
 <template>
     <div class="theme-switch">
-        <select v-model="theme" @change="toogleTheme">
-            <option value="light-theme">Light</option>
-            <option value="dark-theme">Dark</option>
-            <option value="high-contrast-theme">High Contrast</option>
-        </select>
+        <img src="@/assets/contrast.svg" @click="toogleTheme">
     </div>
 </template>
 
@@ -20,10 +16,19 @@ export default {
     methods: {
         toogleTheme() {
 
-            document.documentElement.style.setProperty('--transition', '0.4s');
+            document.documentElement.style.setProperty('--transition', '0.5s');
             setTimeout(() => {
                 document.documentElement.style.setProperty('--transition', '0s');
             }, 400);
+
+            if (this.theme === 'light-theme') {
+                this.theme = 'dark-theme';
+            } else if (this.theme === 'dark-theme') {
+                this.theme = 'high-contrast-theme';
+            } else if (this.theme === 'high-contrast-theme') {
+                this.theme = 'light-theme';
+            }
+
 
             document.documentElement.className = this.theme;
             localStorage.setItem('theme', this.theme);
@@ -37,4 +42,13 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.theme-switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem;
+    cursor: pointer;
+    filter: var(--icon-filter);
+}
+</style>

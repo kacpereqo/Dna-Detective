@@ -30,6 +30,9 @@
                             <div class="left">
                                 <ul>
                                     <li>
+                                        <FontSwitch />
+                                    </li>
+                                    <li>
                                         <LocaleSwitcher />
                                     </li>
                                     <li class="toogle-switch">
@@ -71,6 +74,7 @@
 import DropDownMenu from './DropDownMenu.vue';
 import ThemeToogle from './ThemeToogle.vue';
 import LocaleSwitcher from './LocaleSwitcher.vue';
+import FontSwitch from './FontSwitch.vue';
 
 export default {
     name: 'NavBar',
@@ -82,7 +86,8 @@ export default {
     components: {
         LocaleSwitcher,
         DropDownMenu,
-        ThemeToogle
+        ThemeToogle,
+        FontSwitch
     },
 
 };
@@ -93,9 +98,9 @@ nav {
     position: relative;
     display: flex;
     flex-direction: row;
-    line-height: 54px;
+    line-height: 3.375rem;
     box-shadow: 0 1px 1px var(--accent-color), 0 3px 2px var(--accent-color-light);
-    height: 54px;
+    height: 3.375rem;
 }
 
 p {
@@ -109,7 +114,7 @@ a {
 
 .logo a {
     padding: 0 1rem;
-    height: 54px;
+    height: 3.375rem;
     aspect-ratio: 4/1;
 }
 
@@ -142,8 +147,8 @@ a {
 
     .logo-img {
         background-image: url('@/assets/small-logo.svg');
-        width: 54px;
-        height: 54px;
+        width: 3.375rem;
+        height: 3.375rem;
     }
 
     .logo a {
@@ -172,7 +177,7 @@ ul li {
 }
 
 ul li {
-    padding: 0 0.75rem;
+    padding: 0 0.15rem;
 }
 
 

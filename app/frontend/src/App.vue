@@ -30,8 +30,12 @@ export default {
     }
 
     const theme = localStorage.getItem('theme')
-    console.log(theme)
     document.documentElement.className = theme
+
+    const fontSize = localStorage.getItem('font-size')
+    if (fontSize) {
+      document.documentElement.style.fontSize = fontSize
+    }
   }
 }
 
