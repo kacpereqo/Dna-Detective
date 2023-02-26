@@ -155,8 +155,8 @@ export default {
         saveCsv() {
 
             let csv = 'label,data\n';
-            this.data.forEach((row, i) => {
-                csv += this.labels[i] + ',' + row + '\n';
+            this.yData.forEach((row, i) => {
+                csv += this.xData[i] + ',' + row + '\n';
             });
             const link = document.createElement("a");
             link.download = "data.csv";
@@ -164,7 +164,6 @@ export default {
             link.click();
         },
         saveJson() {
-            // write json with data and labels
             const link = document.createElement("a");
             link.download = "data.json";
             link.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({

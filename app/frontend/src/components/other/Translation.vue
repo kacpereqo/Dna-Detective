@@ -99,9 +99,7 @@ export default {
 
             }).then(
                 res => {
-                    // add frame to vuex
                     this.$store.commit('setFrame', frame.first + frame.rest)
-
                     this.$router.push({
                         name: 'analize',
                         params: {

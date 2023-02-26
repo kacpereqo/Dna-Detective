@@ -47,8 +47,8 @@ class Translator():
 
 # |------------------------------------------------------------------------------|#
 
-
     def parse(self):
+
         frames = self.get_frames(self.is_reversed, self.is_forward)
         result = {}
 
@@ -56,12 +56,13 @@ class Translator():
             for j, frame in enumerate(_frames):
                 translated_frames = self.translate_frames(frame)
 
-                result[i * 3 + j] = {
+                result[str(i * 3 + j)] = {
                     "frame": frame,
                     "shift": j,
                     "direction": ["5'3", "3'5"] if direction == "5'3'" else ["3'5", "5'3"],
                     "translatedFrames": translated_frames,
                 }
+        DB().insert_translation(self.rna , result)
 
         return result
 

@@ -32,7 +32,7 @@ def get_lenght_of_protein(protein: Protein):
 
 
 @router.get("/api/lenght/{_id}", tags=["properties"], description="Returns charge of protein in units")
-def get_charge_of_protein(_id: int):
+def get_charge_of_protein(_id: str):
     """Returns charge of protein in units"""
     sequence = SequenceParameters(DB().get_frame(_id))
     return {"charge": sequence.get_sequence_length()}
@@ -41,7 +41,7 @@ def get_charge_of_protein(_id: int):
 
 
 @router.get("/api/weight/{_id}", tags=["properties"], description="Returns weight of protein in daltons")
-def get_weight_of_protein(_id: int):
+def get_weight_of_protein(_id: str):
     """Returns weight of protein in units"""
     weight = SequncePropeties(DB().get_frame(_id)).get_weight()
     return {"weight": weight}

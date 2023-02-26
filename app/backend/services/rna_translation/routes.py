@@ -24,10 +24,12 @@ async def translate_rna(rna: Rna_to_translate, is_reversed: bool = False, is_for
 
 
 @router.get("/api/{_id}/translate", tags=["Rna translation"], description="Translates RNA to proteins")
-async def translate_rna(_id: int, is_reversed: bool = False, is_forward: bool = True):
-    sequence = DB().get_sequence(_id)
-    translator = Translator(sequence, is_reversed, is_forward)
-
-    return translator.parse()
+async def translate_rna(_id: str, is_reversed: bool = False, is_forward: bool = True):
+    data = DB().get_sequence(_id)
+    if "translation" in data:
+        return data["translation"]
+    else:
+        translator = Translator(data["sequence"], is_reversed, is_forward)
+        return translator.parse()
 
     # |------------------------------------------------------------------------------|#

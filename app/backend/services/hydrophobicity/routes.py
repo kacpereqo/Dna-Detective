@@ -35,7 +35,7 @@ def get_hydrophobicity_of_protein(protein: Protein, hydrophobicity_scale: Hydrop
 
 
 @router.get("/api/hydrophobicity/{_id}", tags=["Hydrophobicity"], description="Returns hydrophobicity of each amino acid in protein")
-def get_hydrophobicity_of_protein(_id: int, hydrophobicity_scale: HydrophobicityScale = Depends()):
+def get_hydrophobicity_of_protein(_id: str, hydrophobicity_scale: HydrophobicityScale = Depends()):
     """Returns hydrophobicity of protein in units"""
 
     sequence = DB().get_frame(_id)
@@ -46,7 +46,7 @@ def get_hydrophobicity_of_protein(_id: int, hydrophobicity_scale: Hydrophobicity
 
 
 @router.get("/api/avghydrophobicity/{_id}", tags=["Hydrophobicity"], description="Returns average hydrophobicity of protein")
-def get_hydrophobicity_of_protein(_id: int, hydrophobicity_scale: HydrophobicityScale = Depends()):
+def get_hydrophobicity_of_protein(_id: str, hydrophobicity_scale: HydrophobicityScale = Depends()):
     """Returns hydrophobicity of protein in units"""
 
     sequence = DB().get_frame(_id)

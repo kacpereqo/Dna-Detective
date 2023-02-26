@@ -15,14 +15,14 @@
                                     <li><router-link to="/#" class="nav-link">{{ $t('navbar.home') }}</router-link></li>
                                     <li><router-link to="/#" class="nav-link">{{ $t('navbar.analise') }}</router-link>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <DropDownMenu :hrefs="[{ name: 'Tabela 1', path: '/' },
                                         { name: 'Tablea 2', path: '/' },]" :name="$t('navbar.tables')" />
                                     </li>
                                     <li class="drop-down">
                                         <DropDownMenu :hrefs="[{ name: 'Narzedzie 1', path: '/' },
                                         { name: 'Narzedzie 2', path: '/' },]" :name="$t('navbar.tools')" />
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </li>
@@ -32,11 +32,11 @@
                                     <li>
                                         <FontSwitch />
                                     </li>
-                                    <li>
-                                        <LocaleSwitcher />
-                                    </li>
                                     <li class="toogle-switch">
                                         <ThemeToogle />
+                                    </li>
+                                    <li>
+                                        <LocaleSwitcher />
                                     </li>
                                     <li>
                                         <DropDownMenu
@@ -206,9 +206,12 @@ a:hover {
 }
 
 .left {
-    margin-left: auto;
+    margin-right: 1.75rem;
 }
 
+.left li {
+    margin-right: 0.5rem;
+}
 
 .mobile {
     height: 100%;

@@ -41,13 +41,6 @@ async def value_error_exception_handler(request: Request, exc: ValueError):
 @app.on_event("startup")
 async def database_connect():
     DB().migrate()
-    app.state.executor = ProcessPoolExecutor()
-
-
-@app.on_event("shutdown")
-async def database_disconnect():
-    DB().migrate()
-    app.state.executor.shutdown()
 
 if __name__ == "__main__":
 

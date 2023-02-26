@@ -4,10 +4,12 @@ export default createStore({
   state: {
     theme: localStorage.getItem('theme'),
     frame: localStorage.getItem('frame') || '',
+    jwt: localStorage.getItem('jwt') || '',
   },
   getters: {
     theme: state => state.theme,
     frame: state => state.frame,
+    jwt: state => state.jwt,
   },
   mutations: {
     toogleTheme(state) {
@@ -21,6 +23,9 @@ export default createStore({
     setFrame(state, frame) {
       state.frame = frame;
       localStorage.setItem('frame', frame);
+    },
+    setUser(state, jwt) {
+      state.jwt = jwt;
     }
   },
   actions: {

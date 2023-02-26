@@ -26,13 +26,16 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 1rem;
     cursor: pointer;
 }
 
+.switch-wrapper img:first-child {
+    margin-right: 0.4rem;
+}
+
 .switch-wrapper img {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 1.9rem;
+    height: 1.9rem;
     filter: var(--icon-filter);
 }
 </style>

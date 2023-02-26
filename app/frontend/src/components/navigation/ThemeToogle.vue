@@ -47,7 +47,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 1rem;
     cursor: pointer;
     filter: var(--icon-filter);
 }

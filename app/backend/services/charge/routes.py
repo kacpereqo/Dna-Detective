@@ -43,7 +43,7 @@ def get_charge_of_protein(protein: Protein, pka_scale: Pka_scale = Depends(), pH
 
 
 @router.get("/api/netcharge/{_id}", tags=["Charge"], description="Returns charge of protein in units")
-def get_netcharge_of_protein(_id: int, pH_range: PH_Range = Depends()):
+def get_netcharge_of_protein(_id: str, pH_range: PH_Range = Depends()):
     """Returns charge of protein in units"""
 
     frame = DB().get_frame(_id)
@@ -55,7 +55,7 @@ def get_netcharge_of_protein(_id: int, pH_range: PH_Range = Depends()):
 
 
 @router.get("/api/isoelectricpoint/{_id}", tags=["Charge"], description="Returns isoelectric point of protein in units")
-async def get_isoelectricpoint_of_protein(_id: int, pka_scale: Pka_scale = Depends()):
+async def get_isoelectricpoint_of_protein(_id: str, pka_scale: Pka_scale = Depends()):
     """Returns isoelectric point of protein in units"""
 
     frame = DB().get_frame(_id)

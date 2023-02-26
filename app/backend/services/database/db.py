@@ -1,66 +1,99 @@
 import sqlite3
-
+from pymongo import MongoClient
+from datetime import datetime
+from bson.objectid import ObjectId
 from .models import SEQUENCE_TABLE, FRAME_TABLE
+from fastapi import HTTPException, status
 
 # |-----------------------------------------------------------------------------|#
 
 
 class DB:
     def __init__(self):
-        self.con = sqlite3.connect("database/database.sqlite")
+        DB = "mongodb+srv://kacperek:NymgvVKCliOlC6T9@cluster0.omn7jln.mongodb.net/test"
+        self.client = MongoClient(DB)
+        self.db = self.client["dna-detective"]
 
 # |-----------------------------------------------------------------------------|#
 
-    def connect(func):
-        def wrapper(self, *args):
-            with self.con as cur:
-                return func(self, cur, *args)
-        return wrapper
+    def migrate(self):
+        try:
+            self.db.frames.create_index(
+                [('frame', 1)], unique=True)
+        except Exception as e:
+            pass
+
+        try:
+            self.db.sequences.create_index(
+                [('sequence', 1)], unique=True)
+        except Exception as e:
+            pass
+
+        try:
+            self.db.users.create_index(
+                [('email', 1)], unique=True)
+        except Exception as e:
+            pass
+
+        # |-----------------------------------------------------------------------------|#
+
+    def get_sequence(self, _id : str):
+        """ Get sequence from database by ID"""
+        return self.db.sequences.find_one({"_id": ObjectId(_id)})
+
+        # |-----------------------------------------------------------------------------|#
+
+    def get_frame(self, _id : str):
+        """ Get frame from database by ID"""
+        return self.db.frames.find_one({"_id": ObjectId(_id)})["frame"]
 
 # |-----------------------------------------------------------------------------|#
 
-    @connect
-    def migrate(self, cur):
-        cur.execute(SEQUENCE_TABLE)
-        cur.execute(FRAME_TABLE)
-
-        cur.commit()
-
-# |-----------------------------------------------------------------------------|#
-
-    @connect
-    def get_sequence(self, cur, _id : int):
-        query = """SELECT sequence FROM sequences WHERE id = :id"""
-        return cur.execute(query, {"id": _id}).fetchone()[0]
+    def post_sequence(self, sequence: str) -> str:
+        """ Post sequence to database and return ID"""
+        try:
+            _id = self.db.sequences.insert_one(
+                {"sequence": sequence}).inserted_id
+            return str(_id)
+        except Exception as e:
+            _id = self.db.sequences.find_one({"sequence": sequence})["_id"]
+            return str(_id)
 
 # |-----------------------------------------------------------------------------|#
 
-    @connect
-    def get_frame(self, cur, _id : int):
-        query = """SELECT sequence FROM frames WHERE id = :id"""
-        return cur.execute(query, {"id": _id}).fetchone()[0]
+    def post_frame(self, frame):
+        """ Post frame to database and return ID"""
+        try:
+            _id = self.db.frames.insert_one(
+                {"frame": frame}).inserted_id
+            return str(_id)
+        except Exception as e:
+            _id = self.db.frames.find_one({"frame": frame})["_id"]
+            return str(_id)
 
 # |-----------------------------------------------------------------------------|#
 
-    @connect
-    def post_sequence(self, cur, sequence: str):
-        query = """INSERT INTO sequences (sequence) VALUES (:sequence) ON CONFLICT DO NOTHING"""
-        cur.execute(query, {"sequence": sequence})
-
-        cur.commit()
-
-        query = """SELECT id FROM sequences WHERE sequence = :sequence"""
-        return {"id": cur.execute(query, {"sequence": sequence}).fetchone()[0]}
+    def insert_translation(self, sequence, translation):
+        """ Add translation to frame in database"""
+        try:
+            self.db.sequences.update_one(
+                {"sequence": sequence}, {"$set": {"translation": translation}})
+        except Exception as e:
+            pass
 
 # |-----------------------------------------------------------------------------|#
 
-    @connect
-    def post_frame(self, cur, frame: str):
-        # insert if frame does not exist
-        query = """INSERT INTO frames (sequence) SELECT :frame WHERE NOT EXISTS (SELECT 1 FROM frames WHERE sequence = :frame)"""
-        cur.execute(query, {"frame": frame})
+    def get_user(self, email : str) -> str:
+        """ Get user from database by e-mail"""
+        return self.db.users.find_one({"email": email})
 
-        cur.commit()
+# |-----------------------------------------------------------------------------|#
 
-        query = """SELECT id FROM frames WHERE sequence = :frame"""
-        return {"id": cur.execute(query, {"frame": frame}).fetchone()[0]}
+    def register_user(self, email : str, password : str) -> str:
+        """ Register user in database"""
+        try:
+            self.db.users.insert_one(
+                {"email": email, "hashed_password": password})
+            return status.HTTP_200_OK
+        except Exception as e:
+            raise HTTPException(status_code=400, detail="E-mail already used")

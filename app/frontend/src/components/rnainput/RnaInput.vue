@@ -72,6 +72,7 @@ export default {
                 axios.post(`http://127.0.0.1:8000/api/sequence`, {
                     data: this.data,
                 }).then(res => {
+                    console.log(res.data, typeof res.data)
                     this.$router.push({
                         name: 'translations',
                         params: {
@@ -207,19 +208,14 @@ form div {
 
 .rna-input__form__data-type select {
     margin-left: 0.5rem;
-    height: fit-content;
+    border: 1px solid var(--accent-color-dark);
+    color: var(--text-color);
     background-color: transparent;
-    border: 1.5px solid var(--accent-color-dark);
-    appearance: none;
-    background-image: url('@/assets/arrow.svg');
-    filter: var(--icon-filter);
-    background-size: 0.5rem;
-    background-repeat: no-repeat;
-    background-position-x: 95%;
-    background-position-y: 50%;
-    padding: 0.4rem;
-    padding-right: 3rem;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 0.9rem;
     cursor: pointer;
+    outline: none;
 }
 
 select option:hover {

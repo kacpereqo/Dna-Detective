@@ -3,7 +3,9 @@
     <template v-slot:title="{ content }">{{ content ? `${content} - DNA detective` : `SITE_NAME` }}</template>
   </metainfo>
   <NavBar />
-  <router-view />
+  <keep-alive>
+    <router-view />
+  </keep-alive>
 </template>
 
 <script>
