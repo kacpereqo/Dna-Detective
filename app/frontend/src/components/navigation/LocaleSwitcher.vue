@@ -7,6 +7,7 @@
 </template>
  
 <script>
+import axios from 'axios';
 export default {
     name: "LocaleSwitcher",
     data() {
@@ -15,6 +16,13 @@ export default {
     methods: {
         saveLocale() {
             localStorage.setItem('locale', this.$i18n.locale);
+            this.updateUserPreference();
+        },
+        updateUserPreference() {
+            if (this.$store.state.isLogged) {
+                axios.post(`http://127.0.0.1:8000/api/preferences?key=lang&value=${this.$i18n.locale}`, {
+                })
+            }
         }
     }
 };

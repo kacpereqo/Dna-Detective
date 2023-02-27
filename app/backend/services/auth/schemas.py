@@ -1,10 +1,12 @@
 from typing import Union
 from pydantic import BaseModel
+from typing import Dict
 
 
 class Token(BaseModel):
     access_token: str
     token_type: str
+    preferences: Dict[str, str]
 
 
 class TokenData(BaseModel):

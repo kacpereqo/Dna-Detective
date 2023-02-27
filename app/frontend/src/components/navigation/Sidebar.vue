@@ -3,8 +3,6 @@
         <div class="show-menu" @click="showMenu = !showMenu"><span
                 :style="{ '--display': showMenu ? 'none' : 'block' }"></span></div>
         <div class="items" :style="{ 'position': position }">
-            <SequenceName />
-            <input type="text" placeholder="Szukaj" id="search" v-model="search" />
             <ul>
                 <li v-for="item in list" @click="changeComponent(item.value)" class="parent-li">
                     <p class="heading">{{

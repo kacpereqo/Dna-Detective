@@ -33,7 +33,12 @@ export default {
     }
 
     const theme = localStorage.getItem('theme')
-    document.documentElement.className = theme
+    if (theme) {
+      document.documentElement.className = theme
+    }
+    else {
+      localStorage.setItem('theme', 'light-theme')
+    }
 
     const fontSize = localStorage.getItem('font-size')
     if (fontSize) {

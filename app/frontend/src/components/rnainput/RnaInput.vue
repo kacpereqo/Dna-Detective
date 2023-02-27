@@ -1,7 +1,6 @@
 <template>
     <div class="rna-input">
         <div class="rna-input__header">
-            <img src="@/assets/settings.svg" alt="settings" class="rna-input__settings-icon" role="button" />
             <div class="rna-input__header__text">
                 <span>
                     <h1>{{ $t('analizeInput.title') }}</h1>
@@ -226,19 +225,7 @@ select option:hover {
     filter: brightness(0.85);
 }
 
-.rna-input__settings-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    cursor: pointer;
-}
 
-.rna-input__settings-icon:hover {
-    transition: 0.5s;
-    filter: brightness(0);
-}
 
 .rna-input {
     border: 1px solid var(--accent-color-dark);

@@ -33,7 +33,7 @@
     "charts": {
         "hydro": {
             "title": "Hydrofofobowość",
-            "info": "",
+            "info": "Wartość podawana w kilodaltonach (kDa), jednostce używanej do określania masy białek. Jeden Dalton jest równy  1/12 masy atomu węgla 12C oraz jest równy jednej jednostce masy atomowej [u]: 1,66033*10^(-27) kg. Nazwa jednostki odwołuje się do brytyjskiego chemika Johna Daltona.",
             "xAxis": "Pozycja",
             "yAxis": "Hydrofofobowość",
             "yUnit": "bp",

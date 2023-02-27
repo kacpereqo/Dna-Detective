@@ -1,8 +1,5 @@
-import sqlite3
 from pymongo import MongoClient
-from datetime import datetime
 from bson.objectid import ObjectId
-from .models import SEQUENCE_TABLE, FRAME_TABLE
 from fastapi import HTTPException, status
 
 # |-----------------------------------------------------------------------------|#
@@ -93,7 +90,7 @@ class DB:
         """ Register user in database"""
         try:
             self.db.users.insert_one(
-                {"email": email, "hashed_password": password})
+                {"email": email, "hashed_password": password, "preferences": {"theme": "light-theme", "lang": "pl", "font-size": 16}})
             return status.HTTP_200_OK
         except Exception as e:
             raise HTTPException(status_code=400, detail="E-mail already used")
@@ -118,3 +115,12 @@ class DB:
             return sequences
         except Exception as e:
             return []
+# |-----------------------------------------------------------------------------|#
+
+    def update_user_preferences(self, user_id, key, value):
+        """ Update user preferences in database"""
+        try:
+            self.db.users.update_one(
+                {"_id": ObjectId(user_id)}, {"$set": {"preferences." + key: value}})
+        except Exception as e:
+            pass

@@ -5,16 +5,16 @@
         <div v-if="isLoading">
             Ładowanie...
         </div>
-
-
         <Line :word="'Wzór szkieletowy'" :line="false" />
-
         <div class="image-container">
-            <div class="fullscreen">
-                Pełny Ekran<img src="@/assets/fullscreen.svg">
-            </div>
-
             <div class="image-viewer"><img :src='visualizationSrc' alt="Wzór szkieletowy białka"></div>
+        </div>
+        <Line :word="'Wzór'" :line="true" />
+        <div class="image-container2">
+            <div v-for="x in this.$store.state.frame">
+                <img :src="getImgUrl(x)">
+                <p> {{ x }} </p>
+            </div>
         </div>
     </div>
 </template>
@@ -32,6 +32,7 @@ export default {
         return {
             visualizationSrc: '',
             isLoading: true,
+            sequence: '',
         }
 
     },
@@ -54,6 +55,9 @@ export default {
                     this.visualizationSrc = window.URL.createObjectURL(blob);
                     this.isLoading = false;
                 });
+        }, getImgUrl(pet) {
+            var images = require.context('@/assets/compounds', false, /\.png$/)
+            return images('./' + pet + ".png")
         }
 
     },
@@ -77,6 +81,8 @@ export default {
 
 .image-viewer {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
     height: 200px;
     overflow: scroll;
     overflow-y: hidden;
@@ -88,6 +94,35 @@ export default {
     margin-top: 2rem;
     position: relative;
 }
+
+.image-container2 {
+    width: calc(100vw - 16.5rem);
+    display: flex;
+    justify-content: flex-start;
+    overflow: scroll;
+    align-items: center;
+}
+
+.image-container2 img {
+    filter: var(--visualization-filter);
+}
+
+.image-viewer2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    /* width: 100%;
+    flex */
+    width: 400px;
+    overflow: hidden;
+    overflow-x: scroll;
+    /* overflow: scroll; */
+    /* overflow-y: hidden; */
+    scrollbar-width: thin;
+    position: relative;
+}
+
 
 .fullscreen {
     color: var(--text-color);
@@ -101,20 +136,5 @@ export default {
     cursor: pointer;
     top: -1rem;
     z-index: 10;
-}
-
-.fullscreen img {
-    filter: var(--icon-filter);
-    width: 1.5rem;
-    height: 1.5rem;
-    top: 50%;
-    position: absolute;
-    transform: translate(0, -50%);
-
-}
-
-.fullscreen:hover {
-    background-color: var(--accent-color-light);
-    transition: 0.2s;
 }
 </style>

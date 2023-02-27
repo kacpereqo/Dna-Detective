@@ -9,6 +9,7 @@ from .schemas import TokenData, User
 from services.database.db import DB
 from fastapi import HTTPException
 
+
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7
@@ -73,7 +74,8 @@ async def get_current_active_user(current_user: User = Depends(get_current_user)
 
 def register_user(email: str, password: str):
     if len(password) < 8:
-        return HTTPException(status_code=400, detail="Password must be at least 8 characters")
+        raise HTTPException(
+            status_code=400, detail="Password must be at least 8 characters")
     hashed_password = get_password_hash(password)
     status = DB().register_user(email, hashed_password)
     return status

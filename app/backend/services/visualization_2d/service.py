@@ -32,11 +32,13 @@ class Visualization2DService:
         Draw.MolToFile(mol, "test.png",
                        (50 * len(self.sequence) , 200))
 
-    def protein_to_svg(self):
-        """Returns 2D visualization for a given sequence"""
+    # |------------------------------------------------------------------------------|#
 
-        loop = asyncio.get_event_loop()
-        loop.run_in_executor(None, self.draw)
+    async def protein_to_svg(self):
+        """Returns 2D visualization for a given sequence"""
+        loop = asyncio.get_running_loop()
+        with concurrent.futures.ProcessPoolExecutor() as pool:
+            await loop.run_in_executor(pool, self.draw)
 
         return "test.png"
 

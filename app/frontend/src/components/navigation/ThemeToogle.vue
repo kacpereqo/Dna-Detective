@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
     name: 'ThemeToogle',
@@ -29,7 +30,14 @@ export default {
                 theme = 'light-theme';
             }
 
+            this.updateUserPreference(theme);
             this.$store.commit('toogleTheme', theme);
+        },
+        updateUserPreference(theme) {
+            if (this.$store.state.isLogged) {
+                axios.post(`http://127.0.0.1:8000/api/preferences?key=theme&value=${theme}`, {
+                })
+            }
         }
     },
     mounted() {

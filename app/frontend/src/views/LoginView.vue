@@ -5,6 +5,7 @@
                 <h1>Logowanie</h1>
             </div>
             <form>
+                <input type="text" ref="login" placeholder="Login" />
                 <input type="text" ref="email" placeholder="E-mail" />
                 <input type="password" ref="password" placeholder="Hasło" />
                 <div class="error-message">{{ error }}</div>
@@ -40,7 +41,7 @@ export default {
             const email = this.$refs.email.value;
             const password = this.$refs.password.value;
 
-            axios.post('http://localhost:8000/login', {
+            axios.post('http://localhost:8000/token', {
                 username: email,
                 password: password
             }, {
@@ -48,12 +49,19 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded"
                 }
             }).then(res => {
+                this.$store.commit("setEmail", res.data.email)
+                console.log(res.data.preferences)
+                this.$store.commit('toogleTheme', res.data.preferences.theme)
+                this.$i18n.locale = res.data.preferences.lang;
+                localStorage.setItem('locale', res.data.preferences.lang);
+                this.$store.commit('setFontSize', res.data.preferences.fontSize);
+
                 const jwt = res.data.access_token;
                 localStorage.setItem('jwt', jwt);
                 this.$store.commit('setUser', jwt);
                 this.$router.push('/');
             }).catch(err => {
-                this.error = err.response.data.detail;
+                console.log(err)
             })
         }
     }
@@ -61,11 +69,16 @@ export default {
 </script>
 
 <style scoped>
+a {
+    text-decoration: underline;
+}
+
 .login-wrapper {
+    overflow: hidden;
     border: 1px solid var(--accent-color-dark);
     border-radius: 5px;
-    width: 300px;
-    height: 350px;
+    width: 20rem;
+    height: 25rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -82,8 +95,10 @@ export default {
 }
 
 .header {
+    overflow: hidden;
     text-align: left;
     margin-bottom: 20px;
+    height: 2.5rem;
     background-color: var(--main-color);
     color: white;
     width: 100%;
@@ -99,6 +114,7 @@ export default {
 .login-wrapper input {
     width: 70%;
     padding: 10px;
+    font-size: 1rem;
     margin: 10px 0;
     background-color: transparent;
     border: 1px solid var(--accent-color);

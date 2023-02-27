@@ -75,7 +75,7 @@ export default {
     name: 'NavBar',
     data() {
         return {
-            showMenu: false
+            showMenu: false,
         }
     },
     components: {
@@ -88,6 +88,11 @@ export default {
         ...mapState({
             isLogged: 'isLogged'
         })
+    },
+    methods: {
+        name() {
+            n
+        }
     }
 
 };

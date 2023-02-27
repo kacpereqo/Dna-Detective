@@ -4,7 +4,7 @@
             <div> Informacje </div>
             <img src="@/assets/error.svg">
             <div class="info" v-if="showInfo">
-                <p>info</p>
+                <p>{{ $t(labels + '.info') }}</p>
             </div>
 
         </div>

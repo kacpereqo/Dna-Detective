@@ -30,10 +30,8 @@ def get_2d_visualization(protein: Protein):
 
 
 @router.get("/api/visualizaiton/{_id}", tags=["converting"], description="Returns 2D visualization for a given sequence", response_class=FileResponse)
-# def get_2d_visualization(_id: int, background_tasks: BackgroundTasks):
-def get_2d_visualization(_id: int):
+async def get_2d_visualization(_id: str):
     sequence = DB().get_frame(_id)
     visualizer = Visualization2DService(sequence)
-    visualizer.protein_to_svg()
-    # background_tasks.add_task(visualizer.protein_to_svg)
+    await visualizer.protein_to_svg()
     return FileResponse("test.png", media_type="image/png", headers={'Access-Control-Expose-Headers': 'Content-Disposition'}, filename="test.png")

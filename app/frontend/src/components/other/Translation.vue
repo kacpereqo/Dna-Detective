@@ -141,6 +141,7 @@ a {
 .tail {
     cursor: pointer;
     word-break: break-all;
+    color: white;
     margin-left: 0.1rem;
     padding: 0.1rem;
     border-radius: 0 0.2rem 0.2rem 0;
@@ -232,6 +233,7 @@ li {
     width: 1.5rem;
     height: 1rem;
     object-fit: cover;
+    filter: var(--icon-filter);
 }
 
 .frame-wrapper h2::after {

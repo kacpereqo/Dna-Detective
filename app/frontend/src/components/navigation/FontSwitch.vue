@@ -5,6 +5,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
     name: "FontSwitch",
 
@@ -14,7 +15,13 @@ export default {
             const currentSize = parseInt(window.getComputedStyle(root).getPropertyValue('font-size').replace('px', ''));
             if (currentSize + size >= 10 && currentSize + size <= 20) {
                 root.style.fontSize = currentSize + size + 'px';
+                this.updateUserPreference(currentSize + size);
                 localStorage.setItem('font-size', currentSize + size + 'px');
+            }
+        }, updateUserPreference(fontSize) {
+            if (this.$store.state.isLogged) {
+                axios.post(`http://127.0.0.1:8000/api/preferences?key=fontSize&value=${fontSize}`, {
+                })
             }
         }
     }
