@@ -15,24 +15,21 @@ export default {
     },
     methods: {
         toogleTheme() {
-
+            let theme = localStorage.getItem('theme');
             document.documentElement.style.setProperty('--transition', '0.5s');
             setTimeout(() => {
                 document.documentElement.style.setProperty('--transition', '0s');
             }, 400);
 
-            if (this.theme === 'light-theme') {
-                this.theme = 'dark-theme';
-            } else if (this.theme === 'dark-theme') {
-                this.theme = 'high-contrast-theme';
-            } else if (this.theme === 'high-contrast-theme') {
-                this.theme = 'light-theme';
+            if (theme === 'light-theme') {
+                theme = 'dark-theme';
+            } else if (theme === 'dark-theme') {
+                theme = 'high-contrast-theme';
+            } else if (theme === 'high-contrast-theme') {
+                theme = 'light-theme';
             }
 
-
-            document.documentElement.className = this.theme;
-            localStorage.setItem('theme', this.theme);
-            this.$store.commit('toogleTheme', this.theme);
+            this.$store.commit('toogleTheme', theme);
         }
     },
     mounted() {

@@ -70,7 +70,6 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    /* min-width: 20vw; */
 }
 
 .login-wrapper form {
@@ -115,6 +114,11 @@ export default {
     border-radius: 5px;
     color: var(--text-color);
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-wrapper button:hover {
+    background-color: var(--accent-color-light);
 }
 
 .info {

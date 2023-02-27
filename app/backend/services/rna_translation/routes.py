@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Body, Form
-
+from fastapi import APIRouter, Request
+from services.auth.service import get_current_user
 from services.database.db import DB
 from .service import Translator
 from .schemas import Rna_to_translate, Rna_translated
@@ -24,7 +24,16 @@ async def translate_rna(rna: Rna_to_translate, is_reversed: bool = False, is_for
 
 
 @router.get("/api/{_id}/translate", tags=["Rna translation"], description="Translates RNA to proteins")
-async def translate_rna(_id: str, is_reversed: bool = False, is_forward: bool = True):
+async def translate_rna(req: Request, _id: str, is_reversed: bool = False, is_forward: bool = True):
+    berear = req.headers.get("Authorization")
+    if berear is not None:
+        try:
+            user = await get_current_user(berear.split(" ")[1])
+            if user is not None:
+                DB().add_sequence_to_user(_id, user['_id'])
+        except Exception as e:
+            print(e)
+
     data = DB().get_sequence(_id)
     if "translation" in data:
         return data["translation"]

@@ -15,14 +15,9 @@
                                     <li><router-link to="/#" class="nav-link">{{ $t('navbar.home') }}</router-link></li>
                                     <li><router-link to="/#" class="nav-link">{{ $t('navbar.analise') }}</router-link>
                                     </li>
-                                    <!-- <li>
-                                        <DropDownMenu :hrefs="[{ name: 'Tabela 1', path: '/' },
-                                        { name: 'Tablea 2', path: '/' },]" :name="$t('navbar.tables')" />
+                                    <li><router-link v-if="isLogged" to="/profile" class="nav-link">Historia</router-link>
                                     </li>
-                                    <li class="drop-down">
-                                        <DropDownMenu :hrefs="[{ name: 'Narzedzie 1', path: '/' },
-                                        { name: 'Narzedzie 2', path: '/' },]" :name="$t('navbar.tools')" />
-                                    </li> -->
+
                                 </ul>
                             </div>
                         </li>
@@ -39,9 +34,8 @@
                                         <LocaleSwitcher />
                                     </li>
                                     <li>
-                                        <DropDownMenu
-                                            :hrefs="[{ name: $t('navbar.account.login'), path: '/' },
-                                            { name: $t('navbar.account.register'), path: '/' }, { name: $t('navbar.account.prefereneces') }]"
+                                        <DropDownMenu :hrefs="isLogged ? [{ name: $t('navbar.account.logout'), path: '/logout' }] : [{ name: $t('navbar.account.login'), path: '/login' },
+                                        { name: $t('navbar.account.register'), path: '/register' }]"
                                             :name="$t('navbar.account.account')" />
                                     </li>
                                 </ul>
@@ -75,6 +69,7 @@ import DropDownMenu from './DropDownMenu.vue';
 import ThemeToogle from './ThemeToogle.vue';
 import LocaleSwitcher from './LocaleSwitcher.vue';
 import FontSwitch from './FontSwitch.vue';
+import { mapState } from 'vuex'
 
 export default {
     name: 'NavBar',
@@ -89,6 +84,11 @@ export default {
         ThemeToogle,
         FontSwitch
     },
+    computed: {
+        ...mapState({
+            isLogged: 'isLogged'
+        })
+    }
 
 };
 </script>

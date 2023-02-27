@@ -36,6 +36,11 @@ export default {
             type: Boolean,
             required: false,
             default: false
+        },
+        loaded: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
     methods: {
@@ -47,27 +52,23 @@ export default {
             }
         },
         getFact() {
-            this.interval =
-                axios.get('http://127.0.0.1:8000/fact')
-                    .then(response => {
-                        this.fact = response.data.fact;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-
+            axios.get('http://127.0.0.1:8000/fact')
+                .then(response => {
+                    this.fact = response.data.fact;
+                })
         },
-    },
-    mounted() {
-        this.dotsInterval = setInterval(this.addDots, 500);
-        if (this.display_facts) {
-            this.factInterval = setInterval(this.getFact, 1000);
+        clearIntervals() {
+            clearInterval(this.dotsInterval);
+            clearInterval(this.factInterval);
         }
     },
-    destroyed() {
-        clearInterval(this.dotsInterval);
-        clearInterval(this.factInterval);
-    }
+    created() {
+        this.dotsInterval = setInterval(this.addDots, 500);
+        this.factInterval = setInterval(this.getFact, 1000);
+    },
+    beforeUnmount() {
+        this.clearIntervals();
+    },
 }
 </script>
 

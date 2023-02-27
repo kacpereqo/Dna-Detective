@@ -10,6 +10,7 @@
 
 <script>
 import { useMeta } from 'vue-meta'
+import axios from 'axios'
 import NavBar from '@/components/navigation/NavBar.vue'
 
 export default {
@@ -38,6 +39,13 @@ export default {
     if (fontSize) {
       document.documentElement.style.fontSize = fontSize
     }
+
+    const jwt = localStorage.getItem('jwt')
+    if (jwt) {
+      this.$store.commit('setUser', jwt)
+      axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`
+    }
+
   }
 }
 

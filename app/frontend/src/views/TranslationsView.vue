@@ -1,10 +1,10 @@
 
 <template>
     <div class="wrapper">
-        <Suspense :display_facts="true">
+        <Suspense>
             <Translations />
             <template #fallback>
-                <LoadingPrompt />
+                <LoadingPrompt :display_facts="true" />
             </template>
         </Suspense>
     </div>
@@ -13,7 +13,6 @@
 
 <script>
 import { useMeta } from 'vue-meta'
-
 import Translations from '@/components/other/Translation.vue';
 import LoadingPrompt from '@/components/other/LoadingPrompt.vue';
 
@@ -29,9 +28,9 @@ export default {
         }
     },
     methods: {
-        destroy() {
-            this.$destroy();
-        }
+        // clearIntervals() {
+        // console.log('clear intervals');
+        // }
     },
     setup() {
         useMeta({
@@ -41,6 +40,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

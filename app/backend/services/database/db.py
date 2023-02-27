@@ -97,3 +97,24 @@ class DB:
             return status.HTTP_200_OK
         except Exception as e:
             raise HTTPException(status_code=400, detail="E-mail already used")
+
+# |-----------------------------------------------------------------------------|#
+
+    def add_sequence_to_user(self, _id : str, user_id):
+        """ Add sequence to user in database"""
+        try:
+            self.db.users.update_one(
+                {"_id": ObjectId(user_id)}, {"$addToSet": {"sequences": _id}})
+        except Exception as e:
+            pass
+
+# |-----------------------------------------------------------------------------|#
+
+    def get_user_sequences(self, user_id):
+        """ Get user sequences from database"""
+        try:
+            sequences = self.db.users.find_one(
+                {"_id": ObjectId(user_id)})["sequences"]
+            return sequences
+        except Exception as e:
+            return []

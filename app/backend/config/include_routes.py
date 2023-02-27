@@ -11,11 +11,13 @@ from services.caching import routers as caching
 from services.facts import routers as facts
 from services.polarity import routes as polarity
 from services.auth import routes as auth
+from services.profile import routes as profile
 
 # |------------------------------------------------------------------------------|#
 
 
 def include_routes(app):
+    app.include_router(profile.router)
     app.include_router(auth.router)
     app.include_router(polarity.router)
     app.include_router(caching.router)
