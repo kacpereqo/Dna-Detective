@@ -20,7 +20,6 @@ async def get_profile(token: str = Depends(oauth2_scheme)):
 @router.post("/api/preferences", tags=["Profile"], description="Update user profile")
 async def update_preferences(token: str = Depends(oauth2_scheme), key : str = None, value: str = None):
     user = await get_current_user(token)
-    print(user["_id"], key, value)
     DB().update_user_preferences(user["_id"], key, value)
     return status.HTTP_200_OK
 

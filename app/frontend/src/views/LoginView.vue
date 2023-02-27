@@ -5,7 +5,6 @@
                 <h1>Logowanie</h1>
             </div>
             <form>
-                <input type="text" ref="login" placeholder="Login" />
                 <input type="text" ref="email" placeholder="E-mail" />
                 <input type="password" ref="password" placeholder="Hasło" />
                 <div class="error-message">{{ error }}</div>

@@ -5,6 +5,7 @@
                 <h1>Rejestracja</h1>
             </div>
             <form @submit="submit">
+                <input type="text" ref="login" placeholder="Login" />
                 <input type="text" placeholder="E-mail" ref="email" />
                 <input type="password" placeholder="Hasło" ref="password" />
                 <div class="error">{{ error }}</div>
