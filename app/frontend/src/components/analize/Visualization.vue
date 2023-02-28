@@ -38,7 +38,9 @@ export default {
     },
     methods: {
         getVisualizationSrc() {
-            axios.get(`http://127.0.0.1:8000/api/visualizaiton/${this.id}`,
+            axios.post(`http://127.0.0.1:8000/api/visualizaiton?`, {
+                frame: this.$store.state.frame,
+            },
                 {
                     responseType: 'blob',
                 }

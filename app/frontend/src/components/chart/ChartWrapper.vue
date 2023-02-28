@@ -48,9 +48,9 @@ export default {
             default: [],
         },
         labels: {
-            type: Object,
+            type: String,
             required: false,
-            default: {},
+            default: '',
         },
         wholeNumbers: {
             type: Boolean,

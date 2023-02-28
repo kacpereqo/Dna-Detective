@@ -34,7 +34,9 @@ export default {
 
     methods: {
         getHydrophobicity() {
-            axios.get(`http://127.0.0.1:8000/api/hydrophobicity/${this.id}?scale=Kyte-Doolittle`)
+            axios.post(`http://127.0.0.1:8000/api/hydrophobicity?scale=Kyte-Doolittle`, {
+                frame: this.$store.state.frame,
+            })
                 .then(response => {
 
                     this.yData = response.data.hydrophobicity;
@@ -46,7 +48,9 @@ export default {
                 })
         },
         getGRAVY() {
-            axios.get(`http://127.0.0.1:8000/api/avghydrophobicity/${this.id}?scale=Kyte-Doolittle`)
+            axios.post(`http://127.0.0.1:8000/api/avghydrophobicity?scale=Kyte-Doolittle`, {
+                frame: this.$store.state.frame,
+            })
                 .then(response => {
                     this.gravy = response.data.hydrophobicity;
                 })

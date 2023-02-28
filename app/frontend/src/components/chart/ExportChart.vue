@@ -118,6 +118,11 @@ export default {
             required: false,
             default: "",
         },
+        wholeNumbers: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     methods: {
         getSrc() {

@@ -12,11 +12,15 @@ from services.facts import routers as facts
 from services.polarity import routes as polarity
 from services.auth import routes as auth
 from services.profile import routes as profile
+from services.bulkiness import routes as bulkiness
+from services.recognition import routes as recognition
 
 # |------------------------------------------------------------------------------|#
 
 
 def include_routes(app):
+    app.include_router(bulkiness.router)
+    app.include_router(recognition.router)
     app.include_router(profile.router)
     app.include_router(auth.router)
     app.include_router(polarity.router)

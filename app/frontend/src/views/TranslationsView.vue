@@ -28,9 +28,6 @@ export default {
         }
     },
     methods: {
-        // clearIntervals() {
-        // console.log('clear intervals');
-        // }
     },
     setup() {
         useMeta({

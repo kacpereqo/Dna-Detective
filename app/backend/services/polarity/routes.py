@@ -1,12 +1,12 @@
 from fastapi import APIRouter
-from services.database.db import DB
+from .schemas import Frame
 from .service import ProteinPolarity
 
 router = APIRouter()
 
 
-@router.get("/api/polarity/{_id}", tags=["properties"], description="Returns weight of protein in daltons")
-def get_weight_of_protein(_id: int):
+@router.post("/api/polarity", tags=["properties"], description="Returns weight of protein in daltons")
+def get_weight_of_protein(frame: Frame):
     """Returns weight of protein in units"""
-    weight = ProteinPolarity(DB().get_frame(_id)).get_polarity()
+    weight = ProteinPolarity(frame.frame).get_polarity()
     return {"polarity": weight}

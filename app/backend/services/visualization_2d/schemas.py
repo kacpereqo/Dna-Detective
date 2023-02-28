@@ -16,3 +16,18 @@ class Protein(BaseModel):
             raise HTTPException(
                 status=422, detail='Sequence contains invalid characters that are not amino acids')
         return v
+
+# |------------------------------------------------------------------------------|#
+
+
+class Frame(BaseModel):
+    frame: str
+
+    @validator('frame')
+    def validate_frame(cls, v):
+        if v.islower():
+            v = v.upper()
+        if any(char not in 'ARNDCQEGHILKMFPSTWYV' for char in v):
+            raise HTTPException(
+                status=422, detail='Sequence contains invalid amino acid')
+        return v

@@ -1,32 +1,13 @@
 from fastapi import APIRouter
-from .schemas import Protein
 from localcider.sequenceParameters import SequenceParameters
-from typing import Optional
 from services.database.db import DB
 from .service import SequncePropeties
+from .schemas import Frame
 
 
 # |------------------------------------------------------------------------------|#
 
 router = APIRouter()
-
-# |------------------------------------------------------------------------------|#
-
-
-@router.post("/api/weight", tags=["properties"], description="Returns weight of protein in daltons")
-def get_weight_of_protein(protein: Protein):
-    """Returns weight of protein in units"""
-    sequence = SequenceParameters(protein.sequence)
-    return {"weight": round(sequence.get_molecular_weight(), 3)}
-
-# |------------------------------------------------------------------------------|#
-
-
-@router.post("/api/lenght", tags=["properties"], description="Returns lenght of protein in amino acids")
-def get_lenght_of_protein(protein: Protein):
-    """Returns charge of protein in units"""
-    sequence = SequenceParameters(protein.sequence)
-    return {"lenght": sequence.get_sequence_length()}
 
 # |------------------------------------------------------------------------------|#
 
@@ -40,8 +21,8 @@ def get_charge_of_protein(_id: str):
 # |------------------------------------------------------------------------------|#
 
 
-@router.get("/api/weight/{_id}", tags=["properties"], description="Returns weight of protein in daltons")
-def get_weight_of_protein(_id: str):
+@router.post("/api/weight/", tags=["properties"], description="Returns weight of protein in daltons")
+def get_weight_of_protein(frame : Frame):
     """Returns weight of protein in units"""
-    weight = SequncePropeties(DB().get_frame(_id)).get_weight()
+    weight = SequncePropeties(frame.frame).get_weight()
     return {"weight": weight}

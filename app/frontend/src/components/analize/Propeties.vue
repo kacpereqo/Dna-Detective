@@ -1,6 +1,11 @@
 <template>
     <div class="propeties-wrapper">
-        <ChartWrapper v-if="loaded" :xData="xData" :yData="yData" :labels="labels" :wholeNumbers="true" />
+        <ChartWrapper v-if="loaded" :xData="xData.weight" :yData="yData.weight" :labels="labels.weight"
+            :wholeNumbers="true" />
+        <ChartWrapper v-if="loaded" :xData="xData.bulkiness" :yData="yData.bulkiness" :labels="labels"
+            :wholeNumbers="true" />
+        <ChartWrapper v-if="loaded" :xData="xData.recognition" :yData="yData.recognition" :labels="labels"
+            :wholeNumbers="true" />
     </div>
 </template>
 
@@ -12,30 +17,67 @@ export default {
     name: "Propeties",
     data() {
         return {
-            yData: [],
-            xData: [],
+            yData: {},
+            xData: {},
             window: 3,
             loaded: false,
+            labels: {},
         };
     },
     methods: {
         getWeight() {
-            axios.get(`http://127.0.0.1:8000/api/weight/${this.id}?window=${this.window}`)
+            axios.post(`http://127.0.0.1:8000/api/weight?window=${this.window}`, {
+                frame: this.$store.state.frame,
+            })
                 .then(res => {
-                    this.yData = res.data.weight;
-                    for (let i = this.window; i < this.window + this.yData.length; i++) {
-                        this.xData.push(i);
+                    this.yData.weight = [];
+                    this.xData.weight = [];
+
+                    this.yData.weight = res.data.weight;
+                    for (let i = this.window; i < this.window + this.yData.weight.length; i++) {
+                        this.xData.weight.push(i);
                     }
                     this.loaded = true;
+                });
+        },
+        getBulkiness() {
+            axios.post(`http://127.0.0.1:8000/api/bulkiness`, {
+                frame: this.$store.state.frame,
+            })
+                .then(res => {
+                    this.yData.bulkiness = [];
+                    this.xData.bulkiness = [];
+
+                    for (let x in res.data.bulkiness) {
+                        this.yData.bulkiness.push(res.data.bulkiness[x]);
+                        this.xData.bulkiness.push(parseInt(x));
+                    }
+                });
+        },
+        getRecognition() {
+            axios.post(`http://127.0.0.1:8000/api/recognition`, {
+                frame: this.$store.state.frame,
+            })
+                .then(res => {
+                    this.yData.recognition = [];
+                    this.xData.recognition = [];
+
+                    for (let x in res.data.recognition) {
+                        console.log(x)
+                        this.yData.recognition.push(res.data.recognition[x]);
+                        this.xData.recognition.push(parseInt(x));
+                    }
                 });
         }
     },
     created() {
         this.id = this.$route.params.id;
         this.getWeight();
+        this.getBulkiness();
+        this.getRecognition();
     },
     mounted() {
-        this.labels = this.$t('charts.mass');
+        this.labels.weight = this.$t('charts.mass');
     },
     components: { ChartWrapper }
 }
