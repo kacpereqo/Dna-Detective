@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
-from .schemas import Protein, HydrophobicityScale, Frame
+from .schemas import HydrophobicityScale, Frame
 from peptides import Peptide
 from .service import ProteinHydrophobicity
-from services.database.db import DB
+from .constants import OMH_SCALE
+from services.common.getproperty import get_property
 
 
 # |------------------------------------------------------------------------------|#
@@ -30,3 +31,10 @@ def get_hydrophobicity_of_protein(frame: Frame, hydrophobicity_scale: Hydrophobi
 
     protein = ProteinHydrophobicity(frame.frame)
     return {"hydrophobicity": round(protein.hydrophobicity(scale=hydrophobicity_scale.scale), 2)}
+
+
+@router.post("/api/omh", tags=["Hydrophobicity"], description="Returns average hydrophobicity of protein")
+def get_omh_of_protein(frame: Frame):
+    """Returns hydrophobicity of protein in units"""
+
+    return {"omh": get_property(OMH_SCALE, frame.frame)}

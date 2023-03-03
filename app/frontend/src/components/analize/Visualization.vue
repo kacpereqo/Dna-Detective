@@ -1,19 +1,17 @@
 <template>
     <div class="property-wrapper">
-
-
-        <div v-if="isLoading">
-            Ładowanie...
-        </div>
-        <Line :word="'Wzór szkieletowy'" :line="false" />
-        <div class="image-container">
+        <Line :word="$t('sidebar.visualization.skeleton')" />
+        <div class=" image-container">
             <div class="image-viewer"><img :src='visualizationSrc' alt="Wzór szkieletowy białka"></div>
+            <div v-if="isLoading">
+                Ładowanie...
+            </div>
         </div>
-        <Line :word="'Wzór'" :line="true" />
+        <Line :word="$t('sidebar.visualization.pattern')" />
         <div class="image-container2">
             <div v-for="x in this.$store.state.frame">
                 <img :src="getImgUrl(x)">
-                <p> {{ x }} </p>
+                <p> {{ getAA(x) }} </p>
             </div>
         </div>
     </div>
@@ -60,6 +58,31 @@ export default {
         }, getImgUrl(pet) {
             var images = require.context('@/assets/compounds', false, /\.png$/)
             return images('./' + pet + ".png")
+        },
+        getAA(x) {
+            const aaTable = {
+                "A": "Ala",
+                "R": "Arg",
+                "N": "Asn",
+                "D": "Asp",
+                "C": "Cys",
+                "Q": "Gln",
+                "E": "Glu",
+                "G": "Gly",
+                "H": "His",
+                "I": "Ile",
+                "L": "Leu",
+                "K": "Lys",
+                "M": "Met",
+                "F": "Phe",
+                "P": "Pro",
+                "S": "Ser",
+                "T": "Thr",
+                "W": "Trp",
+                "Y": "Tyr",
+                "V": "Val",
+            }
+            return aaTable[x];
         }
 
     },

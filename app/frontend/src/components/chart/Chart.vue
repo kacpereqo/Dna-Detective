@@ -38,11 +38,13 @@ export default {
     },
     methods: {
         tooltipPlugin(opts) {
-            let over, bound, bLeft, bTop;
+            let over, bound, bLeft, bTop, bBot;
             function syncBounds(element) {
+                element = element.querySelector(".u-over");
                 let bbox = element.getBoundingClientRect();
                 bLeft = bbox.left;
-                bTop = bbox.top;
+                bTop = bbox.top + window.pageYOffset;
+                bBot = bbox.bottom + window.pageYOffset;
             }
             const overlay = document.createElement("div");
             overlay.id = "overlay";
@@ -70,10 +72,32 @@ export default {
                         const { left, top, idx } = u.cursor;
                         const x = u.data[0][idx];
 
-                        var placement = function () { "use strict"; var e = { size: ["height", "width"], clientSize: ["clientHeight", "clientWidth"], offsetSize: ["offsetHeight", "offsetWidth"], maxSize: ["maxHeight", "maxWidth"], before: ["top", "left"], marginBefore: ["marginTop", "marginLeft"], after: ["bottom", "right"], marginAfter: ["marginBottom", "marginRight"], scrollOffset: ["pageYOffset", "pageXOffset"] }; function t(e) { return { top: e.top, bottom: e.bottom, left: e.left, right: e.right } } return function (o, r, f, a, i) { void 0 === f && (f = "bottom"), void 0 === a && (a = "center"), void 0 === i && (i = {}), (r instanceof Element || r instanceof Range) && (r = t(r.getBoundingClientRect())); var n = Object.assign({ top: r.bottom, bottom: r.top, left: r.right, right: r.left }, r), s = { top: 0, left: 0, bottom: window.innerHeight, right: window.innerWidth }; i.bound && ((i.bound instanceof Element || i.bound instanceof Range) && (i.bound = t(i.bound.getBoundingClientRect())), Object.assign(s, i.bound)); var l = getComputedStyle(o), m = {}, b = {}; for (var g in e) m[g] = e[g]["top" === f || "bottom" === f ? 0 : 1], b[g] = e[g]["top" === f || "bottom" === f ? 1 : 0]; o.style.position = "absolute", o.style.maxWidth = "", o.style.maxHeight = ""; var d = parseInt(l[b.marginBefore]), c = parseInt(l[b.marginAfter]), u = d + c, p = s[b.after] - s[b.before] - u, h = parseInt(l[b.maxSize]); (!h || p < h) && (o.style[b.maxSize] = p + "px"); var x = parseInt(l[m.marginBefore]) + parseInt(l[m.marginAfter]), y = n[m.before] - s[m.before] - x, z = s[m.after] - n[m.after] - x; (f === m.before && o[m.offsetSize] > y || f === m.after && o[m.offsetSize] > z) && (f = y > z ? m.before : m.after); var S = f === m.before ? y : z, v = parseInt(l[m.maxSize]); (!v || S < v) && (o.style[m.maxSize] = S + "px"); var w = window[m.scrollOffset], O = function (e) { return Math.max(s[m.before], Math.min(e, s[m.after] - o[m.offsetSize] - x)) }; f === m.before ? (o.style[m.before] = w + O(n[m.before] - o[m.offsetSize] - x) + "px", o.style[m.after] = "auto") : (o.style[m.before] = w + O(n[m.after]) + "px", o.style[m.after] = "auto"); var B = window[b.scrollOffset], I = function (e) { return Math.max(s[b.before], Math.min(e, s[b.after] - o[b.offsetSize] - u)) }; switch (a) { case "start": o.style[b.before] = B + I(n[b.before] - d) + "px", o.style[b.after] = "auto"; break; case "end": o.style[b.before] = "auto", o.style[b.after] = B + I(document.documentElement[b.clientSize] - n[b.after] - c) + "px"; break; default: var H = n[b.after] - n[b.before]; o.style[b.before] = B + I(n[b.before] + H / 2 - o[b.offsetSize] / 2 - d) + "px", o.style[b.after] = "auto" }o.dataset.side = f, o.dataset.align = a } }();
-
                         const y = u.data[1][idx];
-                        const aa = this.wholeNumbers ? `<b>(${this.$store.state.frame[idx]})<b>` : ""
+
+                        const aaTable = {
+                            "A": "Ala",
+                            "R": "Arg",
+                            "N": "Asn",
+                            "D": "Asp",
+                            "C": "Cys",
+                            "Q": "Gln",
+                            "E": "Glu",
+                            "G": "Gly",
+                            "H": "His",
+                            "I": "Ile",
+                            "L": "Leu",
+                            "K": "Lys",
+                            "M": "Met",
+                            "F": "Phe",
+                            "P": "Pro",
+                            "S": "Ser",
+                            "T": "Thr",
+                            "W": "Trp",
+                            "Y": "Tyr",
+                            "V": "Val",
+                        }
+
+                        const aa = this.wholeNumbers ? `<b>(${aaTable[this.$store.state.frame[idx + 1]]})<b>` : ""
 
                         overlay.innerHTML = `
                         <ul>
@@ -82,8 +106,27 @@ export default {
                     </ul>`;
 
 
-                        const anchor = { left: left + bLeft, top: top + bTop };
-                        placement(overlay, anchor, "right", "start", { bound });
+                        if (bLeft + left - overlay.clientWidth - 10 < bLeft) {
+                            overlay.style.left = bLeft + left + 10 + "px";
+                            overlay.style.setProperty("--after", "none")
+                            overlay.style.setProperty("--before", "block")
+
+                        }
+                        else {
+                            overlay.style.left = bLeft + left - overlay.clientWidth - 10 + "px";
+                            overlay.style.setProperty("--before", "none")
+                            overlay.style.setProperty("--after", "block")
+                        }
+
+                        if (bTop + top + overlay.clientHeight + 15 > bBot) {
+                            overlay.style.top = bTop + top - overlay.clientHeight - 10 + "px";
+                        }
+                        else {
+                            overlay.style.top = bTop + top + 10 + "px";
+
+                        }
+
+
                     }
                 }
             };
@@ -219,22 +262,35 @@ export default {
     position: absolute;
     background: var(--background-color);
     color: var(--text-color);
-    padding: 0.5rem;
+    padding: 0.3rem;
     border-radius: 0.2rem;
     border: 1px solid var(--accent-color-dark);
     z-index: 1000;
-    min-width: 3rem;
+    min-width: 2rem;
     pointer-events: none;
+    font-size: 0.9rem;
 }
 
 #overlay::after {
     content: "";
     position: absolute;
+    display: var(--after);
     top: 50%;
     left: 100%;
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent transparent var(--text-color);
+}
+
+#overlay::before {
+    display: var(--before);
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent var(--text-color) transparent transparent;
 }
 
 #overlay ul {
@@ -267,5 +323,9 @@ export default {
 
 .y {
     font-weight: normal;
+}
+
+.u-over {
+    position: absolute;
 }
 </style>

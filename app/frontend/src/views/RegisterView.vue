@@ -90,6 +90,7 @@ a {
 }
 
 .header {
+    padding: 0.5rem;
     height: 2.5rem;
     overflow: hidden;
     text-align: left;

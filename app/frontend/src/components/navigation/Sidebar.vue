@@ -38,27 +38,37 @@ export default {
 
             list: [
                 {
-                    text: 'Wizualizacja', value: "visualization", nested: [
-                        { text: 'Obraz', value: "" }
+                    text: this.$t('sidebar.visualization.title'), value: "visualization", nested: [
+                        { text: this.$t('sidebar.visualization.skeleton'), value: "" }, {
+                            text: this.$t('sidebar.visualization.pattern'), value: ""
+                        }
                     ]
                 },
                 {
-                    text: 'Ładunek', value: "charge", nested: [
-                        { text: 'Ładunek od ph', value: "" },
-                        { text: 'Punkt izoelektryczny', value: "" }
+                    text: this.$t('sidebar.charge.title'), value: "charge", nested: [
+                        { text: this.$t('sidebar.charge.chargeAtPh'), value: "" },
+                        { text: this.$t('sidebar.charge.polarity'), value: "" }
                     ]
                 },
                 {
-                    text: 'Hydrofobowość', value: "hydro", nested: [
-                        { text: 'Wykres Hydrofobowości', value: "" },
-                        { text: 'Średnia Hydrofobowość', value: "" }
+                    text: this.$t('sidebar.hydro.title'), value: "hydro", nested: [
+                        { text: this.$t('sidebar.hydro.hydro'), value: "" },
+                        { text: this.$t('sidebar.hydro.omh'), value: "" }
                     ]
                 },
                 {
-                    text: 'Właściwości', value: "propeties", nested: [
-                        { text: 'Masa', value: "" }
+                    text: this.$t('sidebar.mass.title'), value: "propeties", nested: [
+                        { text: this.$t('sidebar.mass.mass'), value: "" },
+                        { text: this.$t('sidebar.mass.bulkiness'), value: "" },
+                        { text: this.$t('sidebar.mass.recognition'), value: "" },
                     ]
                 },
+                {
+                    text: this.$t('sidebar.structure.title'), value: "structure", nested: [
+                        { text: this.$t('sidebar.structure.refractivity'), value: "" },
+                        { text: this.$t('sidebar.structure.mutability'), value: "" },
+                    ]
+                }
             ],
             search: '',
         };

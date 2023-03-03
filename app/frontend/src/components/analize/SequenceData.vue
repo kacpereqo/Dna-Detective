@@ -4,6 +4,7 @@
         <Propeties v-show="component == 'propeties'" />
         <Charge v-show="component == 'charge'" />
         <Hydro v-show="component == 'hydro'" />
+        <Structure v-show="component == 'structure'" />
     </div>
 </template>
 
@@ -13,6 +14,7 @@ import Visualization from '@/components/analize/Visualization.vue'
 import Propeties from '@/components/analize/Propeties.vue'
 import Hydro from '@/components/analize/Hydro.vue'
 import Charge from '@/components/analize/Charge.vue'
+import Structure from '@/components/analize/Structure.vue'
 
 export default {
     name: 'SequenceData',
@@ -22,6 +24,7 @@ export default {
         Propeties,
         Hydro,
         Charge,
+        Structure
     },
     props: {
         component: {

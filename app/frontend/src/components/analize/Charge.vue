@@ -1,9 +1,8 @@
 <template>
     <div class="property-wrapper">
-        <h2>Ładunek</h2>
-        <li> Punkt izoelektryczny {{ isoelectricpoint }}</li>
-        <ChartWrapper v-if="loaded" :yData="yData.charge" :xData="xData.charge" :labels="labels.charge" />
-        <ChartWrapper v-if="loaded" :yData="yData.polarity" :xData="xData.polarity" :labels="labels.polarity" />
+        <ChartWrapper v-if="loaded.charge" :yData="yData.charge" :xData="xData.charge" :labels="'charts.chargeAtPH'" />
+        <p> {{ $t('isoelectricPoint') }} {{ isoelectricpoint }}</p>
+        <ChartWrapper v-if="loaded.polarity" :yData="yData.polarity" :xData="xData.polarity" :labels="'charts.polarity'" />
     </div>
 </template>
 
@@ -23,7 +22,10 @@ export default {
             xData: {},
             yData: {},
             labels: {},
-            loaded: false,
+            loaded: {
+                charge: false,
+                polarity: false,
+            },
         }
     },
     created() {
@@ -31,9 +33,6 @@ export default {
         this.getCharge();
         this.getIsoelectricPoint();
         this.getPolarity();
-    },
-    mounted() {
-        this.labels.charge = this.$t('charts.chargeAtPH');
     },
 
     methods: {
@@ -47,8 +46,8 @@ export default {
                     for (let x in response.data.netcharge) {
                         this.yData.charge.push(response.data.netcharge[x]);
                         this.xData.charge.push(parseFloat(x));
-                        this.loaded = true;
                     }
+                    this.loaded.charge = true;
 
                 })
                 .catch(error => {
@@ -77,9 +76,8 @@ export default {
                     for (let x in response.data.polarity) {
                         this.yData.polarity.push(response.data.polarity[x]);
                         this.xData.polarity.push(parseInt(x));
-                        this.loaded = true;
                     }
-
+                    this.loaded.polarity = true;
                 })
                 .catch(error => {
                     console.log(error);

@@ -1,11 +1,11 @@
 <template>
     <div class="propeties-wrapper">
-        <ChartWrapper v-if="loaded" :xData="xData.weight" :yData="yData.weight" :labels="labels.weight"
+        <ChartWrapper v-if="loaded.weight" :xData="xData.weight" :yData="yData.weight" :labels="'charts.weight'"
             :wholeNumbers="true" />
-        <ChartWrapper v-if="loaded" :xData="xData.bulkiness" :yData="yData.bulkiness" :labels="labels"
+        <ChartWrapper v-if="loaded.bulkiness" :xData="xData.bulkiness" :yData="yData.bulkiness" :labels="'charts.bulkiness'"
             :wholeNumbers="true" />
-        <ChartWrapper v-if="loaded" :xData="xData.recognition" :yData="yData.recognition" :labels="labels"
-            :wholeNumbers="true" />
+        <ChartWrapper v-if="loaded.recognition" :xData="xData.recognition" :yData="yData.recognition"
+            :labels="'charts.recognition'" :wholeNumbers="true" />
     </div>
 </template>
 
@@ -20,7 +20,11 @@ export default {
             yData: {},
             xData: {},
             window: 3,
-            loaded: false,
+            loaded: {
+                weight: false,
+                bulkiness: false,
+                recognition: false,
+            },
             labels: {},
         };
     },
@@ -34,10 +38,10 @@ export default {
                     this.xData.weight = [];
 
                     this.yData.weight = res.data.weight;
-                    for (let i = this.window; i < this.window + this.yData.weight.length; i++) {
+                    for (let i = 2; i < 2 + this.yData.weight.length; i++) {
                         this.xData.weight.push(i);
                     }
-                    this.loaded = true;
+                    this.loaded.weight = true;
                 });
         },
         getBulkiness() {
@@ -50,8 +54,9 @@ export default {
 
                     for (let x in res.data.bulkiness) {
                         this.yData.bulkiness.push(res.data.bulkiness[x]);
-                        this.xData.bulkiness.push(parseInt(x));
+                        this.xData.bulkiness.push(parseInt(x) + 1);
                     }
+                    this.loaded.bulkiness = true;
                 });
         },
         getRecognition() {
@@ -63,10 +68,10 @@ export default {
                     this.xData.recognition = [];
 
                     for (let x in res.data.recognition) {
-                        console.log(x)
                         this.yData.recognition.push(res.data.recognition[x]);
-                        this.xData.recognition.push(parseInt(x));
+                        this.xData.recognition.push(parseInt(x) + 1);
                     }
+                    this.loaded.recognition = true;
                 });
         }
     },

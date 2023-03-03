@@ -14,11 +14,13 @@ from services.auth import routes as auth
 from services.profile import routes as profile
 from services.bulkiness import routes as bulkiness
 from services.recognition import routes as recognition
+from services.structure import routes as structure
 
 # |------------------------------------------------------------------------------|#
 
 
 def include_routes(app):
+    app.include_router(structure.router)
     app.include_router(bulkiness.router)
     app.include_router(recognition.router)
     app.include_router(profile.router)

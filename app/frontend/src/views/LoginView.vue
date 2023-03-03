@@ -97,6 +97,7 @@ a {
     overflow: hidden;
     text-align: left;
     margin-bottom: 20px;
+    padding: 0.5rem;
     height: 2.5rem;
     background-color: var(--main-color);
     color: white;

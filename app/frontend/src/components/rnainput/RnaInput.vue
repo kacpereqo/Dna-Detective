@@ -209,7 +209,7 @@ form div {
     margin-left: 0.5rem;
     border: 1px solid var(--accent-color-dark);
     color: var(--text-color);
-    background-color: transparent;
+    background-color: var(--background-color);
     border-radius: 5px;
     padding: 0.5rem;
     font-size: 0.9rem;

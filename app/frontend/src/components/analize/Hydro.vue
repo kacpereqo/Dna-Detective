@@ -1,7 +1,9 @@
 <template>
     <div class="property-wrapper">
-        <ChartWrapper v-if="loaded" :yData="yData" :xData="xData" :wholeNumbers="true" :labels="labels" />
-        <li> Średnia hydrofobowość {{ gravy }}</li>
+        <ChartWrapper v-if="loaded.hydro" :yData="yData.hydro" :xData="xData.hydro" :wholeNumbers="true"
+            :labels="'charts.hydro'" />
+        <p> Gravy: {{ gravy }}</p>
+        <ChartWrapper v-if="loaded.omh" :yData="yData.omh" :xData="xData.omh" :wholeNumbers="true" :labels="'charts.omh'" />
     </div>
 </template>
 
@@ -17,19 +19,20 @@ export default {
     data() {
         return {
             gravy: '',
-            yData: [],
-            xData: [],
-            labels: '',
-            loaded: false,
+            yData: {},
+            xData: {},
+            labels: {},
+            loaded: {
+                hydro: false,
+                omh: false
+            },
         }
     },
     created() {
         this.id = this.$route.params.id;
         this.getHydrophobicity();
         this.getGRAVY();
-    },
-    mounted() {
-        this.labels = this.$t('charts.hydro');
+        this.getOMH();
     },
 
     methods: {
@@ -39,12 +42,13 @@ export default {
             })
                 .then(response => {
 
-                    this.yData = response.data.hydrophobicity;
+                    this.xData.hydro = []
+                    this.yData.hydro = response.data.hydrophobicity;
 
-                    for (let i = 0; i < this.yData.length; i++) {
-                        this.xData.push(i + 1);
+                    for (let i = 1; i < this.yData.hydro.length + 1; i++) {
+                        this.xData.hydro.push(i + 1);
                     }
-                    this.loaded = true;
+                    this.loaded.hydro = true;
                 })
         },
         getGRAVY() {
@@ -58,6 +62,21 @@ export default {
                     console.log(error);
                 })
         },
+        getOMH() {
+            axios.post(`http://127.0.0.1:8000/api/omh`, {
+                frame: this.$store.state.frame,
+            })
+                .then(res => {
+                    this.yData.omh = [];
+                    this.xData.omh = [];
+
+                    for (let x in res.data.omh) {
+                        this.yData.omh.push(res.data.omh[x]);
+                        this.xData.omh.push(parseInt(x) + 1);
+                    }
+                    this.loaded.omh = true;
+                });
+        }
     }
 }
 

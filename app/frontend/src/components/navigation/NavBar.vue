@@ -88,12 +88,9 @@ export default {
         ...mapState({
             isLogged: 'isLogged'
         })
+
     },
-    methods: {
-        name() {
-            n
-        }
-    }
+
 
 };
 </script>
@@ -124,6 +121,7 @@ a {
 }
 
 .logo-img {
+    filter: var(--icon-filter);
     width: 100%;
     height: 100%;
     /* position: absolute; */

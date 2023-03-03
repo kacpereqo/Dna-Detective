@@ -91,14 +91,14 @@ export default {
 <style scoped lang="scss">
 .chart-wrapper {
     width: 100%;
-    height: 250px;
+    height: 300px;
     margin: 2rem 0 6rem 0;
 }
 
 
 #chart {
     width: calc(100vw - 16.5rem);
-    height: 250px;
+    height: 300px;
     margin-bottom: 2rem;
     position: relative;
 }

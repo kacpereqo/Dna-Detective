@@ -63,6 +63,95 @@
             "yAxis": "Masa",
             "xUnit": "aa",
             "yUnit": "Kdal"
+        },
+        "omh": {
+            "title": "Masa",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Masa",
+            "xUnit": "aa",
+            "yUnit": "Kdal"
+        },
+        "polarity": {
+            "title": "Masa",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Masa",
+            "xUnit": "aa",
+            "yUnit": "Kdal"
+        },
+        "weight": {
+            "title": "Masa",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Masa",
+            "xUnit": "aa",
+            "yUnit": "Kdal"
+        },
+        "bulkiness": {
+            "title": "Masa",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Masa",
+            "xUnit": "aa",
+            "yUnit": "Kdal"
+        },
+        "recognition": {
+            "title": "Masa",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Masa",
+            "xUnit": "aa",
+            "yUnit": "Kdal"
+        },
+        "refractivity": {
+            "title": "Masa",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Masa",
+            "xUnit": "aa",
+            "yUnit": "Kdal"
+        },
+        "mutability": {
+            "title": "Masa",
+            "info": "",
+            "xAxis": "Pozycja",
+            "yAxis": "Masa",
+            "xUnit": "aa",
+            "yUnit": "Kdal"
         }
+    },
+    "sidebar": {
+        "visualization": {
+            "title": "Wizualizacja",
+            "skeleton": "Wzór Szkieletowy",
+            "pattern": "Wzór Aminokwasowy"
+        },
+        "charge": {
+            "title": "Ładunek",
+            "chargeAtPh": "Ładunek od PH",
+            "polarity": "polarność"
+        },
+        "mass": {
+            "title": "Masa",
+            "mass": "Masa",
+            "bulkiness": "Pulchność",
+            "recognition": "Rozpoznawalność"
+        },
+        "hydro": {
+            "title": "Hydrofofobowość",
+            "hydro": "Hydrofofobowość",
+            "omh": "OMH"
+        },
+        "structure": {
+            "title": "Struktura",
+            "refractivity": "Refraktywność",
+            "mutability": "Zdolność mutacji"
+        }
+    },
+    "isoelectricPoint": "Punkt izoelektryczny",
+    "translation": {
+        "title": "Translacje",
+        "subtitle": "Wybierz białko do analizy klikając na ciemno niebieskie elementy"
     }
 }

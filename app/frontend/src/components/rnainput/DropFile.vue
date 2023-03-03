@@ -7,7 +7,9 @@
 
             <label for="fileInput" class="file-label" v-if="files.length == 0">
                 <div v-if="isDragging">{{ $t('dropFile.dragging') }}</div>
-                <div v-else>{{ $t('dropFile.placeholder') }}</div>
+                <div v-else>{{ $t('dropFile.placeholder') }}<br>
+                    <p class="formats">formaty: txt, csv</p>
+                </div>
                 <img src="@/assets/upload.svg">
             </label>
             <div class="preview-container mt-4" v-if="files.length">
@@ -171,5 +173,10 @@ p img {
     border-radius: 5px;
     border: 1px solid var(--accent-color-dark);
     background-color: var(--accent-color-light);
+}
+
+.formats {
+    font-size: 1rem;
+    color: var(--accent-color-dark);
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
     <div class="translations-wrapper">
         <div class="header">
-            <h1>Translacje</h1>
-            <h2> Wybierz białko do analizy klikając na ciemno niebieskie elementy </h2>
+            <h1> {{ $t('translation.title') }}</h1>
+            <h2> {{ $t('translation.subtitle') }}</h2>
         </div>
         <div class="translations">
             <ul>
