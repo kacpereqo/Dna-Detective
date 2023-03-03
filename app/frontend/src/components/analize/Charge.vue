@@ -70,7 +70,6 @@ export default {
                 frame: this.$store.state.frame,
             })
                 .then(response => {
-                    console.log(response.data);
                     this.yData.polarity = [];
                     this.xData.polarity = [];
                     for (let x in response.data.polarity) {

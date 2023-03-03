@@ -9,7 +9,7 @@
                 {{ translations.openReadingFrames }}
                 <li v-for="(translation, y) in translations" class="frame-wrapper">
                     <h2>{{ translation.direction[0] }} <img src="@/assets/arrow-ltr.svg"> {{ translation.direction[1] }}
-                        Ramka {{ (y % 3 +
+                        {{ $t('translation.frame') }} {{ (y % 3 +
                             1) }} </h2>
                     <div class="frames">
                         <span class="frame" v-for="(frame, i) in translation.translatedFrames" :key="i">

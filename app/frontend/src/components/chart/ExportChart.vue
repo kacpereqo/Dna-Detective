@@ -1,7 +1,7 @@
 <template>
     <div class="buttons">
         <div class="info-button button" @click="showInfo = !showInfo" v-click-out-side="() => { showInfo = false }">
-            <div> Informacje </div>
+            <div> {{ $t('info') }} </div>
             <img src="@/assets/error.svg">
             <div class="info" v-if="showInfo">
                 <p>{{ $t(labels + '.info') }}</p>
@@ -12,7 +12,8 @@
         <!-- Export buttons -->
 
         <div class="export-button ">
-            <div class="export-button-primary button" @click="() => { showPopup = true; getSrc() }"> Wyeksportuj</div>
+            <div class="export-button-primary button" @click="() => { showPopup = true; getSrc() }">{{ $t('export.title') }}
+            </div>
             <div class="export-button-dropdown" v-click-out-side="() => { showOptions = false }"
                 :style="{ 'border-radius': showOptions ? '0 0.3rem 0 0' : '0 0.3rem 0.3rem 0' }"
                 @click="showOptions = !showOptions">
@@ -46,24 +47,24 @@
         <div class="container">
 
             <div class="preview-container">
-                <p>Podgląd</p>
+                <p>{{ $t('export.preview') }}</p>
                 <div class="preview">
                     <img :src="src" alt="chart">
                 </div>
             </div>
             <div class="sidebar">
                 <div>
-                    <p>Szerokość:</p> <input type="text" min="1" v-model="width"
+                    <p>{{ $t('export.width') }}:</p> <input type="text" min="1" v-model="width"
                         v-on:change="() => { resizeChart(); getSrc() }">
                 </div>
 
                 <div>
-                    <p>Wysokość:</p> <input type="text" min="1" v-model="height"
+                    <p>{{ $t('export.height') }}</p> <input type="text" min="1" v-model="height"
                         v-on:change="() => { resizeChart(); getSrc() }">
                 </div>
 
                 <div class="export" @click="saveChart()">
-                    <p>Eksportuj</p>
+                    <p>{{ $t('export.title') }}</p>
                 </div>
             </div>
         </div>

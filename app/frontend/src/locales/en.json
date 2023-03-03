@@ -1,7 +1,7 @@
 {
-    "test": "test en",
+    "test": "test eng",
     "navbar": {
-        "home": "Home",
+        "home": "Main page",
         "analise": "Analise",
         "tables": "Tables",
         "tools": "Tools",
@@ -14,19 +14,153 @@
         }
     },
     "analizeInput": {
-        "title": "Analise RNA/DNA",
-        "subtitle": "Tool for in-depth analysis of DNA/RNA chains",
+        "title": "DNA/RNA Analysis",
+        "subtitle": "Tools to precise analyse DNA/RNA sequence ",
         "dataType": "Data type",
-        "textareaPlaceholder": "Input RNA or DNA...",
-        "submitButton": "Analize",
+        "textareaPlaceholder": "Write DNA/RNA sequence here: ",
+        "submitButton": "Analyse",
         "clearButton": "Clear",
+        "dropFilePlaceholder": "Drop file here or click to choose it",
         "dataTypes": {
             "file": "File",
             "text": "Text"
         }
     },
     "dropFile": {
-        "placeholder": "Drop file here or click to upload",
-        "dragging": "Drop file here to upload"
+        "placeholder": "Drop file here or click to choose it",
+        "dragging": "Drop the file here to load it"
+    },
+    "charts": {
+        "hydro": {
+            "title": "Hydrophobicity",
+            "info": "Protein hydrophobicity is one of its main properties responsible for folding and stabilization of the protein. The Kyle-Doolittle hydrophobicity scale is presented in the chart below. Molecules with positive values are hydrophobic, while those with negative values are hydrophilic. This means that hydrophilic molecules have a polar structure similar to that of water and dissolve in water, while hydrophobic molecules have a nonpolar structure and do not interact with water.",
+            "xAxis": "Position",
+            "yAxis": "Hydrophobicity",
+            "yUnit": "bp",
+            "xUnit": "aa",
+            "scales": {
+                "len": "1",
+                "scales": [
+                    "Kyte-Dollitle"
+                ]
+            }
+        },
+        "chargeAtPH": {
+            "title": "Charge",
+            "info": "A property dependent on the pH of the environment. In an environment with a pH greater than the isoelectric point, the net charge of the molecule is negative. In contrast, if the pH of the environment is lower than the isoelectric point, the charge is positive.",
+            "xAxis": "pH",
+            "yAxis": "Charge",
+            "xUnit": "pH",
+            "yUnit": "Charge",
+            "scales": [
+                "Rodwell"
+            ]
+        },
+        "mass": {
+            "title": "Mass",
+            "info": "A value given in kilodaltons [kDa], a unit used to determine the mass of molecules. One Dalton is equal to 1/12 of the mass of a 12C carbon atom and is equal to one atomic mass unit [u]: 1.66033 * 10^(-27) kg. The unit's name refers to the British chemist John Dalton.",
+            "xAxis": "Position",
+            "yAxis": "Mass",
+            "xUnit": "aa",
+            "yUnit": "Kdal"
+        },
+        "omh": {
+            "title": "Optimized matching hydrophobicity",
+            "info": "Optimized matching hydrophobicity of a protein refers to the ability of the protein's hydrophobic regions to interact with other hydrophobic surfaces in its environment. ",
+            "xAxis": "Position",
+            "yAxis": "Hydrophobicity",
+            "xUnit": "aa",
+            "yUnit": "bp"
+        },
+        "polarity": {
+            "title": "Polarity",
+            "info": "A property well-known from the structure of the water molecule. It arises when the electrons in the bond are shifted towards one participant of the bond. This results in a higher density of negative charge in one place of the molecule. The unit of polarity is Debye [D], and when the molecule has 0 D, it is considered nonpolar.",
+            "xAxis": "Position",
+            "yAxis": "pH",
+            "xUnit": "aa",
+            "yUnit": "Debye"
+        },
+        "weight": {
+            "title": "Weight",
+            "info": "The weight of a protein refers to its molecular weight or mass, which is the sum of the weights of all the atoms in the protein's amino acid sequence. The molecular weight of a protein can vary widely depending on its size and composition.",
+            "xAxis": "Position",
+            "yAxis": "Weight",
+            "xUnit": "aa",
+            "yUnit": "Kdal"
+        },
+        "bulkiness": {
+            "title": "Bulkiness",
+            "info": "Protein bulkiness refers to the size and shape of the amino acid residues that make up a protein molecule. Some amino acid residues are more bulky than others, and the distribution of bulky residues within a protein can affect its overall shape and structure.",
+            "xAxis": "Position",
+            "yAxis": "Bulkiness",
+            "xUnit": "aa",
+            "yUnit": "mm^3/g"
+        },
+        "recognition": {
+            "title": "Recognition",
+            "info": "Recognition of a protein refers to the ability of other molecules or biological systems to identify, interact with, or bind to that protein. This recognition can be based on a variety of factors, including the protein's size, shape, surface features, and chemical properties such as charge and hydrophobicity.",
+            "xAxis": "Position",
+            "yAxis": "Recognition",
+            "xUnit": "aa",
+            "yUnit": ""
+        },
+        "refractivity": {
+            "title": "Refractivity",
+            "info": "Refractivity of a protein refers to its ability to bend or change the direction of light as it passes through the protein. This property is related to the protein's optical density and is influenced by factors such as the protein's size, shape, and chemical composition.",
+            "xAxis": "Position",
+            "yAxis": "Refraction of light",
+            "xUnit": "aa",
+            "yUnit": "Refractive index [n]"
+        },
+        "mutability": {
+            "title": "Mutability",
+            "info": "Mutability of a protein refers to the likelihood or propensity of the protein to undergo changes or mutations in its amino acid sequence. A protein's mutability can be influenced by a variety of factors, including its chemical composition, stability, and evolutionary history.",
+            "xAxis": "Position",
+            "yAxis": "Mutability",
+            "xUnit": "aa",
+            "yUnit": ""
+        }
+    },
+    "sidebar": {
+        "visualization": {
+            "title": "Visualization",
+            "skeleton": "Structural formula",
+            "pattern": "Amino acid formula"
+        },
+        "charge": {
+            "title": "Charge",
+            "chargeAtPh": "Charge dependent of PH",
+            "polarity": "Polarity"
+        },
+        "mass": {
+            "title": "Mass",
+            "mass": "Mass",
+            "bulkiness": "Bulkiness",
+            "recognition": "Recognition"
+        },
+        "hydro": {
+            "title": "Hydrophobicity",
+            "hydro": "Hydrophobicity",
+            "omh": "OMH"
+        },
+        "structure": {
+            "title": "Structure",
+            "refractivity": "Refractivity",
+            "mutability": "Mutability"
+        }
+    },
+    "isoelectricPoint": "Isoeletric point",
+    "translation": {
+        "title": "Translations",
+        "subtitle": "Pick protein to analyse by clicking on the dark blue elements",
+        "frame": "frame"
+    },
+    "info": "information",
+    "export": {
+        "title": "Export",
+        "width": "width",
+        "height": "height",
+        "export": "Eksportuj",
+        "preview": "Preview"
     }
 }

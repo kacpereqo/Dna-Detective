@@ -47,7 +47,7 @@
         },
         "chargeAtPH": {
             "title": "Ładunek",
-            "info": "",
+            "info": "Zależna od pH środowiska właściwość. W otoczeniu o wartości pH większej niż punkt izoelektryczny, wypadkowy ładunek cząsteczki jest ujemny. Z kolei w przypadku, gdy pH środowiska jest mniejsze niż wartość punktu izoelektrycznego, to jej ładunek jest dodatni",
             "xAxis": "pH",
             "yAxis": "Ładunek",
             "xUnit": "pH",
@@ -58,67 +58,67 @@
         },
         "mass": {
             "title": "Masa",
-            "info": "",
+            "info": "Wartość podawana w kilodaltonach [kDa] jednostce używanej do określania masy cząsteczek. Jeden Dalton jest równy  1/12 masy atomu węgla 12C oraz jest równy jednej jednostce masy atomowej [u]: 1,66033*10^(-27) kg. Nazwa jednostki odwołuje się do brytyjskiego chemika Johna Daltona. ",
             "xAxis": "Pozycja",
             "yAxis": "Masa",
             "xUnit": "aa",
             "yUnit": "Kdal"
         },
         "omh": {
-            "title": "Masa",
-            "info": "",
+            "title": "Optymalne dopasowanie hydrofobowości białka",
+            "info": "Odnosi się do zdolności hydrofobowych obszarów białka do oddziaływania z innymi hydrofobowymi powierzchniami w jego otoczeniu. Hydrofobowość jest miarą tego, jak odporny na wodę jest cząsteczka lub powierzchnia, i odgrywa ważną rolę w składaniu, stabilności i funkcji białek.",
             "xAxis": "Pozycja",
-            "yAxis": "Masa",
+            "yAxis": "Hydrofofobowość",
             "xUnit": "aa",
-            "yUnit": "Kdal"
+            "yUnit": "bp"
         },
         "polarity": {
             "title": "Masa",
-            "info": "",
+            "info": "Właściwość dobrze znana z budowy cząsteczki wody. Pojawia się gdy w cząsteczce elektrony w wiązaniu są bardziej przesunięte w stronę jednego uczestnika wiązania. Powoduje to występowania w cząsteczce większej gęstości ładunku ujemnego w jednym miejscu. Jednostką polarności jest Debaj [D], gdy cząsteczka ma 0 D uważamy ją za apolarną.",
             "xAxis": "Pozycja",
-            "yAxis": "Masa",
+            "yAxis": "pH",
             "xUnit": "aa",
-            "yUnit": "Kdal"
+            "yUnit": "Debaj"
         },
         "weight": {
-            "title": "Masa",
-            "info": "",
+            "title": "Waga",
+            "info": "Waga białka odnosi się do jego masy cząsteczkowej, czyli sumy wag wszystkich atomów w sekwencji aminokwasów białka. Masa cząsteczkowa białka może znacznie się różnić w zależności od jego rozmiaru i składu.",
             "xAxis": "Pozycja",
             "yAxis": "Masa",
             "xUnit": "aa",
             "yUnit": "Kdal"
         },
         "bulkiness": {
-            "title": "Masa",
-            "info": "",
+            "title": "Objętość",
+            "info": "białka odnosi się do wielkości i kształtu reszt aminokwasowych, które tworzą cząsteczkę białka. Niektóre reszty aminokwasowe są bardziej masywne niż inne, a rozkład masywnych reszt w białku może wpłynąć na jego ogólny kształt i strukturę.",
             "xAxis": "Pozycja",
-            "yAxis": "Masa",
+            "yAxis": "Objętość",
             "xUnit": "aa",
-            "yUnit": "Kdal"
+            "yUnit": "Mm^3/g"
         },
         "recognition": {
-            "title": "Masa",
-            "info": "",
+            "title": "Rozpoznawalność",
+            "info": "Rozpoznanie białka odnosi się do zdolności innych cząsteczek lub systemów biologicznych do identyfikacji, interakcji lub wiązania z tym białkiem. Rozpoznanie to może być oparte na różnych czynnikach, takich jak rozmiar białka, jego kształt, cechy powierzchni oraz właściwości chemiczne, takie jak ładunek i hydrofobowość.",
             "xAxis": "Pozycja",
-            "yAxis": "Masa",
+            "yAxis": "Rozpoznawalność",
             "xUnit": "aa",
-            "yUnit": "Kdal"
+            "yUnit": ""
         },
         "refractivity": {
-            "title": "Masa",
-            "info": "",
+            "title": "Refraktywność",
+            "info": "Refraktywność białka odnosi się do zdolności białka do załamywania światła, co jest wynikiem różnic w jego właściwościach optycznych, takich jak współczynnik załamania światła. Ta zdolność jest mierzona przez indeks refrakcji, który określa o ile światło zostaje załamane przechodząc przez białko.",
             "xAxis": "Pozycja",
-            "yAxis": "Masa",
+            "yAxis": "Załamanie światła",
             "xUnit": "aa",
-            "yUnit": "Kdal"
+            "yUnit": "Indeks załamania [n]"
         },
         "mutability": {
-            "title": "Masa",
-            "info": "",
+            "title": "Zdolność do mutacji",
+            "info": "Zdolność do mutacji białka określa prawdopodobieństwo wystąpienia zmian w sekwencji aminokwasów białka w czasie, wynikających z różnych czynników, takich jak mutacje genetyczne, czynniki środowiskowe lub błędy podczas syntezy białka. Mutowalność białka może wpłynąć na jego stabilność, strukturę i funkcję.",
             "xAxis": "Pozycja",
-            "yAxis": "Masa",
+            "yAxis": "Mutagenność",
             "xUnit": "aa",
-            "yUnit": "Kdal"
+            "yUnit": ""
         }
     },
     "sidebar": {
@@ -152,6 +152,15 @@
     "isoelectricPoint": "Punkt izoelektryczny",
     "translation": {
         "title": "Translacje",
+        "frame": "ramka",
         "subtitle": "Wybierz białko do analizy klikając na ciemno niebieskie elementy"
+    },
+    "info": "informacje",
+    "export": {
+        "title": "Wyeksportuj",
+        "width": "Szerokość",
+        "height": "Wysokość",
+        "export": "Eksportuj",
+        "preview": "Podgląd"
     }
 }
