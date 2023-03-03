@@ -4,8 +4,6 @@ import asyncio
 import concurrent.futures
 from rdkit import Chem
 from rdkit.Chem import rdDepictor, Draw
-from threading import Thread
-import multiprocessing
 
 
 # |------------------------------------------------------------------------------|#
@@ -27,8 +25,8 @@ class Visualization2DService:
     # |------------------------------------------------------------------------------|#
 
     def draw(self):
-        mol = Chem.MolFromSmiles(self.smiles)
         rdDepictor.SetPreferCoordGen(True)
+        mol = Chem.MolFromSmiles(self.smiles)
         Draw.MolToFile(mol, "test.png",
                        (50 * len(self.sequence) , 200))
 
