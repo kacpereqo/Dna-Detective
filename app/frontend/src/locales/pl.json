@@ -134,8 +134,8 @@
         },
         "mass": {
             "title": "Masa",
-            "mass": "Masa",
-            "bulkiness": "Pulchność",
+            "mass": "Waga",
+            "bulkiness": "Objętość",
             "recognition": "Rozpoznawalność"
         },
         "hydro": {

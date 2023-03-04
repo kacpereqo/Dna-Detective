@@ -134,7 +134,7 @@
         },
         "mass": {
             "title": "Mass",
-            "mass": "Mass",
+            "mass": "Weight",
             "bulkiness": "Bulkiness",
             "recognition": "Recognition"
         },
